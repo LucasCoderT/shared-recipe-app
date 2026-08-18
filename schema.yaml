@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Shared Recipe Application
+  version: 0.1.0
+paths:
+  /api/health/:
+    get:
+      operationId: health
+      description: Return the simplest possible ok response.
+      tags:
+      - health
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+          description: ''
+  /api/whoami/:
+    get:
+      operationId: whoami
+      description: Return the current user, or an anonymous marker when logged out.
+      tags:
+      - whoami
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhoAmI'
+          description: ''
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+    WhoAmI:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+        id:
+          type: integer
+        username:
+          type: string
+        isStaff:
+          type: boolean
+        groups:
+          type: array
+          items:
+            type: string
+      required:
+      - authenticated
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
