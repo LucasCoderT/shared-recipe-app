@@ -2,7 +2,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from core.models import base
-from core.units import normalize_unit, validate_unit
+from core.utils.units import normalize_unit, validate_unit
 
 
 class RecipeTag(base.OrderableModelMixin, base.TimestampedModel):

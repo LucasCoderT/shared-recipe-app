@@ -19,7 +19,7 @@ from core.models import (
     ShoppingList,
     ShoppingListItem,
 )
-from core.seed_data import RecipeSpec
+from core.utils.seed_data import RecipeSpec
 
 
 @dataclass(frozen=True)

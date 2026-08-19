@@ -1,7 +1,7 @@
 from django.db import models
 
 from core.models import base
-from core.units import validate_unit
+from core.utils.units import validate_unit
 
 
 class ShoppingListItem(base.OrderableModelMixin, base.TimestampedModel):

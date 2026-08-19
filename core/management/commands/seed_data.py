@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
+from core.auth_groups import assign_default_groups_to_users
 from core.models import (
     Recipe,
     RecipeComment,
@@ -20,8 +21,8 @@ from core.models import (
     ShoppingList,
     ShoppingListItem,
 )
-from core.seed_data import load_seed_payload
-from core.seed_factories import (
+from core.utils.seed_data import load_seed_payload
+from core.utils.seed_factories import (
     _quantity_for_unit,
     _slugify_recipe_name,
     build_comments,
@@ -159,11 +160,13 @@ class Command(BaseCommand):
 
         demo_users = [build_user(user, password_hash) for user in users]
         created_demo_users = User.objects.bulk_create(demo_users, batch_size=insert_batch_size)
+        assign_default_groups_to_users(created_demo_users)
 
         load_users = [
             build_load_user(index, password_hash) for index in range(1, authors_requested + 1)
         ]
         created_load_users = User.objects.bulk_create(load_users, batch_size=insert_batch_size)
+        assign_default_groups_to_users(created_load_users)
 
         return {user.username: user for user in created_demo_users}, created_load_users
 

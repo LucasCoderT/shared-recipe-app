@@ -27,7 +27,7 @@ class SeedPayload:
 
 
 def default_seed_payload_path() -> Path:
-    return Path(__file__).resolve().parent / "tests" / "seed_data" / "seed_data.json"
+    return Path(__file__).resolve().parent.parent / "tests" / "seed_data" / "seed_data.json"
 
 
 def load_seed_payload(path: Path | None = None) -> SeedPayload:
