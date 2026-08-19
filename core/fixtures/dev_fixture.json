@@ -1,0 +1,3452 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$baIFl6ezMODiidNNGVQX3c$tIMioowK/yJPAd+YBO7h5x3ePKAaYVEecz6PW8nxNKk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "ava_cooks",
+    "first_name": "Ava",
+    "last_name": "Morgan",
+    "email": "ava@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-19T14:26:05.849Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$baIFl6ezMODiidNNGVQX3c$tIMioowK/yJPAd+YBO7h5x3ePKAaYVEecz6PW8nxNKk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "marco_kitchen",
+    "first_name": "Marco",
+    "last_name": "Silva",
+    "email": "marco@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-19T14:26:06.163Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$baIFl6ezMODiidNNGVQX3c$tIMioowK/yJPAd+YBO7h5x3ePKAaYVEecz6PW8nxNKk=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nina_bakes",
+    "first_name": "Nina",
+    "last_name": "Patel",
+    "email": "nina@example.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-19T14:26:06.474Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.815Z",
+    "updated_at": "2026-08-19T14:26:06.815Z",
+    "recipe": 1,
+    "name": "italian",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.816Z",
+    "updated_at": "2026-08-19T14:26:06.816Z",
+    "recipe": 1,
+    "name": "dinner",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.817Z",
+    "updated_at": "2026-08-19T14:26:06.817Z",
+    "recipe": 1,
+    "name": "comfort food",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.851Z",
+    "updated_at": "2026-08-19T14:26:06.851Z",
+    "recipe": 2,
+    "name": "indian",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.852Z",
+    "updated_at": "2026-08-19T14:26:06.852Z",
+    "recipe": 2,
+    "name": "spicy",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.853Z",
+    "updated_at": "2026-08-19T14:26:06.853Z",
+    "recipe": 2,
+    "name": "main course",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.880Z",
+    "updated_at": "2026-08-19T14:26:06.880Z",
+    "recipe": 3,
+    "name": "vegetarian",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.881Z",
+    "updated_at": "2026-08-19T14:26:06.881Z",
+    "recipe": 3,
+    "name": "one-pot",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.882Z",
+    "updated_at": "2026-08-19T14:26:06.882Z",
+    "recipe": 3,
+    "name": "meal prep",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.904Z",
+    "updated_at": "2026-08-19T14:26:06.904Z",
+    "recipe": 4,
+    "name": "breakfast",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.905Z",
+    "updated_at": "2026-08-19T14:26:06.905Z",
+    "recipe": 4,
+    "name": "mediterranean",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.906Z",
+    "updated_at": "2026-08-19T14:26:06.906Z",
+    "recipe": 4,
+    "name": "vegetarian",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.927Z",
+    "updated_at": "2026-08-19T14:26:06.927Z",
+    "recipe": 5,
+    "name": "breakfast",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.928Z",
+    "updated_at": "2026-08-19T14:26:06.928Z",
+    "recipe": 5,
+    "name": "quick",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipetag",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.929Z",
+    "updated_at": "2026-08-19T14:26:06.929Z",
+    "recipe": 5,
+    "name": "kid-friendly",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.932Z",
+    "updated_at": "2026-08-19T14:26:06.932Z",
+    "recipe": 1,
+    "user": 2,
+    "content": "The sauce texture was perfect after the simmer."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.933Z",
+    "updated_at": "2026-08-19T14:26:06.933Z",
+    "recipe": 1,
+    "user": 3,
+    "content": "Added extra basil and it turned out great."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.933Z",
+    "updated_at": "2026-08-19T14:26:06.933Z",
+    "recipe": 1,
+    "user": 2,
+    "content": "Great for meal prep and freezer portions."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.935Z",
+    "updated_at": "2026-08-19T14:26:06.935Z",
+    "recipe": 2,
+    "user": 1,
+    "content": "Balanced spice and creaminess, loved it."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.936Z",
+    "updated_at": "2026-08-19T14:26:06.936Z",
+    "recipe": 2,
+    "user": 3,
+    "content": "Broiled the chicken for more char and it worked well."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.936Z",
+    "updated_at": "2026-08-19T14:26:06.936Z",
+    "recipe": 2,
+    "user": 1,
+    "content": "Made this with naan and cucumber salad."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.938Z",
+    "updated_at": "2026-08-19T14:26:06.938Z",
+    "recipe": 3,
+    "user": 1,
+    "content": "Very filling and easy for weeknights."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.939Z",
+    "updated_at": "2026-08-19T14:26:06.939Z",
+    "recipe": 3,
+    "user": 2,
+    "content": "Used smoked paprika and got deeper flavor."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.940Z",
+    "updated_at": "2026-08-19T14:26:06.940Z",
+    "recipe": 3,
+    "user": 1,
+    "content": "Tastes even better the next day."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.942Z",
+    "updated_at": "2026-08-19T14:26:06.942Z",
+    "recipe": 4,
+    "user": 2,
+    "content": "Egg timing in the final step was spot on."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.943Z",
+    "updated_at": "2026-08-19T14:26:06.943Z",
+    "recipe": 4,
+    "user": 3,
+    "content": "Served with toasted sourdough and loved it."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.943Z",
+    "updated_at": "2026-08-19T14:26:06.943Z",
+    "recipe": 4,
+    "user": 2,
+    "content": "A great brunch recipe for guests."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.948Z",
+    "updated_at": "2026-08-19T14:26:06.948Z",
+    "recipe": 5,
+    "user": 1,
+    "content": "Quick breakfast and the kids liked it."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.949Z",
+    "updated_at": "2026-08-19T14:26:06.949Z",
+    "recipe": 5,
+    "user": 3,
+    "content": "I added walnuts and blueberries."
+  }
+},
+{
+  "model": "core.recipecomment",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.949Z",
+    "updated_at": "2026-08-19T14:26:06.949Z",
+    "recipe": 5,
+    "user": 1,
+    "content": "Texture stayed soft even after reheating."
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.930Z",
+    "updated_at": "2026-08-19T14:26:06.930Z",
+    "recipe": 1,
+    "user": 2,
+    "rating": 5
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.931Z",
+    "updated_at": "2026-08-19T14:26:06.931Z",
+    "recipe": 1,
+    "user": 3,
+    "rating": 4
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.934Z",
+    "updated_at": "2026-08-19T14:26:06.934Z",
+    "recipe": 2,
+    "user": 1,
+    "rating": 5
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.935Z",
+    "updated_at": "2026-08-19T14:26:06.935Z",
+    "recipe": 2,
+    "user": 3,
+    "rating": 5
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.937Z",
+    "updated_at": "2026-08-19T14:26:06.937Z",
+    "recipe": 3,
+    "user": 1,
+    "rating": 4
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.938Z",
+    "updated_at": "2026-08-19T14:26:06.938Z",
+    "recipe": 3,
+    "user": 2,
+    "rating": 4
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.940Z",
+    "updated_at": "2026-08-19T14:26:06.940Z",
+    "recipe": 4,
+    "user": 2,
+    "rating": 5
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.941Z",
+    "updated_at": "2026-08-19T14:26:06.941Z",
+    "recipe": 4,
+    "user": 3,
+    "rating": 4
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.947Z",
+    "updated_at": "2026-08-19T14:26:06.947Z",
+    "recipe": 5,
+    "user": 1,
+    "rating": 4
+  }
+},
+{
+  "model": "core.recipereview",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.947Z",
+    "updated_at": "2026-08-19T14:26:06.947Z",
+    "recipe": 5,
+    "user": 3,
+    "rating": 5
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.803Z",
+    "updated_at": "2026-08-19T14:26:06.803Z",
+    "recipe": 1,
+    "description": "Cook spaghetti in salted water until al dente.",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.805Z",
+    "updated_at": "2026-08-19T14:26:06.805Z",
+    "recipe": 1,
+    "description": "Saute onion, carrot, celery, and garlic in olive oil until softened.",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.809Z",
+    "updated_at": "2026-08-19T14:26:06.809Z",
+    "recipe": 1,
+    "description": "Brown beef, then stir in tomato paste and crushed tomatoes.",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.812Z",
+    "updated_at": "2026-08-19T14:26:06.812Z",
+    "recipe": 1,
+    "description": "Simmer 30 minutes and finish with milk, basil, and parmesan.",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.836Z",
+    "updated_at": "2026-08-19T14:26:06.836Z",
+    "recipe": 2,
+    "description": "Marinate chicken with yogurt, lemon juice, and spices for 1 hour.",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.841Z",
+    "updated_at": "2026-08-19T14:26:06.841Z",
+    "recipe": 2,
+    "description": "Roast marinated chicken until lightly charred.",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.843Z",
+    "updated_at": "2026-08-19T14:26:06.843Z",
+    "recipe": 2,
+    "description": "Cook onion, garlic, and ginger in butter, then add tomato puree.",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.847Z",
+    "updated_at": "2026-08-19T14:26:06.847Z",
+    "recipe": 2,
+    "description": "Fold in cream and chicken, simmer, and serve with rice and cilantro.",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.869Z",
+    "updated_at": "2026-08-19T14:26:06.869Z",
+    "recipe": 3,
+    "description": "Cook onion, bell pepper, and garlic in olive oil.",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.872Z",
+    "updated_at": "2026-08-19T14:26:06.872Z",
+    "recipe": 3,
+    "description": "Add chili powder, cumin, and cocoa powder; toast for 1 minute.",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.875Z",
+    "updated_at": "2026-08-19T14:26:06.876Z",
+    "recipe": 3,
+    "description": "Stir in tomatoes, broth, and all beans, then simmer 35 minutes.",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.895Z",
+    "updated_at": "2026-08-19T14:26:06.895Z",
+    "recipe": 4,
+    "description": "Saute onion, pepper, and garlic in olive oil until soft.",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.898Z",
+    "updated_at": "2026-08-19T14:26:06.898Z",
+    "recipe": 4,
+    "description": "Add tomatoes and spices, then simmer until thickened.",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.901Z",
+    "updated_at": "2026-08-19T14:26:06.901Z",
+    "recipe": 4,
+    "description": "Crack eggs into wells and cook until whites set, then top with feta and parsley.",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.918Z",
+    "updated_at": "2026-08-19T14:26:06.918Z",
+    "recipe": 5,
+    "description": "Blend oats, banana, egg, milk, baking powder, cinnamon, and vanilla.",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.923Z",
+    "updated_at": "2026-08-19T14:26:06.923Z",
+    "recipe": 5,
+    "description": "Cook pancakes in a buttered skillet until golden.",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipestep",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.925Z",
+    "updated_at": "2026-08-19T14:26:06.925Z",
+    "recipe": 5,
+    "description": "Serve warm with maple syrup.",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.803Z",
+    "updated_at": "2026-08-19T14:26:06.803Z",
+    "recipe": 1,
+    "step": 1,
+    "ingredient": 1
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.805Z",
+    "updated_at": "2026-08-19T14:26:06.805Z",
+    "recipe": 1,
+    "step": 2,
+    "ingredient": 3
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.806Z",
+    "updated_at": "2026-08-19T14:26:06.806Z",
+    "recipe": 1,
+    "step": 2,
+    "ingredient": 4
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.807Z",
+    "updated_at": "2026-08-19T14:26:06.807Z",
+    "recipe": 1,
+    "step": 2,
+    "ingredient": 5
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.807Z",
+    "updated_at": "2026-08-19T14:26:06.807Z",
+    "recipe": 1,
+    "step": 2,
+    "ingredient": 6
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.808Z",
+    "updated_at": "2026-08-19T14:26:06.808Z",
+    "recipe": 1,
+    "step": 2,
+    "ingredient": 7
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.810Z",
+    "updated_at": "2026-08-19T14:26:06.810Z",
+    "recipe": 1,
+    "step": 3,
+    "ingredient": 2
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.810Z",
+    "updated_at": "2026-08-19T14:26:06.810Z",
+    "recipe": 1,
+    "step": 3,
+    "ingredient": 8
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.811Z",
+    "updated_at": "2026-08-19T14:26:06.811Z",
+    "recipe": 1,
+    "step": 3,
+    "ingredient": 9
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.813Z",
+    "updated_at": "2026-08-19T14:26:06.813Z",
+    "recipe": 1,
+    "step": 4,
+    "ingredient": 10
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.813Z",
+    "updated_at": "2026-08-19T14:26:06.813Z",
+    "recipe": 1,
+    "step": 4,
+    "ingredient": 12
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.814Z",
+    "updated_at": "2026-08-19T14:26:06.814Z",
+    "recipe": 1,
+    "step": 4,
+    "ingredient": 11
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.837Z",
+    "updated_at": "2026-08-19T14:26:06.837Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 13
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.837Z",
+    "updated_at": "2026-08-19T14:26:06.837Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 14
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.838Z",
+    "updated_at": "2026-08-19T14:26:06.838Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 15
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.839Z",
+    "updated_at": "2026-08-19T14:26:06.839Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 16
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.840Z",
+    "updated_at": "2026-08-19T14:26:06.840Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 17
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 18,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.840Z",
+    "updated_at": "2026-08-19T14:26:06.840Z",
+    "recipe": 2,
+    "step": 5,
+    "ingredient": 18
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 19,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.842Z",
+    "updated_at": "2026-08-19T14:26:06.842Z",
+    "recipe": 2,
+    "step": 6,
+    "ingredient": 13
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 20,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.843Z",
+    "updated_at": "2026-08-19T14:26:06.843Z",
+    "recipe": 2,
+    "step": 7,
+    "ingredient": 20
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 21,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.844Z",
+    "updated_at": "2026-08-19T14:26:06.844Z",
+    "recipe": 2,
+    "step": 7,
+    "ingredient": 21
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 22,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.845Z",
+    "updated_at": "2026-08-19T14:26:06.845Z",
+    "recipe": 2,
+    "step": 7,
+    "ingredient": 22
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 23,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.846Z",
+    "updated_at": "2026-08-19T14:26:06.846Z",
+    "recipe": 2,
+    "step": 7,
+    "ingredient": 19
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 24,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.846Z",
+    "updated_at": "2026-08-19T14:26:06.846Z",
+    "recipe": 2,
+    "step": 7,
+    "ingredient": 23
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 25,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.848Z",
+    "updated_at": "2026-08-19T14:26:06.848Z",
+    "recipe": 2,
+    "step": 8,
+    "ingredient": 24
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 26,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.849Z",
+    "updated_at": "2026-08-19T14:26:06.849Z",
+    "recipe": 2,
+    "step": 8,
+    "ingredient": 13
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 27,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.849Z",
+    "updated_at": "2026-08-19T14:26:06.849Z",
+    "recipe": 2,
+    "step": 8,
+    "ingredient": 26
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 28,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.850Z",
+    "updated_at": "2026-08-19T14:26:06.850Z",
+    "recipe": 2,
+    "step": 8,
+    "ingredient": 25
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 29,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.869Z",
+    "updated_at": "2026-08-19T14:26:06.869Z",
+    "recipe": 3,
+    "step": 9,
+    "ingredient": 27
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 30,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.870Z",
+    "updated_at": "2026-08-19T14:26:06.870Z",
+    "recipe": 3,
+    "step": 9,
+    "ingredient": 28
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 31,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.871Z",
+    "updated_at": "2026-08-19T14:26:06.871Z",
+    "recipe": 3,
+    "step": 9,
+    "ingredient": 29
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 32,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.871Z",
+    "updated_at": "2026-08-19T14:26:06.871Z",
+    "recipe": 3,
+    "step": 9,
+    "ingredient": 30
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 33,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.873Z",
+    "updated_at": "2026-08-19T14:26:06.873Z",
+    "recipe": 3,
+    "step": 10,
+    "ingredient": 36
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 34,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.874Z",
+    "updated_at": "2026-08-19T14:26:06.874Z",
+    "recipe": 3,
+    "step": 10,
+    "ingredient": 37
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 35,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.874Z",
+    "updated_at": "2026-08-19T14:26:06.874Z",
+    "recipe": 3,
+    "step": 10,
+    "ingredient": 38
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 36,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.876Z",
+    "updated_at": "2026-08-19T14:26:06.876Z",
+    "recipe": 3,
+    "step": 11,
+    "ingredient": 34
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 37,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.877Z",
+    "updated_at": "2026-08-19T14:26:06.877Z",
+    "recipe": 3,
+    "step": 11,
+    "ingredient": 35
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 38,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.877Z",
+    "updated_at": "2026-08-19T14:26:06.877Z",
+    "recipe": 3,
+    "step": 11,
+    "ingredient": 31
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 39,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.878Z",
+    "updated_at": "2026-08-19T14:26:06.878Z",
+    "recipe": 3,
+    "step": 11,
+    "ingredient": 32
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 40,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.879Z",
+    "updated_at": "2026-08-19T14:26:06.879Z",
+    "recipe": 3,
+    "step": 11,
+    "ingredient": 33
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 41,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.895Z",
+    "updated_at": "2026-08-19T14:26:06.895Z",
+    "recipe": 4,
+    "step": 12,
+    "ingredient": 39
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 42,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.896Z",
+    "updated_at": "2026-08-19T14:26:06.896Z",
+    "recipe": 4,
+    "step": 12,
+    "ingredient": 40
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 43,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.896Z",
+    "updated_at": "2026-08-19T14:26:06.896Z",
+    "recipe": 4,
+    "step": 12,
+    "ingredient": 41
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 44,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.897Z",
+    "updated_at": "2026-08-19T14:26:06.897Z",
+    "recipe": 4,
+    "step": 12,
+    "ingredient": 42
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 45,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.899Z",
+    "updated_at": "2026-08-19T14:26:06.899Z",
+    "recipe": 4,
+    "step": 13,
+    "ingredient": 43
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 46,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.899Z",
+    "updated_at": "2026-08-19T14:26:06.899Z",
+    "recipe": 4,
+    "step": 13,
+    "ingredient": 44
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 47,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.900Z",
+    "updated_at": "2026-08-19T14:26:06.900Z",
+    "recipe": 4,
+    "step": 13,
+    "ingredient": 45
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 48,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.902Z",
+    "updated_at": "2026-08-19T14:26:06.902Z",
+    "recipe": 4,
+    "step": 14,
+    "ingredient": 46
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 49,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.902Z",
+    "updated_at": "2026-08-19T14:26:06.902Z",
+    "recipe": 4,
+    "step": 14,
+    "ingredient": 47
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 50,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.903Z",
+    "updated_at": "2026-08-19T14:26:06.903Z",
+    "recipe": 4,
+    "step": 14,
+    "ingredient": 48
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 51,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.919Z",
+    "updated_at": "2026-08-19T14:26:06.919Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 49
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 52,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.919Z",
+    "updated_at": "2026-08-19T14:26:06.919Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 50
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 53,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.920Z",
+    "updated_at": "2026-08-19T14:26:06.920Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 51
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 54,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.921Z",
+    "updated_at": "2026-08-19T14:26:06.921Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 52
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 55,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.921Z",
+    "updated_at": "2026-08-19T14:26:06.921Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 53
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 56,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.922Z",
+    "updated_at": "2026-08-19T14:26:06.922Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 54
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 57,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.922Z",
+    "updated_at": "2026-08-19T14:26:06.922Z",
+    "recipe": 5,
+    "step": 15,
+    "ingredient": 55
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 58,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.924Z",
+    "updated_at": "2026-08-19T14:26:06.924Z",
+    "recipe": 5,
+    "step": 16,
+    "ingredient": 57
+  }
+},
+{
+  "model": "core.recipestepingredient",
+  "pk": 59,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.926Z",
+    "updated_at": "2026-08-19T14:26:06.926Z",
+    "recipe": 5,
+    "step": 17,
+    "ingredient": 56
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.789Z",
+    "updated_at": "2026-08-19T14:26:06.789Z",
+    "recipe": 1,
+    "name": "Spaghetti",
+    "quantity": "400.00",
+    "unit": "gram",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.790Z",
+    "updated_at": "2026-08-19T14:26:06.790Z",
+    "recipe": 1,
+    "name": "Ground beef",
+    "quantity": "500.00",
+    "unit": "gram",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.792Z",
+    "updated_at": "2026-08-19T14:26:06.792Z",
+    "recipe": 1,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.793Z",
+    "updated_at": "2026-08-19T14:26:06.793Z",
+    "recipe": 1,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.794Z",
+    "updated_at": "2026-08-19T14:26:06.794Z",
+    "recipe": 1,
+    "name": "Carrot",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 4
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.795Z",
+    "updated_at": "2026-08-19T14:26:06.795Z",
+    "recipe": 1,
+    "name": "Celery stalk",
+    "quantity": "2.00",
+    "unit": "count",
+    "_order": 5
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.796Z",
+    "updated_at": "2026-08-19T14:26:06.796Z",
+    "recipe": 1,
+    "name": "Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "_order": 6
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.797Z",
+    "updated_at": "2026-08-19T14:26:06.797Z",
+    "recipe": 1,
+    "name": "Tomato paste",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "_order": 7
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.798Z",
+    "updated_at": "2026-08-19T14:26:06.798Z",
+    "recipe": 1,
+    "name": "Crushed tomatoes",
+    "quantity": "800.00",
+    "unit": "gram",
+    "_order": 8
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.799Z",
+    "updated_at": "2026-08-19T14:26:06.799Z",
+    "recipe": 1,
+    "name": "Milk",
+    "quantity": "125.00",
+    "unit": "milliliter",
+    "_order": 9
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.800Z",
+    "updated_at": "2026-08-19T14:26:06.800Z",
+    "recipe": 1,
+    "name": "Parmesan",
+    "quantity": "60.00",
+    "unit": "gram",
+    "_order": 10
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.802Z",
+    "updated_at": "2026-08-19T14:26:06.802Z",
+    "recipe": 1,
+    "name": "Basil",
+    "quantity": "8.00",
+    "unit": "gram",
+    "_order": 11
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.822Z",
+    "updated_at": "2026-08-19T14:26:06.822Z",
+    "recipe": 2,
+    "name": "Chicken thigh",
+    "quantity": "900.00",
+    "unit": "gram",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.823Z",
+    "updated_at": "2026-08-19T14:26:06.823Z",
+    "recipe": 2,
+    "name": "Yogurt",
+    "quantity": "250.00",
+    "unit": "gram",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.824Z",
+    "updated_at": "2026-08-19T14:26:06.824Z",
+    "recipe": 2,
+    "name": "Lemon juice",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.825Z",
+    "updated_at": "2026-08-19T14:26:06.825Z",
+    "recipe": 2,
+    "name": "Garam masala",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.826Z",
+    "updated_at": "2026-08-19T14:26:06.826Z",
+    "recipe": 2,
+    "name": "Ground cumin",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "_order": 4
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 18,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.827Z",
+    "updated_at": "2026-08-19T14:26:06.827Z",
+    "recipe": 2,
+    "name": "Paprika",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "_order": 5
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 19,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.828Z",
+    "updated_at": "2026-08-19T14:26:06.828Z",
+    "recipe": 2,
+    "name": "Butter",
+    "quantity": "3.00",
+    "unit": "tablespoon",
+    "_order": 6
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 20,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.829Z",
+    "updated_at": "2026-08-19T14:26:06.829Z",
+    "recipe": 2,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 7
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 21,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.830Z",
+    "updated_at": "2026-08-19T14:26:06.830Z",
+    "recipe": 2,
+    "name": "Garlic",
+    "quantity": "4.00",
+    "unit": "count",
+    "_order": 8
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 22,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.831Z",
+    "updated_at": "2026-08-19T14:26:06.831Z",
+    "recipe": 2,
+    "name": "Ginger",
+    "quantity": "20.00",
+    "unit": "gram",
+    "_order": 9
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 23,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.832Z",
+    "updated_at": "2026-08-19T14:26:06.832Z",
+    "recipe": 2,
+    "name": "Tomato puree",
+    "quantity": "500.00",
+    "unit": "milliliter",
+    "_order": 10
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 24,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.833Z",
+    "updated_at": "2026-08-19T14:26:06.833Z",
+    "recipe": 2,
+    "name": "Heavy cream",
+    "quantity": "200.00",
+    "unit": "milliliter",
+    "_order": 11
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 25,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.834Z",
+    "updated_at": "2026-08-19T14:26:06.834Z",
+    "recipe": 2,
+    "name": "Cilantro",
+    "quantity": "15.00",
+    "unit": "gram",
+    "_order": 12
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 26,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.835Z",
+    "updated_at": "2026-08-19T14:26:06.835Z",
+    "recipe": 2,
+    "name": "Basmati rice",
+    "quantity": "350.00",
+    "unit": "gram",
+    "_order": 13
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 27,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.857Z",
+    "updated_at": "2026-08-19T14:26:06.857Z",
+    "recipe": 3,
+    "name": "Olive oil",
+    "quantity": "1.00",
+    "unit": "tablespoon",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 28,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.858Z",
+    "updated_at": "2026-08-19T14:26:06.858Z",
+    "recipe": 3,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 29,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.859Z",
+    "updated_at": "2026-08-19T14:26:06.859Z",
+    "recipe": 3,
+    "name": "Bell pepper",
+    "quantity": "2.00",
+    "unit": "count",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 30,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.860Z",
+    "updated_at": "2026-08-19T14:26:06.860Z",
+    "recipe": 3,
+    "name": "Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 31,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.861Z",
+    "updated_at": "2026-08-19T14:26:06.861Z",
+    "recipe": 3,
+    "name": "Kidney beans",
+    "quantity": "400.00",
+    "unit": "gram",
+    "_order": 4
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 32,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.862Z",
+    "updated_at": "2026-08-19T14:26:06.862Z",
+    "recipe": 3,
+    "name": "Black beans",
+    "quantity": "400.00",
+    "unit": "gram",
+    "_order": 5
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 33,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.863Z",
+    "updated_at": "2026-08-19T14:26:06.863Z",
+    "recipe": 3,
+    "name": "Pinto beans",
+    "quantity": "400.00",
+    "unit": "gram",
+    "_order": 6
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 34,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.864Z",
+    "updated_at": "2026-08-19T14:26:06.864Z",
+    "recipe": 3,
+    "name": "Crushed tomatoes",
+    "quantity": "700.00",
+    "unit": "gram",
+    "_order": 7
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 35,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.865Z",
+    "updated_at": "2026-08-19T14:26:06.865Z",
+    "recipe": 3,
+    "name": "Vegetable broth",
+    "quantity": "400.00",
+    "unit": "milliliter",
+    "_order": 8
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 36,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.866Z",
+    "updated_at": "2026-08-19T14:26:06.866Z",
+    "recipe": 3,
+    "name": "Chili powder",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "_order": 9
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 37,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.867Z",
+    "updated_at": "2026-08-19T14:26:06.867Z",
+    "recipe": 3,
+    "name": "Ground cumin",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "_order": 10
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 38,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.868Z",
+    "updated_at": "2026-08-19T14:26:06.868Z",
+    "recipe": 3,
+    "name": "Cocoa powder",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "_order": 11
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 39,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.885Z",
+    "updated_at": "2026-08-19T14:26:06.885Z",
+    "recipe": 4,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 40,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.886Z",
+    "updated_at": "2026-08-19T14:26:06.886Z",
+    "recipe": 4,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 41,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.887Z",
+    "updated_at": "2026-08-19T14:26:06.887Z",
+    "recipe": 4,
+    "name": "Red bell pepper",
+    "quantity": "1.00",
+    "unit": "count",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 42,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.888Z",
+    "updated_at": "2026-08-19T14:26:06.888Z",
+    "recipe": 4,
+    "name": "Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 43,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.889Z",
+    "updated_at": "2026-08-19T14:26:06.889Z",
+    "recipe": 4,
+    "name": "Crushed tomatoes",
+    "quantity": "800.00",
+    "unit": "gram",
+    "_order": 4
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 44,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.890Z",
+    "updated_at": "2026-08-19T14:26:06.890Z",
+    "recipe": 4,
+    "name": "Paprika",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "_order": 5
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 45,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.891Z",
+    "updated_at": "2026-08-19T14:26:06.891Z",
+    "recipe": 4,
+    "name": "Ground cumin",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "_order": 6
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 46,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.892Z",
+    "updated_at": "2026-08-19T14:26:06.892Z",
+    "recipe": 4,
+    "name": "Egg",
+    "quantity": "6.00",
+    "unit": "count",
+    "_order": 7
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 47,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.893Z",
+    "updated_at": "2026-08-19T14:26:06.893Z",
+    "recipe": 4,
+    "name": "Feta",
+    "quantity": "120.00",
+    "unit": "gram",
+    "_order": 8
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 48,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.894Z",
+    "updated_at": "2026-08-19T14:26:06.894Z",
+    "recipe": 4,
+    "name": "Parsley",
+    "quantity": "12.00",
+    "unit": "gram",
+    "_order": 9
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 49,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.909Z",
+    "updated_at": "2026-08-19T14:26:06.909Z",
+    "recipe": 5,
+    "name": "Rolled oats",
+    "quantity": "220.00",
+    "unit": "gram",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 50,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.910Z",
+    "updated_at": "2026-08-19T14:26:06.910Z",
+    "recipe": 5,
+    "name": "Banana",
+    "quantity": "2.00",
+    "unit": "count",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 51,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.911Z",
+    "updated_at": "2026-08-19T14:26:06.911Z",
+    "recipe": 5,
+    "name": "Egg",
+    "quantity": "2.00",
+    "unit": "count",
+    "_order": 2
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 52,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.912Z",
+    "updated_at": "2026-08-19T14:26:06.912Z",
+    "recipe": 5,
+    "name": "Milk",
+    "quantity": "300.00",
+    "unit": "milliliter",
+    "_order": 3
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 53,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.913Z",
+    "updated_at": "2026-08-19T14:26:06.913Z",
+    "recipe": 5,
+    "name": "Baking powder",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "_order": 4
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 54,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.914Z",
+    "updated_at": "2026-08-19T14:26:06.914Z",
+    "recipe": 5,
+    "name": "Cinnamon",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "_order": 5
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 55,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.915Z",
+    "updated_at": "2026-08-19T14:26:06.915Z",
+    "recipe": 5,
+    "name": "Vanilla extract",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "_order": 6
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 56,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.916Z",
+    "updated_at": "2026-08-19T14:26:06.916Z",
+    "recipe": 5,
+    "name": "Maple syrup",
+    "quantity": "60.00",
+    "unit": "milliliter",
+    "_order": 7
+  }
+},
+{
+  "model": "core.recipeingredient",
+  "pk": 57,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.917Z",
+    "updated_at": "2026-08-19T14:26:06.917Z",
+    "recipe": 5,
+    "name": "Butter",
+    "quantity": "1.00",
+    "unit": "tablespoon",
+    "_order": 8
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.819Z",
+    "updated_at": "2026-08-19T14:26:06.819Z",
+    "recipe": 1,
+    "image": "recipe_photos/classic_spaghetti_bolognese_1.jpg",
+    "description": "Plated classic spaghetti bolognese",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.820Z",
+    "updated_at": "2026-08-19T14:26:06.820Z",
+    "recipe": 1,
+    "image": "recipe_photos/classic_spaghetti_bolognese_2.jpg",
+    "description": "In-progress cooking photo",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.854Z",
+    "updated_at": "2026-08-19T14:26:06.854Z",
+    "recipe": 2,
+    "image": "recipe_photos/chicken_tikka_masala_1.jpg",
+    "description": "Plated chicken tikka masala",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.855Z",
+    "updated_at": "2026-08-19T14:26:06.855Z",
+    "recipe": 2,
+    "image": "recipe_photos/chicken_tikka_masala_2.jpg",
+    "description": "In-progress cooking photo",
+    "_order": 1
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.883Z",
+    "updated_at": "2026-08-19T14:26:06.883Z",
+    "recipe": 3,
+    "image": "recipe_photos/hearty_three_bean_chili_1.jpg",
+    "description": "Plated hearty three-bean chili",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.907Z",
+    "updated_at": "2026-08-19T14:26:06.907Z",
+    "recipe": 4,
+    "image": "recipe_photos/shakshuka_with_feta_1.jpg",
+    "description": "Plated shakshuka with feta",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipephoto",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.930Z",
+    "updated_at": "2026-08-19T14:26:06.930Z",
+    "recipe": 5,
+    "image": "recipe_photos/banana_oat_pancakes_1.jpg",
+    "description": "Plated banana oat pancakes",
+    "_order": 0
+  }
+},
+{
+  "model": "core.recipe",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.787Z",
+    "updated_at": "2026-08-19T14:26:06.787Z",
+    "name": "Classic Spaghetti Bolognese",
+    "author": 1,
+    "description": "A slow-simmered beef and tomato pasta sauce.",
+    "original_recipe": null,
+    "original_author": null
+  }
+},
+{
+  "model": "core.recipe",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.820Z",
+    "updated_at": "2026-08-19T14:26:06.820Z",
+    "name": "Chicken Tikka Masala",
+    "author": 2,
+    "description": "Roasted chicken pieces in a creamy spiced tomato sauce.",
+    "original_recipe": null,
+    "original_author": null
+  }
+},
+{
+  "model": "core.recipe",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.856Z",
+    "updated_at": "2026-08-19T14:26:06.856Z",
+    "name": "Hearty Three-Bean Chili",
+    "author": 3,
+    "description": "A rich vegetarian chili with warm spices and beans.",
+    "original_recipe": null,
+    "original_author": null
+  }
+},
+{
+  "model": "core.recipe",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.883Z",
+    "updated_at": "2026-08-19T14:26:06.883Z",
+    "name": "Shakshuka with Feta",
+    "author": 1,
+    "description": "Eggs poached in a spiced tomato and pepper sauce.",
+    "original_recipe": null,
+    "original_author": null
+  }
+},
+{
+  "model": "core.recipe",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.908Z",
+    "updated_at": "2026-08-19T14:26:06.908Z",
+    "name": "Banana Oat Pancakes",
+    "author": 2,
+    "description": "Tender blender pancakes with banana and oats.",
+    "original_recipe": 1,
+    "original_author": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.951Z",
+    "updated_at": "2026-08-19T14:26:06.951Z",
+    "shopping_list": 1,
+    "ingredient": 28,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.952Z",
+    "updated_at": "2026-08-19T14:26:06.952Z",
+    "shopping_list": 1,
+    "ingredient": null,
+    "name": "Vegetable broth",
+    "quantity": null,
+    "unit": "milliliter",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.954Z",
+    "updated_at": "2026-08-19T14:26:06.954Z",
+    "shopping_list": 1,
+    "ingredient": null,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.955Z",
+    "updated_at": "2026-08-19T14:26:06.955Z",
+    "shopping_list": 1,
+    "ingredient": 10,
+    "name": "Milk",
+    "quantity": "125.00",
+    "unit": "milliliter",
+    "purchased": false,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.956Z",
+    "updated_at": "2026-08-19T14:26:06.956Z",
+    "shopping_list": 1,
+    "ingredient": 21,
+    "name": "Garlic",
+    "quantity": "4.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.957Z",
+    "updated_at": "2026-08-19T14:26:06.957Z",
+    "shopping_list": 1,
+    "ingredient": null,
+    "name": "Paprika",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.958Z",
+    "updated_at": "2026-08-19T14:26:06.958Z",
+    "shopping_list": 1,
+    "ingredient": 27,
+    "name": "Olive oil",
+    "quantity": null,
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.959Z",
+    "updated_at": "2026-08-19T14:26:06.959Z",
+    "shopping_list": 1,
+    "ingredient": 45,
+    "name": "Ground cumin",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 7
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.960Z",
+    "updated_at": "2026-08-19T14:26:06.960Z",
+    "shopping_list": 1,
+    "ingredient": 12,
+    "name": "Basil",
+    "quantity": "8.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 8
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.961Z",
+    "updated_at": "2026-08-19T14:26:06.961Z",
+    "shopping_list": 1,
+    "ingredient": 25,
+    "name": "Cilantro",
+    "quantity": "15.00",
+    "unit": "gram",
+    "purchased": true,
+    "_order": 9
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.962Z",
+    "updated_at": "2026-08-19T14:26:06.962Z",
+    "shopping_list": 1,
+    "ingredient": 5,
+    "name": "Carrot",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 10
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 12,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.963Z",
+    "updated_at": "2026-08-19T14:26:06.963Z",
+    "shopping_list": 1,
+    "ingredient": 2,
+    "name": "Ground beef",
+    "quantity": "500.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 11
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.964Z",
+    "updated_at": "2026-08-19T14:26:06.964Z",
+    "shopping_list": 1,
+    "ingredient": 8,
+    "name": "Tomato paste",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": true,
+    "_order": 12
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.966Z",
+    "updated_at": "2026-08-19T14:26:06.966Z",
+    "shopping_list": 2,
+    "ingredient": 55,
+    "name": "Vanilla extract",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.967Z",
+    "updated_at": "2026-08-19T14:26:06.967Z",
+    "shopping_list": 2,
+    "ingredient": 4,
+    "name": "Extra Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.968Z",
+    "updated_at": "2026-08-19T14:26:06.968Z",
+    "shopping_list": 2,
+    "ingredient": 7,
+    "name": "Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.969Z",
+    "updated_at": "2026-08-19T14:26:06.969Z",
+    "shopping_list": 2,
+    "ingredient": null,
+    "name": "Red bell pepper",
+    "quantity": null,
+    "unit": "count",
+    "purchased": false,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 18,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.970Z",
+    "updated_at": "2026-08-19T14:26:06.970Z",
+    "shopping_list": 2,
+    "ingredient": null,
+    "name": "Butter",
+    "quantity": "1.00",
+    "unit": "tablespoon",
+    "purchased": true,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 19,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.971Z",
+    "updated_at": "2026-08-19T14:26:06.971Z",
+    "shopping_list": 2,
+    "ingredient": 31,
+    "name": "Kidney beans",
+    "quantity": "400.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 20,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.972Z",
+    "updated_at": "2026-08-19T14:26:06.972Z",
+    "shopping_list": 2,
+    "ingredient": 1,
+    "name": "Spaghetti",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": true,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 21,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.973Z",
+    "updated_at": "2026-08-19T14:26:06.973Z",
+    "shopping_list": 2,
+    "ingredient": 43,
+    "name": "Crushed tomatoes",
+    "quantity": "800.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 7
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 22,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.974Z",
+    "updated_at": "2026-08-19T14:26:06.974Z",
+    "shopping_list": 2,
+    "ingredient": null,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 8
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 23,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.975Z",
+    "updated_at": "2026-08-19T14:26:06.975Z",
+    "shopping_list": 2,
+    "ingredient": 46,
+    "name": "Egg",
+    "quantity": null,
+    "unit": "count",
+    "purchased": false,
+    "_order": 9
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 24,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.976Z",
+    "updated_at": "2026-08-19T14:26:06.976Z",
+    "shopping_list": 2,
+    "ingredient": 5,
+    "name": "Carrot",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 10
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 25,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.977Z",
+    "updated_at": "2026-08-19T14:26:06.977Z",
+    "shopping_list": 3,
+    "ingredient": 21,
+    "name": "Garlic",
+    "quantity": "4.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 26,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.978Z",
+    "updated_at": "2026-08-19T14:26:06.978Z",
+    "shopping_list": 3,
+    "ingredient": 34,
+    "name": "Crushed tomatoes",
+    "quantity": "700.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 27,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.979Z",
+    "updated_at": "2026-08-19T14:26:06.979Z",
+    "shopping_list": 3,
+    "ingredient": 6,
+    "name": "Celery stalk",
+    "quantity": "2.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 28,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.981Z",
+    "updated_at": "2026-08-19T14:26:06.981Z",
+    "shopping_list": 3,
+    "ingredient": 2,
+    "name": "Ground beef",
+    "quantity": "500.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 29,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.982Z",
+    "updated_at": "2026-08-19T14:26:06.982Z",
+    "shopping_list": 3,
+    "ingredient": null,
+    "name": "Crushed tomatoes",
+    "quantity": "800.00",
+    "unit": "gram",
+    "purchased": true,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 30,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.982Z",
+    "updated_at": "2026-08-19T14:26:06.982Z",
+    "shopping_list": 3,
+    "ingredient": 57,
+    "name": "Extra Butter",
+    "quantity": null,
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 31,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.983Z",
+    "updated_at": "2026-08-19T14:26:06.983Z",
+    "shopping_list": 3,
+    "ingredient": 3,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 32,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.985Z",
+    "updated_at": "2026-08-19T14:26:06.985Z",
+    "shopping_list": 4,
+    "ingredient": 9,
+    "name": "Crushed tomatoes",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": true,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 33,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.987Z",
+    "updated_at": "2026-08-19T14:26:06.987Z",
+    "shopping_list": 4,
+    "ingredient": 30,
+    "name": "Garlic",
+    "quantity": null,
+    "unit": "count",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 34,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.988Z",
+    "updated_at": "2026-08-19T14:26:06.988Z",
+    "shopping_list": 4,
+    "ingredient": 31,
+    "name": "Kidney beans",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": true,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 35,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.989Z",
+    "updated_at": "2026-08-19T14:26:06.989Z",
+    "shopping_list": 4,
+    "ingredient": 16,
+    "name": "Extra Garam masala",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "purchased": true,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 36,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.990Z",
+    "updated_at": "2026-08-19T14:26:06.990Z",
+    "shopping_list": 4,
+    "ingredient": 14,
+    "name": "Yogurt",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": false,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 37,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.991Z",
+    "updated_at": "2026-08-19T14:26:06.991Z",
+    "shopping_list": 4,
+    "ingredient": 17,
+    "name": "Ground cumin",
+    "quantity": null,
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 38,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.992Z",
+    "updated_at": "2026-08-19T14:26:06.992Z",
+    "shopping_list": 4,
+    "ingredient": 40,
+    "name": "Yellow onion",
+    "quantity": null,
+    "unit": "count",
+    "purchased": true,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 39,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.993Z",
+    "updated_at": "2026-08-19T14:26:06.993Z",
+    "shopping_list": 4,
+    "ingredient": null,
+    "name": "Banana",
+    "quantity": "2.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 7
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 40,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.994Z",
+    "updated_at": "2026-08-19T14:26:06.994Z",
+    "shopping_list": 4,
+    "ingredient": 22,
+    "name": "Ginger",
+    "quantity": "20.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 8
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 41,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.995Z",
+    "updated_at": "2026-08-19T14:26:06.995Z",
+    "shopping_list": 4,
+    "ingredient": 12,
+    "name": "Extra Basil",
+    "quantity": "8.00",
+    "unit": "gram",
+    "purchased": true,
+    "_order": 9
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 42,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.996Z",
+    "updated_at": "2026-08-19T14:26:06.996Z",
+    "shopping_list": 4,
+    "ingredient": 21,
+    "name": "Garlic",
+    "quantity": "4.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 10
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 43,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.997Z",
+    "updated_at": "2026-08-19T14:26:06.997Z",
+    "shopping_list": 4,
+    "ingredient": 20,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 11
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 44,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.999Z",
+    "updated_at": "2026-08-19T14:26:06.999Z",
+    "shopping_list": 5,
+    "ingredient": null,
+    "name": "Black beans",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": false,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 45,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.000Z",
+    "updated_at": "2026-08-19T14:26:07.000Z",
+    "shopping_list": 5,
+    "ingredient": 56,
+    "name": "Maple syrup",
+    "quantity": "60.00",
+    "unit": "milliliter",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 46,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.001Z",
+    "updated_at": "2026-08-19T14:26:07.001Z",
+    "shopping_list": 5,
+    "ingredient": 1,
+    "name": "Spaghetti",
+    "quantity": "400.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 47,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.002Z",
+    "updated_at": "2026-08-19T14:26:07.002Z",
+    "shopping_list": 5,
+    "ingredient": 3,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 48,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.003Z",
+    "updated_at": "2026-08-19T14:26:07.003Z",
+    "shopping_list": 5,
+    "ingredient": 6,
+    "name": "Celery stalk",
+    "quantity": "2.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 49,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.004Z",
+    "updated_at": "2026-08-19T14:26:07.004Z",
+    "shopping_list": 5,
+    "ingredient": 42,
+    "name": "Extra Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 50,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.005Z",
+    "updated_at": "2026-08-19T14:26:07.005Z",
+    "shopping_list": 5,
+    "ingredient": 54,
+    "name": "Cinnamon",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 51,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.006Z",
+    "updated_at": "2026-08-19T14:26:07.006Z",
+    "shopping_list": 5,
+    "ingredient": 37,
+    "name": "Ground cumin",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 7
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 52,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.007Z",
+    "updated_at": "2026-08-19T14:26:07.007Z",
+    "shopping_list": 5,
+    "ingredient": 47,
+    "name": "Feta",
+    "quantity": "120.00",
+    "unit": "gram",
+    "purchased": true,
+    "_order": 8
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 53,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.008Z",
+    "updated_at": "2026-08-19T14:26:07.008Z",
+    "shopping_list": 5,
+    "ingredient": 30,
+    "name": "Garlic",
+    "quantity": "3.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 9
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 54,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.009Z",
+    "updated_at": "2026-08-19T14:26:07.009Z",
+    "shopping_list": 5,
+    "ingredient": 40,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": true,
+    "_order": 10
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 55,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.010Z",
+    "updated_at": "2026-08-19T14:26:07.010Z",
+    "shopping_list": 5,
+    "ingredient": 36,
+    "name": "Chili powder",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 11
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 56,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.012Z",
+    "updated_at": "2026-08-19T14:26:07.012Z",
+    "shopping_list": 5,
+    "ingredient": 2,
+    "name": "Extra Ground beef",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": false,
+    "_order": 12
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 57,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.013Z",
+    "updated_at": "2026-08-19T14:26:07.013Z",
+    "shopping_list": 5,
+    "ingredient": 34,
+    "name": "Crushed tomatoes",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": true,
+    "_order": 13
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 58,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.014Z",
+    "updated_at": "2026-08-19T14:26:07.014Z",
+    "shopping_list": 5,
+    "ingredient": 35,
+    "name": "Vegetable broth",
+    "quantity": "400.00",
+    "unit": "milliliter",
+    "purchased": true,
+    "_order": 14
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 59,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.015Z",
+    "updated_at": "2026-08-19T14:26:07.015Z",
+    "shopping_list": 5,
+    "ingredient": 11,
+    "name": "Parmesan",
+    "quantity": "60.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 15
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 60,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.016Z",
+    "updated_at": "2026-08-19T14:26:07.016Z",
+    "shopping_list": 5,
+    "ingredient": 48,
+    "name": "Parsley",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": false,
+    "_order": 16
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 61,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.017Z",
+    "updated_at": "2026-08-19T14:26:07.017Z",
+    "shopping_list": 5,
+    "ingredient": 10,
+    "name": "Milk",
+    "quantity": "125.00",
+    "unit": "milliliter",
+    "purchased": false,
+    "_order": 17
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 62,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.019Z",
+    "updated_at": "2026-08-19T14:26:07.019Z",
+    "shopping_list": 6,
+    "ingredient": 34,
+    "name": "Crushed tomatoes",
+    "quantity": "700.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 0
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 63,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.020Z",
+    "updated_at": "2026-08-19T14:26:07.020Z",
+    "shopping_list": 6,
+    "ingredient": 1,
+    "name": "Spaghetti",
+    "quantity": "400.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 1
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 64,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.021Z",
+    "updated_at": "2026-08-19T14:26:07.021Z",
+    "shopping_list": 6,
+    "ingredient": 55,
+    "name": "Vanilla extract",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "purchased": true,
+    "_order": 2
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 65,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.022Z",
+    "updated_at": "2026-08-19T14:26:07.022Z",
+    "shopping_list": 6,
+    "ingredient": 2,
+    "name": "Ground beef",
+    "quantity": "500.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 3
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 66,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.023Z",
+    "updated_at": "2026-08-19T14:26:07.023Z",
+    "shopping_list": 6,
+    "ingredient": 17,
+    "name": "Ground cumin",
+    "quantity": "1.00",
+    "unit": "teaspoon",
+    "purchased": false,
+    "_order": 4
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 67,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.024Z",
+    "updated_at": "2026-08-19T14:26:07.024Z",
+    "shopping_list": 6,
+    "ingredient": 21,
+    "name": "Garlic",
+    "quantity": null,
+    "unit": "count",
+    "purchased": true,
+    "_order": 5
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 68,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.025Z",
+    "updated_at": "2026-08-19T14:26:07.025Z",
+    "shopping_list": 6,
+    "ingredient": 29,
+    "name": "Bell pepper",
+    "quantity": null,
+    "unit": "count",
+    "purchased": false,
+    "_order": 6
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 69,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.026Z",
+    "updated_at": "2026-08-19T14:26:07.026Z",
+    "shopping_list": 6,
+    "ingredient": 57,
+    "name": "Butter",
+    "quantity": "1.00",
+    "unit": "tablespoon",
+    "purchased": true,
+    "_order": 7
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 70,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.027Z",
+    "updated_at": "2026-08-19T14:26:07.027Z",
+    "shopping_list": 6,
+    "ingredient": 3,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 8
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 71,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.028Z",
+    "updated_at": "2026-08-19T14:26:07.028Z",
+    "shopping_list": 6,
+    "ingredient": 14,
+    "name": "Yogurt",
+    "quantity": "250.00",
+    "unit": "gram",
+    "purchased": false,
+    "_order": 9
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 72,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.029Z",
+    "updated_at": "2026-08-19T14:26:07.029Z",
+    "shopping_list": 6,
+    "ingredient": 4,
+    "name": "Yellow onion",
+    "quantity": "1.00",
+    "unit": "count",
+    "purchased": false,
+    "_order": 10
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 73,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.031Z",
+    "updated_at": "2026-08-19T14:26:07.031Z",
+    "shopping_list": 6,
+    "ingredient": 18,
+    "name": "Paprika",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "purchased": true,
+    "_order": 11
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 74,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.032Z",
+    "updated_at": "2026-08-19T14:26:07.032Z",
+    "shopping_list": 6,
+    "ingredient": 49,
+    "name": "Rolled oats",
+    "quantity": "220.00",
+    "unit": "gram",
+    "purchased": true,
+    "_order": 12
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 75,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.033Z",
+    "updated_at": "2026-08-19T14:26:07.033Z",
+    "shopping_list": 6,
+    "ingredient": 39,
+    "name": "Olive oil",
+    "quantity": "2.00",
+    "unit": "tablespoon",
+    "purchased": false,
+    "_order": 13
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 76,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.034Z",
+    "updated_at": "2026-08-19T14:26:07.034Z",
+    "shopping_list": 6,
+    "ingredient": 31,
+    "name": "Kidney beans",
+    "quantity": null,
+    "unit": "gram",
+    "purchased": false,
+    "_order": 14
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 77,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.035Z",
+    "updated_at": "2026-08-19T14:26:07.035Z",
+    "shopping_list": 6,
+    "ingredient": 53,
+    "name": "Baking powder",
+    "quantity": "2.00",
+    "unit": "teaspoon",
+    "purchased": true,
+    "_order": 15
+  }
+},
+{
+  "model": "core.shoppinglistitem",
+  "pk": 78,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.036Z",
+    "updated_at": "2026-08-19T14:26:07.036Z",
+    "shopping_list": 6,
+    "ingredient": 56,
+    "name": "Maple syrup",
+    "quantity": "60.00",
+    "unit": "milliliter",
+    "purchased": false,
+    "_order": 16
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.950Z",
+    "updated_at": "2026-08-19T14:26:06.950Z",
+    "name": "Ava Weekly Market Run",
+    "user": 1
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.965Z",
+    "updated_at": "2026-08-19T14:26:06.965Z",
+    "name": "Ava Weekend Meal Prep",
+    "user": 1
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.976Z",
+    "updated_at": "2026-08-19T14:26:06.976Z",
+    "name": "Marco Weekly Market Run",
+    "user": 2
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.984Z",
+    "updated_at": "2026-08-19T14:26:06.984Z",
+    "name": "Marco Weekend Meal Prep",
+    "user": 2
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-08-19T14:26:06.998Z",
+    "updated_at": "2026-08-19T14:26:06.998Z",
+    "name": "Nina Weekly Market Run",
+    "user": 3
+  }
+},
+{
+  "model": "core.shoppinglist",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-08-19T14:26:07.018Z",
+    "updated_at": "2026-08-19T14:26:07.018Z",
+    "name": "Nina Weekend Meal Prep",
+    "user": 3
+  }
+}
+]
