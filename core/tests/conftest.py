@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 from django.core.management import call_command
 
-from core.seed_data import load_seed_payload
+from core.utils.seed_data import load_seed_payload
 
 
 @pytest.fixture
