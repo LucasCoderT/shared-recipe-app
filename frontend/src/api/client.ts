@@ -5,8 +5,21 @@
 
 import type { operations } from "~/schema";
 
-export type OperationResponse<key extends keyof operations> =
-    operations[key]["responses"][200]["content"]["application/json"];
+type JsonResponseBody<response> = response extends {
+    content: { "application/json": infer body };
+}
+    ? body
+    : never;
+
+type SuccessResponse<responseMap> = responseMap extends { "200": infer okResponse }
+    ? JsonResponseBody<okResponse>
+    : responseMap extends { "201": infer createdResponse }
+      ? JsonResponseBody<createdResponse>
+      : never;
+
+export type OperationResponse<key extends keyof operations> = SuccessResponse<
+    operations[key]["responses"]
+>;
 
 export class ApiError extends Error {
     status: number;

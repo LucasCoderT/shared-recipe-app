@@ -21,6 +21,342 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/recipes/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesList"];
+        put?: never;
+        post: operations["recipesCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesRetrieve"];
+        put: operations["recipesUpdate"];
+        post?: never;
+        delete: operations["recipesDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/comments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesCommentsList"];
+        put?: never;
+        post: operations["recipesCommentsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/comments/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesCommentsRetrieve"];
+        put: operations["recipesCommentsUpdate"];
+        post?: never;
+        delete: operations["recipesCommentsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesCommentsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/ingredients/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesIngredientsList"];
+        put?: never;
+        post: operations["recipesIngredientsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/ingredients/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesIngredientsRetrieve"];
+        put: operations["recipesIngredientsUpdate"];
+        post?: never;
+        delete: operations["recipesIngredientsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesIngredientsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/photos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesPhotosList"];
+        put?: never;
+        post: operations["recipesPhotosCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/photos/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesPhotosRetrieve"];
+        put: operations["recipesPhotosUpdate"];
+        post?: never;
+        delete: operations["recipesPhotosDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesPhotosPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/reviews/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesReviewsList"];
+        put?: never;
+        post: operations["recipesReviewsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/reviews/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesReviewsRetrieve"];
+        put: operations["recipesReviewsUpdate"];
+        post?: never;
+        delete: operations["recipesReviewsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesReviewsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/step-ingredients/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesStepIngredientsList"];
+        put?: never;
+        post: operations["recipesStepIngredientsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/step-ingredients/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesStepIngredientsRetrieve"];
+        put: operations["recipesStepIngredientsUpdate"];
+        post?: never;
+        delete: operations["recipesStepIngredientsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesStepIngredientsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/steps/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesStepsList"];
+        put?: never;
+        post: operations["recipesStepsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/steps/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesStepsRetrieve"];
+        put: operations["recipesStepsUpdate"];
+        post?: never;
+        delete: operations["recipesStepsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesStepsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/tags/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesTagsList"];
+        put?: never;
+        post: operations["recipesTagsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/tags/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesTagsRetrieve"];
+        put: operations["recipesTagsUpdate"];
+        post?: never;
+        delete: operations["recipesTagsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["recipesTagsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/grid/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipesGrid"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shopping-lists/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["shoppingListsList"];
+        put?: never;
+        post: operations["shoppingListsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shopping-lists/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["shoppingListsRetrieve"];
+        put: operations["shoppingListsUpdate"];
+        post?: never;
+        delete: operations["shoppingListsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["shoppingListsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/shopping-lists/{shoppingListPk}/items/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["shoppingListsItemsList"];
+        put?: never;
+        post: operations["shoppingListsItemsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/shopping-lists/{shoppingListPk}/items/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["shoppingListsItemsRetrieve"];
+        put: operations["shoppingListsItemsUpdate"];
+        post?: never;
+        delete: operations["shoppingListsItemsDestroy"];
+        options?: never;
+        head?: never;
+        patch: operations["shoppingListsItemsPartialUpdate"];
+        trace?: never;
+    };
     "/api/whoami/": {
         parameters: {
             query?: never;
@@ -44,6 +380,403 @@ export interface components {
     schemas: {
         Health: {
             status: string;
+        };
+        PaginatedRecipeCommentList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeComment"][];
+        };
+        PaginatedRecipeGridCardList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeGridCard"][];
+        };
+        PaginatedRecipeIngredientList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeIngredient"][];
+        };
+        PaginatedRecipeList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Recipe"][];
+        };
+        PaginatedRecipePhotoList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipePhoto"][];
+        };
+        PaginatedRecipeReviewList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeReview"][];
+        };
+        PaginatedRecipeStepIngredientList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeStepIngredient"][];
+        };
+        PaginatedRecipeStepList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeStep"][];
+        };
+        PaginatedRecipeTagList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["RecipeTag"][];
+        };
+        PaginatedShoppingListItemList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ShoppingListItem"][];
+        };
+        PaginatedShoppingListList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ShoppingList"][];
+        };
+        PatchedRecipe: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            name?: string;
+            readonly author?: number;
+            description?: string;
+            originalRecipe?: number | null;
+            readonly originalAuthor?: number;
+        };
+        PatchedRecipeComment: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            readonly user?: number;
+            content?: string;
+        };
+        PatchedRecipeIngredient: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            name?: string;
+            /** Format: decimal */
+            quantity?: string;
+            unit?: string;
+            readonly position?: number;
+        };
+        PatchedRecipePhoto: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            /** Format: uri */
+            image?: string;
+            description?: string;
+            readonly position?: number;
+        };
+        PatchedRecipeReview: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            readonly user?: number;
+            rating?: number;
+        };
+        PatchedRecipeStep: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            description?: string;
+            readonly position?: number;
+            readonly ingredientIds?: number[];
+        };
+        PatchedRecipeStepIngredient: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            step?: number;
+            ingredient?: number;
+        };
+        PatchedRecipeTag: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly recipe?: number;
+            name?: string;
+            readonly position?: number;
+        };
+        PatchedShoppingList: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            name?: string;
+            readonly user?: number;
+        };
+        PatchedShoppingListItem: {
+            readonly id?: number;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly updatedAt?: string;
+            readonly shoppingList?: number;
+            ingredient?: number | null;
+            name?: string;
+            /** Format: decimal */
+            quantity?: string | null;
+            unit?: string;
+            purchased?: boolean;
+            readonly position?: number;
+        };
+        Recipe: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            name: string;
+            readonly author: number;
+            description: string;
+            originalRecipe?: number | null;
+            readonly originalAuthor: number;
+        };
+        RecipeComment: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            readonly user: number;
+            content: string;
+        };
+        RecipeGridCard: {
+            readonly id: number;
+            readonly image: string | null;
+            name: string;
+            /** Format: double */
+            readonly rating: number | null;
+            readonly tags: string[];
+        };
+        RecipeIngredient: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            name: string;
+            /** Format: decimal */
+            quantity: string;
+            unit: string;
+            readonly position: number;
+        };
+        RecipePhoto: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            /** Format: uri */
+            image: string;
+            description?: string;
+            readonly position: number;
+        };
+        RecipeReview: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            readonly user: number;
+            rating: number;
+        };
+        RecipeStep: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            description: string;
+            readonly position: number;
+            readonly ingredientIds: number[];
+        };
+        RecipeStepIngredient: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            step: number;
+            ingredient: number;
+        };
+        RecipeTag: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly recipe: number;
+            name: string;
+            readonly position: number;
+        };
+        ShoppingList: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            name: string;
+            readonly user: number;
+        };
+        ShoppingListItem: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            readonly shoppingList: number;
+            ingredient?: number | null;
+            name: string;
+            /** Format: decimal */
+            quantity?: string | null;
+            unit: string;
+            purchased?: boolean;
+            readonly position: number;
         };
         WhoAmI: {
             authenticated: boolean;
@@ -76,6 +809,1565 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Health"];
+                };
+            };
+        };
+    };
+    recipesList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeList"];
+                };
+            };
+        };
+    };
+    recipesCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Recipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["Recipe"];
+                "multipart/form-data": components["schemas"]["Recipe"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Recipe"];
+                };
+            };
+        };
+    };
+    recipesRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Recipe"];
+                };
+            };
+        };
+    };
+    recipesUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Recipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["Recipe"];
+                "multipart/form-data": components["schemas"]["Recipe"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Recipe"];
+                };
+            };
+        };
+    };
+    recipesDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipe"];
+                "multipart/form-data": components["schemas"]["PatchedRecipe"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Recipe"];
+                };
+            };
+        };
+    };
+    recipesCommentsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeCommentList"];
+                };
+            };
+        };
+    };
+    recipesCommentsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeComment"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeComment"];
+                "multipart/form-data": components["schemas"]["RecipeComment"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeComment"];
+                };
+            };
+        };
+    };
+    recipesCommentsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe comment. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeComment"];
+                };
+            };
+        };
+    };
+    recipesCommentsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe comment. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeComment"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeComment"];
+                "multipart/form-data": components["schemas"]["RecipeComment"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeComment"];
+                };
+            };
+        };
+    };
+    recipesCommentsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe comment. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesCommentsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe comment. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeComment"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeComment"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeComment"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeComment"];
+                };
+            };
+        };
+    };
+    recipesIngredientsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeIngredientList"];
+                };
+            };
+        };
+    };
+    recipesIngredientsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeIngredient"];
+                "multipart/form-data": components["schemas"]["RecipeIngredient"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeIngredient"];
+                };
+            };
+        };
+    };
+    recipesIngredientsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeIngredient"];
+                };
+            };
+        };
+    };
+    recipesIngredientsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeIngredient"];
+                "multipart/form-data": components["schemas"]["RecipeIngredient"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeIngredient"];
+                };
+            };
+        };
+    };
+    recipesIngredientsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesIngredientsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeIngredient"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeIngredient"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeIngredient"];
+                };
+            };
+        };
+    };
+    recipesPhotosList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipePhotoList"];
+                };
+            };
+        };
+    };
+    recipesPhotosCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipePhoto"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipePhoto"];
+                "multipart/form-data": components["schemas"]["RecipePhoto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipePhoto"];
+                };
+            };
+        };
+    };
+    recipesPhotosRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe photo. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipePhoto"];
+                };
+            };
+        };
+    };
+    recipesPhotosUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe photo. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipePhoto"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipePhoto"];
+                "multipart/form-data": components["schemas"]["RecipePhoto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipePhoto"];
+                };
+            };
+        };
+    };
+    recipesPhotosDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe photo. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesPhotosPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe photo. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipePhoto"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipePhoto"];
+                "multipart/form-data": components["schemas"]["PatchedRecipePhoto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipePhoto"];
+                };
+            };
+        };
+    };
+    recipesReviewsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeReviewList"];
+                };
+            };
+        };
+    };
+    recipesReviewsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeReview"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeReview"];
+                "multipart/form-data": components["schemas"]["RecipeReview"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeReview"];
+                };
+            };
+        };
+    };
+    recipesReviewsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe review. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeReview"];
+                };
+            };
+        };
+    };
+    recipesReviewsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe review. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeReview"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeReview"];
+                "multipart/form-data": components["schemas"]["RecipeReview"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeReview"];
+                };
+            };
+        };
+    };
+    recipesReviewsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe review. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesReviewsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe review. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeReview"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeReview"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeReview"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeReview"];
+                };
+            };
+        };
+    };
+    recipesStepIngredientsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeStepIngredientList"];
+                };
+            };
+        };
+    };
+    recipesStepIngredientsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeStepIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeStepIngredient"];
+                "multipart/form-data": components["schemas"]["RecipeStepIngredient"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStepIngredient"];
+                };
+            };
+        };
+    };
+    recipesStepIngredientsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStepIngredient"];
+                };
+            };
+        };
+    };
+    recipesStepIngredientsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeStepIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeStepIngredient"];
+                "multipart/form-data": components["schemas"]["RecipeStepIngredient"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStepIngredient"];
+                };
+            };
+        };
+    };
+    recipesStepIngredientsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesStepIngredientsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step ingredient. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeStepIngredient"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeStepIngredient"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeStepIngredient"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStepIngredient"];
+                };
+            };
+        };
+    };
+    recipesStepsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeStepList"];
+                };
+            };
+        };
+    };
+    recipesStepsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeStep"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeStep"];
+                "multipart/form-data": components["schemas"]["RecipeStep"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStep"];
+                };
+            };
+        };
+    };
+    recipesStepsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStep"];
+                };
+            };
+        };
+    };
+    recipesStepsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeStep"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeStep"];
+                "multipart/form-data": components["schemas"]["RecipeStep"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStep"];
+                };
+            };
+        };
+    };
+    recipesStepsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesStepsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe step. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeStep"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeStep"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeStep"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeStep"];
+                };
+            };
+        };
+    };
+    recipesTagsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeTagList"];
+                };
+            };
+        };
+    };
+    recipesTagsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeTag"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeTag"];
+                "multipart/form-data": components["schemas"]["RecipeTag"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeTag"];
+                };
+            };
+        };
+    };
+    recipesTagsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Recipe Tag. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeTag"];
+                };
+            };
+        };
+    };
+    recipesTagsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Recipe Tag. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeTag"];
+                "application/x-www-form-urlencoded": components["schemas"]["RecipeTag"];
+                "multipart/form-data": components["schemas"]["RecipeTag"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeTag"];
+                };
+            };
+        };
+    };
+    recipesTagsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Recipe Tag. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    recipesTagsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this Recipe Tag. */
+                id: number;
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedRecipeTag"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipeTag"];
+                "multipart/form-data": components["schemas"]["PatchedRecipeTag"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeTag"];
+                };
+            };
+        };
+    };
+    recipesGrid: {
+        parameters: {
+            query?: {
+                minRating?: number;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                q?: string;
+                /**
+                 * @description * `name` - name
+                 *     * `-name` - -name
+                 *     * `rating` - rating
+                 *     * `-rating` - -rating
+                 *     * `createdAt` - createdAt
+                 *     * `-createdAt` - -createdAt
+                 */
+                sort?: "name" | "-name" | "rating" | "-rating" | "createdAt" | "-createdAt";
+                /** @description Repeat the parameter or pass a comma-separated list. */
+                tag?: string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRecipeGridCardList"];
+                };
+            };
+        };
+    };
+    shoppingListsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedShoppingListList"];
+                };
+            };
+        };
+    };
+    shoppingListsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingList"];
+                "application/x-www-form-urlencoded": components["schemas"]["ShoppingList"];
+                "multipart/form-data": components["schemas"]["ShoppingList"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingList"];
+                };
+            };
+        };
+    };
+    shoppingListsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingList"];
+                };
+            };
+        };
+    };
+    shoppingListsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingList"];
+                "application/x-www-form-urlencoded": components["schemas"]["ShoppingList"];
+                "multipart/form-data": components["schemas"]["ShoppingList"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingList"];
+                };
+            };
+        };
+    };
+    shoppingListsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    shoppingListsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedShoppingList"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedShoppingList"];
+                "multipart/form-data": components["schemas"]["PatchedShoppingList"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingList"];
+                };
+            };
+        };
+    };
+    shoppingListsItemsList: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path: {
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedShoppingListItemList"];
+                };
+            };
+        };
+    };
+    shoppingListsItemsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingListItem"];
+                "application/x-www-form-urlencoded": components["schemas"]["ShoppingListItem"];
+                "multipart/form-data": components["schemas"]["ShoppingListItem"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListItem"];
+                };
+            };
+        };
+    };
+    shoppingListsItemsRetrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list item. */
+                id: number;
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListItem"];
+                };
+            };
+        };
+    };
+    shoppingListsItemsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list item. */
+                id: number;
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingListItem"];
+                "application/x-www-form-urlencoded": components["schemas"]["ShoppingListItem"];
+                "multipart/form-data": components["schemas"]["ShoppingListItem"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListItem"];
+                };
+            };
+        };
+    };
+    shoppingListsItemsDestroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list item. */
+                id: number;
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    shoppingListsItemsPartialUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list item. */
+                id: number;
+                shoppingListPk: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedShoppingListItem"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedShoppingListItem"];
+                "multipart/form-data": components["schemas"]["PatchedShoppingListItem"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListItem"];
                 };
             };
         };

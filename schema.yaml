@@ -19,6 +19,1772 @@ paths:
               schema:
                 $ref: '#/components/schemas/Health'
           description: ''
+  /api/recipes/:
+    get:
+      operationId: recipesList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeList'
+          description: ''
+    post:
+      operationId: recipesCreate
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+  /api/recipes/{id}/:
+    get:
+      operationId: recipesRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe.
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+    put:
+      operationId: recipesUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe.
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Recipe'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+    patch:
+      operationId: recipesPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe.
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipe'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipe'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipe'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+    delete:
+      operationId: recipesDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe.
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/comments/:
+    get:
+      operationId: recipesCommentsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeCommentList'
+          description: ''
+    post:
+      operationId: recipesCommentsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeComment'
+          description: ''
+  /api/recipes/{recipePk}/comments/{id}/:
+    get:
+      operationId: recipesCommentsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe comment.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeComment'
+          description: ''
+    put:
+      operationId: recipesCommentsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe comment.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeComment'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeComment'
+          description: ''
+    patch:
+      operationId: recipesCommentsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe comment.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeComment'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeComment'
+          description: ''
+    delete:
+      operationId: recipesCommentsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe comment.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/ingredients/:
+    get:
+      operationId: recipesIngredientsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeIngredientList'
+          description: ''
+    post:
+      operationId: recipesIngredientsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeIngredient'
+          description: ''
+  /api/recipes/{recipePk}/ingredients/{id}/:
+    get:
+      operationId: recipesIngredientsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeIngredient'
+          description: ''
+    put:
+      operationId: recipesIngredientsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeIngredient'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeIngredient'
+          description: ''
+    patch:
+      operationId: recipesIngredientsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeIngredient'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeIngredient'
+          description: ''
+    delete:
+      operationId: recipesIngredientsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/photos/:
+    get:
+      operationId: recipesPhotosList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipePhotoList'
+          description: ''
+    post:
+      operationId: recipesPhotosCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePhoto'
+          description: ''
+  /api/recipes/{recipePk}/photos/{id}/:
+    get:
+      operationId: recipesPhotosRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe photo.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePhoto'
+          description: ''
+    put:
+      operationId: recipesPhotosUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe photo.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipePhoto'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePhoto'
+          description: ''
+    patch:
+      operationId: recipesPhotosPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe photo.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipePhoto'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipePhoto'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipePhoto'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipePhoto'
+          description: ''
+    delete:
+      operationId: recipesPhotosDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe photo.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/reviews/:
+    get:
+      operationId: recipesReviewsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeReviewList'
+          description: ''
+    post:
+      operationId: recipesReviewsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeReview'
+          description: ''
+  /api/recipes/{recipePk}/reviews/{id}/:
+    get:
+      operationId: recipesReviewsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe review.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeReview'
+          description: ''
+    put:
+      operationId: recipesReviewsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe review.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeReview'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeReview'
+          description: ''
+    patch:
+      operationId: recipesReviewsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe review.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeReview'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeReview'
+          description: ''
+    delete:
+      operationId: recipesReviewsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe review.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/step-ingredients/:
+    get:
+      operationId: recipesStepIngredientsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeStepIngredientList'
+          description: ''
+    post:
+      operationId: recipesStepIngredientsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStepIngredient'
+          description: ''
+  /api/recipes/{recipePk}/step-ingredients/{id}/:
+    get:
+      operationId: recipesStepIngredientsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStepIngredient'
+          description: ''
+    put:
+      operationId: recipesStepIngredientsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeStepIngredient'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStepIngredient'
+          description: ''
+    patch:
+      operationId: recipesStepIngredientsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStepIngredient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStepIngredient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStepIngredient'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStepIngredient'
+          description: ''
+    delete:
+      operationId: recipesStepIngredientsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step ingredient.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/steps/:
+    get:
+      operationId: recipesStepsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeStepList'
+          description: ''
+    post:
+      operationId: recipesStepsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStep'
+          description: ''
+  /api/recipes/{recipePk}/steps/{id}/:
+    get:
+      operationId: recipesStepsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStep'
+          description: ''
+    put:
+      operationId: recipesStepsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeStep'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStep'
+          description: ''
+    patch:
+      operationId: recipesStepsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStep'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStep'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeStep'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeStep'
+          description: ''
+    delete:
+      operationId: recipesStepsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this recipe step.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{recipePk}/tags/:
+    get:
+      operationId: recipesTagsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeTagList'
+          description: ''
+    post:
+      operationId: recipesTagsCreate
+      parameters:
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeTag'
+          description: ''
+  /api/recipes/{recipePk}/tags/{id}/:
+    get:
+      operationId: recipesTagsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Recipe Tag.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeTag'
+          description: ''
+    put:
+      operationId: recipesTagsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Recipe Tag.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeTag'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeTag'
+          description: ''
+    patch:
+      operationId: recipesTagsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Recipe Tag.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeTag'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeTag'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeTag'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeTag'
+          description: ''
+    delete:
+      operationId: recipesTagsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Recipe Tag.
+        required: true
+      - in: path
+        name: recipePk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/grid/:
+    get:
+      operationId: recipesGrid
+      parameters:
+      - in: query
+        name: minRating
+        schema:
+          type: number
+          format: double
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: sort
+        schema:
+          enum:
+          - name
+          - -name
+          - rating
+          - -rating
+          - createdAt
+          - -createdAt
+          type: string
+          x-spec-enum-id: 0a25169181a52e0c
+          minLength: 1
+        description: |-
+          * `name` - name
+          * `-name` - -name
+          * `rating` - rating
+          * `-rating` - -rating
+          * `createdAt` - createdAt
+          * `-createdAt` - -createdAt
+      - in: query
+        name: tag
+        schema:
+          type: array
+          items:
+            type: string
+        description: Repeat the parameter or pass a comma-separated list.
+      tags:
+      - recipes
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeGridCardList'
+          description: ''
+  /api/shopping-lists/:
+    get:
+      operationId: shoppingListsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedShoppingListList'
+          description: ''
+    post:
+      operationId: shoppingListsCreate
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingList'
+          description: ''
+  /api/shopping-lists/{id}/:
+    get:
+      operationId: shoppingListsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list.
+        required: true
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingList'
+          description: ''
+    put:
+      operationId: shoppingListsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list.
+        required: true
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShoppingList'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingList'
+          description: ''
+    patch:
+      operationId: shoppingListsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list.
+        required: true
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingList'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingList'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingList'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingList'
+          description: ''
+    delete:
+      operationId: shoppingListsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list.
+        required: true
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/shopping-lists/{shoppingListPk}/items/:
+    get:
+      operationId: shoppingListsItemsList
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedShoppingListItemList'
+          description: ''
+    post:
+      operationId: shoppingListsItemsCreate
+      parameters:
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingListItem'
+          description: ''
+  /api/shopping-lists/{shoppingListPk}/items/{id}/:
+    get:
+      operationId: shoppingListsItemsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list item.
+        required: true
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingListItem'
+          description: ''
+    put:
+      operationId: shoppingListsItemsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list item.
+        required: true
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShoppingListItem'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingListItem'
+          description: ''
+    patch:
+      operationId: shoppingListsItemsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list item.
+        required: true
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingListItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingListItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedShoppingListItem'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingListItem'
+          description: ''
+    delete:
+      operationId: shoppingListsItemsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this shopping list item.
+        required: true
+      - in: path
+        name: shoppingListPk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping-lists
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/whoami/:
     get:
       operationId: whoami
@@ -44,6 +1810,874 @@ components:
           type: string
       required:
       - status
+    PaginatedRecipeCommentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeComment'
+    PaginatedRecipeGridCardList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeGridCard'
+    PaginatedRecipeIngredientList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeIngredient'
+    PaginatedRecipeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipe'
+    PaginatedRecipePhotoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipePhoto'
+    PaginatedRecipeReviewList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeReview'
+    PaginatedRecipeStepIngredientList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeStepIngredient'
+    PaginatedRecipeStepList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeStep'
+    PaginatedRecipeTagList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeTag'
+    PaginatedShoppingListItemList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShoppingListItem'
+    PaginatedShoppingListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShoppingList'
+    PatchedRecipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        author:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+        originalRecipe:
+          type: integer
+          nullable: true
+        originalAuthor:
+          type: integer
+          readOnly: true
+    PatchedRecipeComment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+    PatchedRecipeIngredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        unit:
+          type: string
+          maxLength: 50
+        position:
+          type: integer
+          readOnly: true
+    PatchedRecipePhoto:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+        description:
+          type: string
+        position:
+          type: integer
+          readOnly: true
+    PatchedRecipeReview:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          readOnly: true
+        rating:
+          type: integer
+          maximum: 5
+          minimum: 1
+    PatchedRecipeStep:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+        position:
+          type: integer
+          readOnly: true
+        ingredientIds:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+    PatchedRecipeStepIngredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        step:
+          type: integer
+        ingredient:
+          type: integer
+    PatchedRecipeTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        position:
+          type: integer
+          readOnly: true
+    PatchedShoppingList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        user:
+          type: integer
+          readOnly: true
+    PatchedShoppingListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        shoppingList:
+          type: integer
+          readOnly: true
+        ingredient:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+        unit:
+          type: string
+          maxLength: 50
+        purchased:
+          type: boolean
+        position:
+          type: integer
+          readOnly: true
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        author:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+        originalRecipe:
+          type: integer
+          nullable: true
+        originalAuthor:
+          type: integer
+          readOnly: true
+      required:
+      - author
+      - createdAt
+      - description
+      - id
+      - name
+      - originalAuthor
+      - updatedAt
+    RecipeComment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+      required:
+      - content
+      - createdAt
+      - id
+      - recipe
+      - updatedAt
+      - user
+    RecipeGridCard:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          nullable: true
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        rating:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - id
+      - image
+      - name
+      - rating
+      - tags
+    RecipeIngredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        unit:
+          type: string
+          maxLength: 50
+        position:
+          type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - id
+      - name
+      - position
+      - quantity
+      - recipe
+      - unit
+      - updatedAt
+    RecipePhoto:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+        description:
+          type: string
+        position:
+          type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - id
+      - image
+      - position
+      - recipe
+      - updatedAt
+    RecipeReview:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          readOnly: true
+        rating:
+          type: integer
+          maximum: 5
+          minimum: 1
+      required:
+      - createdAt
+      - id
+      - rating
+      - recipe
+      - updatedAt
+      - user
+    RecipeStep:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+        position:
+          type: integer
+          readOnly: true
+        ingredientIds:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - description
+      - id
+      - ingredientIds
+      - position
+      - recipe
+      - updatedAt
+    RecipeStepIngredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        step:
+          type: integer
+        ingredient:
+          type: integer
+      required:
+      - createdAt
+      - id
+      - ingredient
+      - recipe
+      - step
+      - updatedAt
+    RecipeTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        recipe:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        position:
+          type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - id
+      - name
+      - position
+      - recipe
+      - updatedAt
+    ShoppingList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        user:
+          type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - id
+      - name
+      - updatedAt
+      - user
+    ShoppingListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        shoppingList:
+          type: integer
+          readOnly: true
+        ingredient:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        quantity:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+        unit:
+          type: string
+          maxLength: 50
+        purchased:
+          type: boolean
+        position:
+          type: integer
+          readOnly: true
+      required:
+      - createdAt
+      - id
+      - name
+      - position
+      - shoppingList
+      - unit
+      - updatedAt
     WhoAmI:
       type: object
       properties:
