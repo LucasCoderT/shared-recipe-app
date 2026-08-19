@@ -1,0 +1,271 @@
+{
+  "users": [
+    {
+      "username": "ava_cooks",
+      "email": "ava@example.com",
+      "first_name": "Ava",
+      "last_name": "Morgan"
+    },
+    {
+      "username": "marco_kitchen",
+      "email": "marco@example.com",
+      "first_name": "Marco",
+      "last_name": "Silva"
+    },
+    {
+      "username": "nina_bakes",
+      "email": "nina@example.com",
+      "first_name": "Nina",
+      "last_name": "Patel"
+    }
+  ],
+  "curated_recipes": [
+    {
+      "name": "Classic Spaghetti Bolognese",
+      "author_username": "ava_cooks",
+      "description": "A slow-simmered beef and tomato pasta sauce.",
+      "tags": ["italian", "dinner", "comfort food"],
+      "ingredients": [
+        {"name": "Spaghetti", "quantity": "400", "unit": "gram"},
+        {"name": "Ground beef", "quantity": "500", "unit": "gram"},
+        {"name": "Olive oil", "quantity": "2", "unit": "tablespoon"},
+        {"name": "Yellow onion", "quantity": "1", "unit": "count"},
+        {"name": "Carrot", "quantity": "1", "unit": "count"},
+        {"name": "Celery stalk", "quantity": "2", "unit": "count"},
+        {"name": "Garlic", "quantity": "3", "unit": "count"},
+        {"name": "Tomato paste", "quantity": "2", "unit": "tablespoon"},
+        {"name": "Crushed tomatoes", "quantity": "800", "unit": "gram"},
+        {"name": "Milk", "quantity": "125", "unit": "milliliter"},
+        {"name": "Parmesan", "quantity": "60", "unit": "gram"},
+        {"name": "Basil", "quantity": "8", "unit": "gram"}
+      ],
+      "steps": [
+        {"description": "Cook spaghetti in salted water until al dente.", "ingredients": ["Spaghetti"]},
+        {
+          "description": "Saute onion, carrot, celery, and garlic in olive oil until softened.",
+          "ingredients": ["Olive oil", "Yellow onion", "Carrot", "Celery stalk", "Garlic"]
+        },
+        {
+          "description": "Brown beef, then stir in tomato paste and crushed tomatoes.",
+          "ingredients": ["Ground beef", "Tomato paste", "Crushed tomatoes"]
+        },
+        {
+          "description": "Simmer 30 minutes and finish with milk, basil, and parmesan.",
+          "ingredients": ["Milk", "Basil", "Parmesan"]
+        }
+      ],
+      "reviews": [
+        {"username": "marco_kitchen", "rating": 5},
+        {"username": "nina_bakes", "rating": 4}
+      ],
+      "comments": [
+        {
+          "username": "marco_kitchen",
+          "content": "The sauce texture was perfect after the simmer."
+        },
+        {
+          "username": "nina_bakes",
+          "content": "Added extra basil and it turned out great."
+        },
+        {
+          "username": "marco_kitchen",
+          "content": "Great for meal prep and freezer portions."
+        }
+      ]
+    },
+    {
+      "name": "Chicken Tikka Masala",
+      "author_username": "marco_kitchen",
+      "description": "Roasted chicken pieces in a creamy spiced tomato sauce.",
+      "tags": ["indian", "spicy", "main course"],
+      "ingredients": [
+        {"name": "Chicken thigh", "quantity": "900", "unit": "gram"},
+        {"name": "Yogurt", "quantity": "250", "unit": "gram"},
+        {"name": "Lemon juice", "quantity": "2", "unit": "tablespoon"},
+        {"name": "Garam masala", "quantity": "2", "unit": "teaspoon"},
+        {"name": "Ground cumin", "quantity": "1", "unit": "teaspoon"},
+        {"name": "Paprika", "quantity": "2", "unit": "teaspoon"},
+        {"name": "Butter", "quantity": "3", "unit": "tablespoon"},
+        {"name": "Yellow onion", "quantity": "1", "unit": "count"},
+        {"name": "Garlic", "quantity": "4", "unit": "count"},
+        {"name": "Ginger", "quantity": "20", "unit": "gram"},
+        {"name": "Tomato puree", "quantity": "500", "unit": "milliliter"},
+        {"name": "Heavy cream", "quantity": "200", "unit": "milliliter"},
+        {"name": "Cilantro", "quantity": "15", "unit": "gram"},
+        {"name": "Basmati rice", "quantity": "350", "unit": "gram"}
+      ],
+      "steps": [
+        {
+          "description": "Marinate chicken with yogurt, lemon juice, and spices for 1 hour.",
+          "ingredients": ["Chicken thigh", "Yogurt", "Lemon juice", "Garam masala", "Ground cumin", "Paprika"]
+        },
+        {"description": "Roast marinated chicken until lightly charred.", "ingredients": ["Chicken thigh"]},
+        {
+          "description": "Cook onion, garlic, and ginger in butter, then add tomato puree.",
+          "ingredients": ["Yellow onion", "Garlic", "Ginger", "Butter", "Tomato puree"]
+        },
+        {
+          "description": "Fold in cream and chicken, simmer, and serve with rice and cilantro.",
+          "ingredients": ["Heavy cream", "Chicken thigh", "Basmati rice", "Cilantro"]
+        }
+      ],
+      "reviews": [
+        {"username": "ava_cooks", "rating": 5},
+        {"username": "nina_bakes", "rating": 5}
+      ],
+      "comments": [
+        {"username": "ava_cooks", "content": "Balanced spice and creaminess, loved it."},
+        {"username": "nina_bakes", "content": "Broiled the chicken for more char and it worked well."},
+        {"username": "ava_cooks", "content": "Made this with naan and cucumber salad."}
+      ]
+    },
+    {
+      "name": "Hearty Three-Bean Chili",
+      "author_username": "nina_bakes",
+      "description": "A rich vegetarian chili with warm spices and beans.",
+      "tags": ["vegetarian", "one-pot", "meal prep"],
+      "ingredients": [
+        {"name": "Olive oil", "quantity": "1", "unit": "tablespoon"},
+        {"name": "Yellow onion", "quantity": "1", "unit": "count"},
+        {"name": "Bell pepper", "quantity": "2", "unit": "count"},
+        {"name": "Garlic", "quantity": "3", "unit": "count"},
+        {"name": "Kidney beans", "quantity": "400", "unit": "gram"},
+        {"name": "Black beans", "quantity": "400", "unit": "gram"},
+        {"name": "Pinto beans", "quantity": "400", "unit": "gram"},
+        {"name": "Crushed tomatoes", "quantity": "700", "unit": "gram"},
+        {"name": "Vegetable broth", "quantity": "400", "unit": "milliliter"},
+        {"name": "Chili powder", "quantity": "2", "unit": "tablespoon"},
+        {"name": "Ground cumin", "quantity": "2", "unit": "teaspoon"},
+        {"name": "Cocoa powder", "quantity": "1", "unit": "teaspoon"}
+      ],
+      "steps": [
+        {
+          "description": "Cook onion, bell pepper, and garlic in olive oil.",
+          "ingredients": ["Olive oil", "Yellow onion", "Bell pepper", "Garlic"]
+        },
+        {
+          "description": "Add chili powder, cumin, and cocoa powder; toast for 1 minute.",
+          "ingredients": ["Chili powder", "Ground cumin", "Cocoa powder"]
+        },
+        {
+          "description": "Stir in tomatoes, broth, and all beans, then simmer 35 minutes.",
+          "ingredients": ["Crushed tomatoes", "Vegetable broth", "Kidney beans", "Black beans", "Pinto beans"]
+        }
+      ],
+      "reviews": [
+        {"username": "ava_cooks", "rating": 4},
+        {"username": "marco_kitchen", "rating": 4}
+      ],
+      "comments": [
+        {"username": "ava_cooks", "content": "Very filling and easy for weeknights."},
+        {"username": "marco_kitchen", "content": "Used smoked paprika and got deeper flavor."},
+        {"username": "ava_cooks", "content": "Tastes even better the next day."}
+      ]
+    },
+    {
+      "name": "Shakshuka with Feta",
+      "author_username": "ava_cooks",
+      "description": "Eggs poached in a spiced tomato and pepper sauce.",
+      "tags": ["breakfast", "mediterranean", "vegetarian"],
+      "ingredients": [
+        {"name": "Olive oil", "quantity": "2", "unit": "tablespoon"},
+        {"name": "Yellow onion", "quantity": "1", "unit": "count"},
+        {"name": "Red bell pepper", "quantity": "1", "unit": "count"},
+        {"name": "Garlic", "quantity": "3", "unit": "count"},
+        {"name": "Crushed tomatoes", "quantity": "800", "unit": "gram"},
+        {"name": "Paprika", "quantity": "2", "unit": "teaspoon"},
+        {"name": "Ground cumin", "quantity": "1", "unit": "teaspoon"},
+        {"name": "Egg", "quantity": "6", "unit": "count"},
+        {"name": "Feta", "quantity": "120", "unit": "gram"},
+        {"name": "Parsley", "quantity": "12", "unit": "gram"}
+      ],
+      "steps": [
+        {
+          "description": "Saute onion, pepper, and garlic in olive oil until soft.",
+          "ingredients": ["Olive oil", "Yellow onion", "Red bell pepper", "Garlic"]
+        },
+        {
+          "description": "Add tomatoes and spices, then simmer until thickened.",
+          "ingredients": ["Crushed tomatoes", "Paprika", "Ground cumin"]
+        },
+        {
+          "description": "Crack eggs into wells and cook until whites set, then top with feta and parsley.",
+          "ingredients": ["Egg", "Feta", "Parsley"]
+        }
+      ],
+      "reviews": [
+        {"username": "marco_kitchen", "rating": 5},
+        {"username": "nina_bakes", "rating": 4}
+      ],
+      "comments": [
+        {"username": "marco_kitchen", "content": "Egg timing in the final step was spot on."},
+        {"username": "nina_bakes", "content": "Served with toasted sourdough and loved it."},
+        {"username": "marco_kitchen", "content": "A great brunch recipe for guests."}
+      ]
+    },
+    {
+      "name": "Banana Oat Pancakes",
+      "author_username": "marco_kitchen",
+      "description": "Tender blender pancakes with banana and oats.",
+      "tags": ["breakfast", "quick", "kid-friendly"],
+      "ingredients": [
+        {"name": "Rolled oats", "quantity": "220", "unit": "gram"},
+        {"name": "Banana", "quantity": "2", "unit": "count"},
+        {"name": "Egg", "quantity": "2", "unit": "count"},
+        {"name": "Milk", "quantity": "300", "unit": "milliliter"},
+        {"name": "Baking powder", "quantity": "2", "unit": "teaspoon"},
+        {"name": "Cinnamon", "quantity": "1", "unit": "teaspoon"},
+        {"name": "Vanilla extract", "quantity": "1", "unit": "teaspoon"},
+        {"name": "Maple syrup", "quantity": "60", "unit": "milliliter"},
+        {"name": "Butter", "quantity": "1", "unit": "tablespoon"}
+      ],
+      "steps": [
+        {
+          "description": "Blend oats, banana, egg, milk, baking powder, cinnamon, and vanilla.",
+          "ingredients": ["Rolled oats", "Banana", "Egg", "Milk", "Baking powder", "Cinnamon", "Vanilla extract"]
+        },
+        {"description": "Cook pancakes in a buttered skillet until golden.", "ingredients": ["Butter"]},
+        {"description": "Serve warm with maple syrup.", "ingredients": ["Maple syrup"]}
+      ],
+      "reviews": [
+        {"username": "ava_cooks", "rating": 4},
+        {"username": "nina_bakes", "rating": 5}
+      ],
+      "comments": [
+        {"username": "ava_cooks", "content": "Quick breakfast and the kids liked it."},
+        {"username": "nina_bakes", "content": "I added walnuts and blueberries."},
+        {"username": "ava_cooks", "content": "Texture stayed soft even after reheating."}
+      ]
+    }
+  ],
+  "load_templates": {
+    "dish_bases": [
+      "Pasta Bowl",
+      "Tikka Plate",
+      "Bean Chili",
+      "Shakshuka Skillet",
+      "Oat Pancakes"
+    ],
+    "preparations": [
+      "Roasted",
+      "Skillet",
+      "Braised",
+      "Herbed",
+      "Smoky",
+      "Zesty",
+      "Crispy",
+      "Toasted",
+      "Spicy",
+      "Caramelized"
+    ],
+    "step_actions": [
+      "Prep",
+      "Mix",
+      "Saute",
+      "Simmer",
+      "Fold",
+      "Finish",
+      "Serve"
+    ]
+  }
+}
