@@ -54,6 +54,15 @@ source trees are mounted into the containers, so edits reload.
 docker compose exec backend python manage.py createsuperuser
 ```
 
+Seed sample data:
+
+```bash
+docker compose exec backend python manage.py seed_data
+```
+
+By default this seeds the 5 curated demo recipes plus synthetic load data for query testing.
+Use `--recipes 0` when you only want the curated demo dataset.
+
 ## Running it without Docker
 
 Postgres stays in a container, everything else runs locally.
@@ -74,6 +83,19 @@ Then two terminals:
 ```bash
 uv run python manage.py runserver     # :8000
 cd frontend && npm run dev            # :5173
+```
+
+To seed the same data without Docker:
+
+```bash
+uv run python manage.py seed_data
+```
+
+Examples:
+
+```bash
+uv run python manage.py seed_data --recipes 0
+uv run python manage.py seed_data --recipes 100000 --authors 500
 ```
 
 npm 11 blocks postinstall scripts, so a fresh `npm install` needs
