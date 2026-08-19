@@ -12,6 +12,7 @@ dependencies = [
     "drf-spectacular>=0.30.0",
     "djangorestframework-camel-case>=1.4.2",
     "django-environ>=0.14.0",
+    "pint>=0.24",
 ]
 
 [dependency-groups]
@@ -29,6 +30,7 @@ package = false
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+exclude = ["**/migrations/**"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "DJ"]
