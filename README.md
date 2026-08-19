@@ -16,9 +16,9 @@ and build a shopping list from the ingredients.
 config/            settings, urls, wsgi
 core/              the Django app
   models/          TimestampedModel for now
-  views.py         HealthView, WhoAmIView, spa_index
-  serializers.py
-  urls.py
+  views/           split by API area and SPA serving
+  serializers/     split by API area with shared serializer base classes
+  urls.py          API routes with nested recipe and shopping-list children
 frontend/src/
   api/client.ts    fetch wrapper, handles CSRF
   api/index.ts     the endpoints
@@ -62,6 +62,18 @@ docker compose exec backend python manage.py seed_data
 
 By default this seeds the 5 curated demo recipes plus synthetic load data for query testing.
 Use `--recipes 0` when you only want the curated demo dataset.
+
+## Authorization
+
+Default Django auth groups are provisioned after migrate:
+
+- `Recipe Editors`
+- `Recipe Interactors`
+- `Shopping List Editors`
+
+API writes require both the relevant Django model permission from one of those groups
+and object ownership. Anonymous reads remain public where the app is public, and
+superusers bypass group and ownership checks.
 
 ## Running it without Docker
 
