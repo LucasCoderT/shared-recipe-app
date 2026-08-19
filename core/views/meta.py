@@ -1,6 +1,3 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.template import TemplateDoesNotExist
-from django.template.response import TemplateResponse
 from drf_spectacular.utils import extend_schema
 from rest_framework import views
 from rest_framework.permissions import AllowAny
@@ -33,19 +30,4 @@ class WhoAmIView(views.APIView):
         if request.user.is_authenticated:
             serializer = self.serializer_class.from_user(request.user)
             return Response(serializer.data)
-        else:
-            return Response({"authenticated": False})
-
-
-def spa_index(request: HttpRequest) -> HttpResponse:
-    """Serves the React app shell, or a clear hint if the bundle is missing."""
-    try:
-        return TemplateResponse(request, "index.html")
-    except TemplateDoesNotExist:
-        return JsonResponse(
-            {
-                "detail": "Frontend bundle not built.",
-                "fix": "Run npm run build in frontend/, or use the Vite dev server on :5173.",
-            },
-            status=501,
-        )
+        return Response({"authenticated": False})
