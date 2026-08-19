@@ -31,6 +31,12 @@ class RecipeComment(base.TimestampedModel):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipe_comments")
     content = models.TextField()
 
+    class Meta:
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["recipe", "-created_at"]),
+        ]
+
     def __str__(self):
         return f"Comment by {self.user.username} on {self.recipe.name}"
 
@@ -50,6 +56,9 @@ class RecipeReview(base.TimestampedModel):
             models.UniqueConstraint(
                 fields=["recipe", "user"], name="uniq_review_per_user_per_recipe"
             ),
+        ]
+        indexes = [
+            models.Index(fields=["recipe", "rating"]),
         ]
 
 
@@ -156,6 +165,9 @@ class Recipe(base.TimestampedModel):
 
     class Meta:
         ordering = ["name", "-created_at"]
+        indexes = [
+            models.Index(fields=["author", "-created_at"]),
+        ]
 
     def __str__(self):
         return self.name

@@ -38,5 +38,10 @@ class ShoppingList(base.TimestampedModel):
     name = models.CharField(max_length=255)
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="shopping_lists")
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["user", "-created_at"], name="slist_user_created_idx"),
+        ]
+
     def __str__(self):
         return f"Shopping List: {self.name}"
