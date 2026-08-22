@@ -1,12 +1,12 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
+from django.db import models, transaction
 
 from core.models import base
 from core.utils.units import normalize_unit, validate_unit
 
 
 class RecipeTag(base.OrderableModelMixin, base.TimestampedModel):
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="recipe_tags")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="tags")
     name = models.CharField(max_length=50)
 
     class Meta:
@@ -27,7 +27,7 @@ class RecipeTag(base.OrderableModelMixin, base.TimestampedModel):
 
 
 class RecipeComment(base.TimestampedModel):
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="recipe_comments")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="comments")
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipe_comments")
     content = models.TextField()
 
@@ -42,7 +42,7 @@ class RecipeComment(base.TimestampedModel):
 
 
 class RecipeReview(base.TimestampedModel):
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="recipe_reviews")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipe_reviews")
     rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(5)]
@@ -63,7 +63,7 @@ class RecipeReview(base.TimestampedModel):
 
 
 class RecipeStep(base.OrderableModelMixin, base.TimestampedModel):
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="recipe_steps")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="steps")
     description = models.TextField()
     ingredients = models.ManyToManyField(
         "RecipeIngredient",
@@ -104,7 +104,7 @@ class RecipeStepIngredient(base.TimestampedModel):
 
 class RecipeIngredient(base.OrderableModelMixin, base.TimestampedModel):
     recipe = models.ForeignKey(
-        "Recipe", on_delete=models.CASCADE, related_name="recipe_ingredients"
+        "Recipe", on_delete=models.CASCADE, related_name="ingredients"
     )
     name = models.CharField(max_length=255)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
@@ -130,7 +130,7 @@ class RecipeIngredient(base.OrderableModelMixin, base.TimestampedModel):
 
 
 class RecipePhoto(base.OrderableModelMixin, base.TimestampedModel):
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="recipe_photos")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="photos")
     image = models.ImageField(upload_to="recipe_photos/")
     description = models.TextField(blank=True)
 
@@ -171,3 +171,64 @@ class Recipe(base.TimestampedModel):
 
     def __str__(self):
         return self.name
+
+    def clone(self, user):
+        """
+        Clones a recipe and all its children while maintaining a reference to the original recipe
+        :param user:
+        :return:
+        """
+        with transaction.atomic():
+
+            relations = [
+                "tags",
+                "photos",
+            ]
+
+            children_entities = {
+                child: list(getattr(self, child).all())
+                for child in relations
+            }
+            self.original_author = self.author
+            self.original_recipe_id = self.pk
+            self.author = user
+            self.pk = None
+            self.id = None
+
+            self.save()
+
+            for rel_name, children in children_entities.items():
+                for child in children:
+                    child.pk = None
+                    child.id = None
+                    child.recipe = self
+                    child.save()
+
+            # Handle ingredients and steps specifically because they are joined by RecipeStepIngredient
+
+            ingredients = {}
+            for ingredient in RecipeIngredient.objects.filter(recipe_id=self.original_recipe_id):
+                old_id = ingredient.pk
+                ingredient.pk = None
+                ingredient.recipe = self
+                ingredient.save()
+                ingredients[old_id] = ingredient
+
+            steps = {}
+            for step in RecipeStep.objects.filter(recipe_id=self.original_recipe_id):
+                old_id = step.pk
+                step.pk = None
+                step.recipe = self
+                step.save()
+                steps[old_id] = step
+
+            for link in RecipeStepIngredient.objects.filter(recipe_id=self.original_recipe_id):
+                RecipeStepIngredient.objects.create(
+                    recipe=self,
+                    step=steps[link.step_id],
+                    ingredient=ingredients[link.ingredient_id]
+                )
+
+            return self
+
+

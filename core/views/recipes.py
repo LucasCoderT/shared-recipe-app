@@ -1,6 +1,7 @@
 from django.db.models import Avg, FloatField, OuterRef, Prefetch, QuerySet, Subquery
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from core.models import (
@@ -49,19 +50,6 @@ class RecipeViewSet(OwnedResourceViewSet):
         "-createdAt": "-created_at",
     }
 
-    def perform_create(self, serializer) -> None:
-        original_recipe = serializer.validated_data.get("original_recipe")
-        serializer.save(
-            author=self.request.user,
-            original_author=original_recipe.author if original_recipe is not None else None,
-        )
-
-    def perform_update(self, serializer) -> None:
-        if "original_recipe" in serializer.validated_data:
-            original_recipe = serializer.validated_data["original_recipe"]
-            serializer.save(original_author=original_recipe.author if original_recipe else None)
-            return
-        serializer.save()
 
     def get_recipe_grid_queryset(self) -> QuerySet[Recipe]:
         average_rating_subquery = (
@@ -128,6 +116,17 @@ class RecipeViewSet(OwnedResourceViewSet):
         if page is not None:
             return self.get_paginated_response(serializer.data)
         return Response(serializer.data)
+
+    @extend_schema(
+        operation_id="cloneRecipe",
+
+    )
+    @action(detail=True, methods=["post"], url_path="clone")
+    def clone(self, request, pk) -> Response:
+        recipe = get_object_or_404(self.queryset, pk=pk)
+        new_recipe = recipe.clone(request.user)
+        return new_recipe
+
 
 
 class RecipeTagViewSet(RecipeNestedViewSet):
