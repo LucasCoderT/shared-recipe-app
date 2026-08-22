@@ -11,6 +11,7 @@ from .recipes import (
     RecipeStepIngredientSerializer,
     RecipeStepSerializer,
     RecipeTagSerializer,
+    FullRecipeSerializer,
 )
 from .shopping import ShoppingListItemSerializer, ShoppingListSerializer
 
@@ -26,6 +27,7 @@ __all__ = (
     "RecipeStepIngredientSerializer",
     "RecipeStepSerializer",
     "RecipeTagSerializer",
+    "FullRecipeSerializer",
     "ShoppingListItemSerializer",
     "ShoppingListSerializer",
     "TimestampedModelSerializer",

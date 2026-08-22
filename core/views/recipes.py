@@ -24,14 +24,22 @@ from core.serializers import (
     RecipeStepIngredientSerializer,
     RecipeStepSerializer,
     RecipeTagSerializer,
+    FullRecipeSerializer,
 )
 
 from .base import OwnedResourceViewSet, RecipeNestedViewSet, ensure_recipe_owned
 
 
 class RecipeViewSet(OwnedResourceViewSet):
-    queryset = Recipe.objects.select_related("author", "original_recipe", "original_author").all()
-    serializer_class = RecipeSerializer
+    queryset = Recipe.objects.prefetch_related(
+        "ingredients",
+        "steps",
+        "tags",
+        "photos",
+        "reviews",
+        "comments"
+    ).all()
+    serializer_class = FullRecipeSerializer
     recipe_grid_sort_fields = {
         "name": "name",
         "-name": "-name",

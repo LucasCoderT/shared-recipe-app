@@ -232,3 +232,32 @@ class RecipeStepIngredientSerializer(TimestampedModelSerializer):
         if errors:
             raise serializers.ValidationError(errors)
         return attrs
+
+
+class FullRecipeSerializer(RecipeSerializer):
+    ingredients = RecipeIngredientSerializer(many=True, read_only=True)
+    steps = RecipeStepSerializer(many=True, read_only=True)
+    tags = RecipeTagSerializer(many=True, read_only=True)
+    photos = RecipePhotoSerializer(many=True, read_only=True)
+    reviews = RecipeReviewSerializer(many=True, read_only=True)
+    comments = RecipeCommentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Recipe
+        fields = (
+            "id",
+            "created_at",
+            "updated_at",
+            "name",
+            "author",
+            "description",
+            "original_recipe",
+            "original_author",
+            "ingredients",
+            "steps",
+            "tags",
+            "photos",
+            "reviews",
+            "comments"
+        )
+        read_only_fields = ("id", "created_at", "updated_at", "author", "original_recipe", "original_author")
