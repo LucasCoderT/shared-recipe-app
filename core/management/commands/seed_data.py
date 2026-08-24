@@ -4,7 +4,6 @@ from itertools import batched
 from random import Random
 
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
@@ -20,11 +19,11 @@ from core.models import (
     RecipeTag,
     ShoppingList,
     ShoppingListItem,
+    User,
 )
 from core.utils.seed_data import load_seed_payload
 from core.utils.seed_factories import (
     _quantity_for_unit,
-    _slugify_recipe_name,
     build_comments,
     build_load_user,
     build_ordered_ingredients,
@@ -39,6 +38,7 @@ from core.utils.seed_factories import (
     build_synthetic_recipe,
     build_user,
 )
+from core.utils.seed_photos import copy_placeholder_photos, placeholder_photo
 
 DEFAULT_RECIPES = 500
 DEFAULT_AUTHORS = 300
@@ -53,7 +53,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             "--password",
-            default="TestPassword@1",
+            default="Password@1",
             help="Password for all seeded users.",
         )
         parser.add_argument(
@@ -112,6 +112,9 @@ class Command(BaseCommand):
         password_hash = make_password(options["password"])
         payload = load_seed_payload()
 
+        copied_photos = copy_placeholder_photos()
+        self.stdout.write(f"Copied {copied_photos} placeholder photo file(s) into MEDIA_ROOT.")
+
         demo_users, load_authors = self._create_users(
             password_hash=password_hash,
             authors_requested=authors_requested,
@@ -155,8 +158,8 @@ class Command(BaseCommand):
         insert_batch_size: int,
         users: tuple[dict[str, str], ...],
     ) -> tuple[dict[str, User], list[User]]:
-        User.objects.filter(username__in=[user["username"] for user in users]).delete()
-        User.objects.filter(username__startswith="cook_").delete()
+        User.objects.filter(email__in=[user["email"] for user in users]).delete()
+        User.objects.filter(email__startswith="cook_").delete()
 
         demo_users = [build_user(user, password_hash) for user in users]
         created_demo_users = User.objects.bulk_create(demo_users, batch_size=insert_batch_size)
@@ -168,7 +171,7 @@ class Command(BaseCommand):
         created_load_users = User.objects.bulk_create(load_users, batch_size=insert_batch_size)
         assign_default_groups_to_users(created_load_users)
 
-        return {user.username: user for user in created_demo_users}, created_load_users
+        return {user.display_name: user for user in created_demo_users}, created_load_users
 
     @staticmethod
     def _seed_curated_demo(
@@ -224,9 +227,9 @@ class Command(BaseCommand):
             review_rows.extend(build_reviews(recipe, spec.reviews, users_by_username))
 
             commenter_usernames = [
-                user.username
+                user.display_name
                 for user in users_by_username.values()
-                if user.username != spec.author_username
+                if user.display_name != spec.author_username
             ]
             comment_rows.extend(
                 build_comments(
@@ -330,7 +333,9 @@ class Command(BaseCommand):
             step_links: dict[tuple[str, int, str], Recipe] = {}
             ingredient_map: dict[tuple[str, str], RecipeIngredient] = {}
 
-            for recipe, plan in zip(created_recipes, plans, strict=False):
+            for recipe_index, (recipe, plan) in enumerate(
+                zip(created_recipes, plans, strict=False)
+            ):
                 for order, ingredient_name in enumerate(plan.ingredient_names):
                     ingredient = RecipeIngredient(
                         recipe=recipe,
@@ -353,7 +358,7 @@ class Command(BaseCommand):
                 photo_rows.append(
                     RecipePhoto(
                         recipe=recipe,
-                        image=f"recipe_photos/{_slugify_recipe_name(plan.name)}_1.jpg",
+                        image=placeholder_photo(recipe_index),
                         description=f"Load photo for {plan.name}",
                         _order=0,
                     )
@@ -447,9 +452,8 @@ class Command(BaseCommand):
             shopping_list_ids = [shopping_list.pk for shopping_list in created_lists]
 
             shopping_item_rows: list[ShoppingListItem] = []
-            ingredient_pool_for_lists = (
-                ingredient_pool_for_lists
-                or list(RecipeIngredient.objects.filter(name__in=ingredient_names).order_by("id"))
+            ingredient_pool_for_lists = ingredient_pool_for_lists or list(
+                RecipeIngredient.objects.filter(name__in=ingredient_names).order_by("id")
             )
             for shopping_list in (
                 ShoppingList.objects.filter(pk__in=shopping_list_ids)
