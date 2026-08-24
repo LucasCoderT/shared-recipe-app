@@ -53,7 +53,7 @@ export const RecipeEditPage = () => {
     useEffect(() => {
         if (recipe) {
             setName(recipe.name);
-            setDescription(recipe.description);
+            setDescription(recipe.description ?? "");
         }
     }, [recipe?.id, recipe?.updatedAt]);
 
@@ -118,7 +118,6 @@ export const RecipeEditPage = () => {
                             Save details
                         </Button>
                     </Box>
-                    {m.updateRecipe.isSuccess && <Alert severity="success">Saved.</Alert>}
                 </Stack>
             </Section>
 
@@ -167,11 +166,6 @@ export const RecipeEditPage = () => {
                     {recipe.tags.length >= MAX_TAGS && (
                         <Alert severity="info" variant="outlined">
                             A recipe can have at most {MAX_TAGS} tags.
-                        </Alert>
-                    )}
-                    {m.addTag.isError && (
-                        <Alert severity="error">
-                            {errorMessage(m.addTag.error, "Could not add that tag.")}
                         </Alert>
                     )}
                 </Stack>
@@ -238,14 +232,6 @@ export const RecipeEditPage = () => {
                         </Button>
                     </Stack>
 
-                    {m.addIngredient.isError && (
-                        <Alert severity="error">
-                            {errorMessage(
-                                m.addIngredient.error,
-                                "Could not add that ingredient."
-                            )}
-                        </Alert>
-                    )}
                 </Stack>
             </Section>
 
@@ -328,11 +314,6 @@ export const RecipeEditPage = () => {
                         </Button>
                     </Box>
 
-                    {m.uploadPhoto.isError && (
-                        <Alert severity="error">
-                            {errorMessage(m.uploadPhoto.error, "Could not upload that photo.")}
-                        </Alert>
-                    )}
                 </Stack>
             </Section>
         </PageShell>

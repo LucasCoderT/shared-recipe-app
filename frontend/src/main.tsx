@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { RouterProvider } from "react-router";
+import { ToastProvider } from "~/components/ToastProvider";
 import { queryClient } from "~/queryClient";
 import { router } from "~/router";
 import { theme } from "~/theme";
@@ -20,6 +21,7 @@ createRoot(container).render(
             <CssBaseline />
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router} />
+                <ToastProvider />
             </QueryClientProvider>
         </ThemeProvider>
     </StrictMode>

@@ -157,7 +157,9 @@ class Recipe(base.TimestampedModel):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipes"
     )
-    description = models.TextField()
+    # Optional: the brief requires a name, ingredients and steps. A description
+    # is listed with the optional extras alongside tags, photos and comments.
+    description = models.TextField(blank=True)
     original_recipe = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="derivatives"
     )

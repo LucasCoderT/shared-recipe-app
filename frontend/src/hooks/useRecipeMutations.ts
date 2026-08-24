@@ -29,20 +29,24 @@ export const useRecipeMutations = (recipeId: Id) => {
 
     return {
         updateRecipe: useMutation({
+            meta: { success: 'Recipe saved.' },
             mutationFn: (body: { name?: string; description?: string; updatedAt?: string }) =>
                 api.recipes.update(recipeId, body),
             onSuccess,
         }),
         deleteRecipe: useMutation({
+            meta: { success: 'Recipe deleted.' },
             mutationFn: (updatedAt?: string) => api.recipes.destroy(recipeId, updatedAt),
             onSuccess,
         }),
         addIngredient: useMutation({
+            meta: { success: 'Ingredient added.' },
             mutationFn: (body: { name: string; quantity: string; unit: string }) =>
                 api.recipeIngredients.create(recipeId, body),
             onSuccess,
         }),
         removeIngredient: useMutation({
+            meta: { success: 'Ingredient removed.' },
             mutationFn: (id: number) => api.recipeIngredients.destroy(recipeId, id),
             onSuccess,
         }),
@@ -54,6 +58,7 @@ export const useRecipeMutations = (recipeId: Id) => {
          * read as a bug.
          */
         reorderSteps: useMutation({
+            meta: { success: 'Steps reordered.' },
             mutationFn: (order: number[]) => api.recipeSteps.reorder(recipeId, order),
             onMutate: async (order: number[]) => {
                 const key = keys.recipes.detail(recipeId);
@@ -81,44 +86,54 @@ export const useRecipeMutations = (recipeId: Id) => {
             onSettled: onSuccess,
         }),
         addStep: useMutation({
+            meta: { success: 'Step added.' },
             mutationFn: (body: { description: string }) => api.recipeSteps.create(recipeId, body),
             onSuccess,
         }),
         removeStep: useMutation({
+            meta: { success: 'Step removed.' },
             mutationFn: (id: number) => api.recipeSteps.destroy(recipeId, id),
             onSuccess,
         }),
         addTag: useMutation({
+            meta: { success: 'Tag added.' },
             mutationFn: (body: { name: string }) => api.recipeTags.create(recipeId, body),
             onSuccess,
         }),
         removeTag: useMutation({
+            meta: { success: 'Tag removed.' },
             mutationFn: (id: number) => api.recipeTags.destroy(recipeId, id),
             onSuccess,
         }),
         uploadPhoto: useMutation({
+            meta: { success: 'Photo uploaded.' },
             mutationFn: ({ image, description }: { image: File; description?: string }) =>
                 api.recipePhotos.create(recipeId, image, description ?? ""),
             onSuccess,
         }),
         removePhoto: useMutation({
+            meta: { success: 'Photo removed.' },
             mutationFn: (id: number) => api.recipePhotos.destroy(recipeId, id),
             onSuccess,
         }),
         addReview: useMutation({
+            meta: { success: 'Rating saved.' },
             mutationFn: (body: { rating: number }) => api.recipeReviews.create(recipeId, body),
             onSuccess,
         }),
         updateReview: useMutation({
+            meta: { success: 'Rating updated.' },
             mutationFn: ({ id, rating }: { id: number; rating: number }) =>
                 api.recipeReviews.update(recipeId, id, { rating }),
             onSuccess,
         }),
         addComment: useMutation({
+            meta: { success: 'Comment posted.' },
             mutationFn: (body: { content: string }) => api.recipeComments.create(recipeId, body),
             onSuccess,
         }),
         removeComment: useMutation({
+            meta: { success: 'Comment deleted.' },
             mutationFn: (id: number) => api.recipeComments.destroy(recipeId, id),
             onSuccess,
         }),
@@ -129,6 +144,7 @@ export const useRecipeMutations = (recipeId: Id) => {
 export const useCloneRecipe = () => {
     const client = useQueryClient();
     return useMutation({
+        meta: { success: "Recipe copied to your recipes." },
         mutationFn: (recipeId: Id) => api.recipes.clone(recipeId),
         onSuccess: () => client.invalidateQueries({ queryKey: keys.recipes.all }),
     });
@@ -137,7 +153,8 @@ export const useCloneRecipe = () => {
 export const useCreateRecipe = () => {
     const client = useQueryClient();
     return useMutation({
-        mutationFn: (body: { name: string; description: string }) => api.recipes.create(body),
+        meta: { success: "Recipe created." },
+        mutationFn: (body: { name: string; description?: string }) => api.recipes.create(body),
         onSuccess: () => client.invalidateQueries({ queryKey: keys.recipes.all }),
     });
 };

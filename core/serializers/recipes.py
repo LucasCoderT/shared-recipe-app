@@ -44,7 +44,7 @@ class RecipeSerializer(TimestampedModelSerializer):
         return validate_nonblank_text(value=value, field_name="Name")
 
     def validate_description(self, value: str) -> str:
-        return validate_nonblank_text(value=value, field_name="Description")
+        return validate_optional_text(value)
 
     def validate_original_recipe(self, value: Recipe) -> Recipe:
         if self.instance is not None and value.pk == self.instance.pk:

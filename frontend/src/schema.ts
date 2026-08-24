@@ -670,7 +670,7 @@ export interface components {
             readonly updatedAt: string;
             name: string;
             readonly author: number;
-            description: string;
+            description?: string;
             readonly originalRecipe: number | null;
             readonly originalAuthor: number;
             readonly ingredients: components["schemas"]["RecipeIngredient"][];
@@ -979,7 +979,7 @@ export interface components {
             readonly updatedAt: string;
             name: string;
             readonly author: number;
-            description: string;
+            description?: string;
             originalRecipe?: number | null;
             readonly originalAuthor: number;
         };

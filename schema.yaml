@@ -2200,7 +2200,6 @@ components:
       - author
       - comments
       - createdAt
-      - description
       - id
       - ingredients
       - name
@@ -2801,7 +2800,6 @@ components:
       required:
       - author
       - createdAt
-      - description
       - id
       - name
       - originalAuthor

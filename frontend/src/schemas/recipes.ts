@@ -10,7 +10,8 @@ import {
 /** RecipeSerializer. author and original_* are read-only on the server. */
 export const recipeSchema = z.object({
     name: nonBlankText(255, "Name"),
-    description: nonBlankProse("Description"),
+    // Optional: the brief lists a description with the optional extras.
+    description: optionalText,
 });
 
 /** RecipeTagSerializer. The five-per-recipe cap is enforced by a signal server-side. */
@@ -92,7 +93,10 @@ export const recipeGridFilterSchema = z.object({
 export const normalizeGridFilters = (filters: Partial<RecipeGridFilterValues> = {}) =>
     recipeGridFilterSchema.parse(filters);
 
-export type RecipeValues = z.infer<typeof recipeSchema>;
+/** Output type: what the resolver produces once defaults are applied. */
+export type RecipeValues = z.output<typeof recipeSchema>;
+/** Input type: what the form holds before defaults. description is optional here. */
+export type RecipeInput = z.input<typeof recipeSchema>;
 export type RecipeTagValues = z.infer<typeof recipeTagSchema>;
 export type RecipeIngredientValues = z.infer<typeof recipeIngredientSchema>;
 export type RecipeStepValues = z.infer<typeof recipeStepSchema>;

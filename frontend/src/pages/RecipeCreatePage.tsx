@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import { applyServerErrors } from "~/api/errors";
 import { PageShell } from "~/components/PageShell";
 import { useCreateRecipe } from "~/hooks/useRecipeMutations";
-import { recipeSchema, type RecipeValues } from "~/schemas";
+import { recipeSchema, type RecipeInput, type RecipeValues } from "~/schemas";
 
 /**
  * Creates the recipe itself, then hands off to the edit screen.
@@ -29,7 +29,9 @@ export const RecipeCreatePage = () => {
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm<RecipeValues>({
+        // Three generics because the schema transforms: description is
+        // optional on input and always a string on output.
+    } = useForm<RecipeInput, unknown, RecipeValues>({
         resolver: zodResolver(recipeSchema),
         defaultValues: { name: "", description: "" },
         mode: "onTouched",
@@ -55,7 +57,7 @@ export const RecipeCreatePage = () => {
                         {...register("name")}
                     />
                     <TextField
-                        label="Description"
+                        label="Description (optional)"
                         multiline
                         minRows={3}
                         error={Boolean(errors.description)}
