@@ -1,10 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "~/api";
+import { whoamiQuery } from "~/api/queries";
 
-export const useWhoamiQuery = () =>
-    useQuery({
-        queryKey: ["whoami"],
-        queryFn: () => api.whoami(),
-        retry: false,
-        refetchOnWindowFocus: false,
-    });
+export const useWhoamiQuery = () => useQuery(whoamiQuery);

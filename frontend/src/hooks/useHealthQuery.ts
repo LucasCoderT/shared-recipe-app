@@ -1,10 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "~/api";
+import { healthQuery } from "~/api/queries";
 
-export const useHealthQuery = () =>
-    useQuery({
-        queryKey: ["health"],
-        queryFn: () => api.health(),
-        retry: false,
-        refetchOnWindowFocus: false,
-    });
+export const useHealthQuery = () => useQuery(healthQuery);

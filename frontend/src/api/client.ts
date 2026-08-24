@@ -33,6 +33,31 @@ export class ApiError extends Error {
     }
 }
 
+/**
+ * Serialise any params object into a query string.
+ *
+ * URLSearchParams is the built-in for this; the only thing it does not decide
+ * for you is what to do with absent values and arrays. Empty and undefined are
+ * dropped so an unset filter does not become "?q=", and arrays are repeated
+ * (?tag=a&tag=b) because that is what DRF's ListField reads off a QueryDict.
+ */
+export const toQuery = (params: Record<string, unknown>): string => {
+    const search = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(params)) {
+        if (value === undefined || value === null || value === "") continue;
+
+        if (Array.isArray(value)) {
+            for (const entry of value) search.append(key, String(entry));
+            continue;
+        }
+        search.set(key, String(value));
+    }
+
+    const query = search.toString();
+    return query ? `?${query}` : "";
+};
+
 const csrfProtectedMethods = ["POST", "PUT", "PATCH", "DELETE"];
 
 const getCookie = (name: string) => {
@@ -48,7 +73,9 @@ export const apiFetch = async <T>(
     const headers = new Headers(options.headers);
 
     headers.set("Accept", "application/json");
-    if (options.body !== undefined) {
+    // FormData must set its own Content-Type so the multipart boundary is
+    // included; anything else we send is JSON.
+    if (options.body !== undefined && !(options.body instanceof FormData)) {
         headers.set("Content-Type", "application/json");
     }
     if (csrfProtectedMethods.includes(method)) {
