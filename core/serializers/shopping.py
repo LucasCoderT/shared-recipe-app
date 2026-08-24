@@ -1,8 +1,9 @@
 from decimal import Decimal
 
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
-from core.models import ShoppingList, ShoppingListItem
+from core.models import Recipe, ShoppingList, ShoppingListItem
 
 from .base import TimestampedModelSerializer, validate_nonblank_text, validate_positive_decimal
 
@@ -50,3 +51,7 @@ class ShoppingListItemSerializer(TimestampedModelSerializer):
 
     def validate_quantity(self, value: Decimal | None) -> Decimal | None:
         return validate_positive_decimal(value=value, field_name="Quantity")
+
+
+class ShoppingListItemFromRecipeSerializer(serializers.Serializer):
+    recipe = PrimaryKeyRelatedField(queryset=Recipe.objects.all())

@@ -3,6 +3,25 @@ from decimal import Decimal
 from rest_framework import serializers
 
 
+class RelativeImageField(serializers.ImageField):
+    """Serialise an image as a root-relative URL.
+
+    DRF's ImageField builds an absolute URL from the Host header. The dev
+    server proxies with changeOrigin, so under Docker that yields
+    http://backend:8000/media/... -- a hostname that only resolves inside the
+    compose network, which the browser renders as a broken image.
+
+    The SPA is served from the same origin as the API, so a relative path is
+    correct and immune to whatever Host the request arrived with. Uploads are
+    unaffected: only the output representation changes.
+    """
+
+    def to_representation(self, value):
+        if not value:
+            return None
+        return value.url
+
+
 class TimestampedModelSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)

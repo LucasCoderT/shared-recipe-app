@@ -1,15 +1,19 @@
 from datetime import datetime
 
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import is_aware
+from drf_spectacular.utils import extend_schema
 from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.response import Response
 
 from core.exceptions import StaleWrite
 from core.models import Recipe, ShoppingList
 from core.permissions import HasGroupPermissionAndOwnershipOrReadOnly, is_admin_user
+from core.serializers import ReorderSerializer
 
 
 def _parse_client_ts(value: object) -> datetime | None:
@@ -78,11 +82,7 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
         client_ts = _parse_client_ts(self.request.data.get("updated_at"))
         if client_ts is None:
             return instance
-        locked = (
-            self.get_queryset()
-            .select_for_update(of=("self",))
-            .get(pk=instance.pk)
-        )
+        locked = self.get_queryset().select_for_update(of=("self",)).get(pk=instance.pk)
         if _truncate_to_ms(locked.updated_at) != _truncate_to_ms(client_ts):
             raise StaleWrite()
         return locked
@@ -104,6 +104,42 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
         instance = self._check_stale_write(self.get_object())
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class OrderableNestedMixin:
+    """Adds a reorder action to a nested collection using order_with_respect_to.
+
+    Django generates set_<model>_order() on the parent for every child declaring
+    order_with_respect_to, so the reordering itself is a one-liner. What this
+    adds is the endpoint, the ownership check, and validation that the submitted
+    list is a complete permutation of the children that exist.
+
+    The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+    the bulk update passes through states where two rows briefly share a
+    position, which an immediately-checked constraint would reject.
+    """
+
+    order_setter_name: str = ""
+
+    @extend_schema(request=ReorderSerializer, responses={200: None})
+    @action(detail=False, methods=["post"], url_path="reorder")
+    def reorder(self, request, **kwargs):
+        recipe = self.get_parent_recipe()
+        ensure_recipe_owned(user=request.user, recipe=recipe)
+
+        serializer = ReorderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        submitted = serializer.validated_data["order"]
+
+        existing = set(self.get_queryset().values_list("id", flat=True))
+        if set(submitted) != existing or len(submitted) != len(existing):
+            raise ValidationError({"order": "Send every id for this recipe exactly once."})
+
+        with transaction.atomic():
+            getattr(recipe, self.order_setter_name)(submitted)
+
+        page = self.get_serializer(self.get_queryset(), many=True)
+        return Response(page.data)
 
 
 class RecipeNestedViewSet(OwnedResourceViewSet):
@@ -131,6 +167,17 @@ class ShoppingListNestedViewSet(OwnedResourceViewSet):
         )
 
     def get_queryset(self):
-        return super().get_queryset().filter(
-            shopping_list_id=self.kwargs.get("shopping_list_pk")
+        """Items are only visible to the owner of the list holding them.
+
+        Filtering by shopping_list_id alone would let anyone read another
+        user's items by guessing a list id, because safe methods bypass the
+        ownership check in the permission class.
+        """
+        queryset = (
+            super().get_queryset().filter(shopping_list_id=self.kwargs.get("shopping_list_pk"))
         )
+        if is_admin_user(self.request.user):
+            return queryset
+        if not self.request.user.is_authenticated:
+            return queryset.none()
+        return queryset.filter(shopping_list__user=self.request.user)

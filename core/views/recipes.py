@@ -15,6 +15,7 @@ from core.models import (
     RecipeTag,
 )
 from core.serializers import (
+    FullRecipeSerializer,
     RecipeCommentSerializer,
     RecipeGridCardSerializer,
     RecipeGridQuerySerializer,
@@ -25,20 +26,19 @@ from core.serializers import (
     RecipeStepIngredientSerializer,
     RecipeStepSerializer,
     RecipeTagSerializer,
-    FullRecipeSerializer,
 )
 
-from .base import OwnedResourceViewSet, RecipeNestedViewSet, ensure_recipe_owned
+from .base import (
+    OrderableNestedMixin,
+    OwnedResourceViewSet,
+    RecipeNestedViewSet,
+    ensure_recipe_owned,
+)
 
 
 class RecipeViewSet(OwnedResourceViewSet):
     queryset = Recipe.objects.prefetch_related(
-        "ingredients",
-        "steps",
-        "tags",
-        "photos",
-        "reviews",
-        "comments"
+        "ingredients", "steps", "tags", "photos", "reviews", "comments"
     ).all()
     serializer_class = FullRecipeSerializer
     recipe_grid_sort_fields = {
@@ -50,6 +50,10 @@ class RecipeViewSet(OwnedResourceViewSet):
         "-createdAt": "-created_at",
     }
 
+    def perform_create(self, serializer) -> None:
+        # author is read-only on the serializer, so the owner can only come from
+        # the session. Without this the insert fails on a not-null author_id.
+        serializer.save(author=self.request.user)
 
     def get_recipe_grid_queryset(self) -> QuerySet[Recipe]:
         average_rating_subquery = (
@@ -60,17 +64,15 @@ class RecipeViewSet(OwnedResourceViewSet):
         )
         queryset = (
             Recipe.objects.select_related("author")
-            .annotate(
-                average_rating=Subquery(average_rating_subquery, output_field=FloatField())
-            )
+            .annotate(average_rating=Subquery(average_rating_subquery, output_field=FloatField()))
             .prefetch_related(
                 Prefetch(
-                    "recipe_photos",
+                    "photos",
                     queryset=RecipePhoto.objects.order_by("_order"),
                     to_attr="ordered_photos",
                 ),
                 Prefetch(
-                    "recipe_tags",
+                    "tags",
                     queryset=RecipeTag.objects.order_by("_order"),
                     to_attr="ordered_tags",
                 ),
@@ -90,7 +92,7 @@ class RecipeViewSet(OwnedResourceViewSet):
         tags = validated_filters.get("tag", [])
         if tags:
             for tag in tags:
-                queryset = queryset.filter(recipe_tags__name__iexact=tag)
+                queryset = queryset.filter(tags__name__iexact=tag)
             queryset = queryset.distinct()
 
         sort = validated_filters.get("sort", "name")
@@ -119,14 +121,14 @@ class RecipeViewSet(OwnedResourceViewSet):
 
     @extend_schema(
         operation_id="cloneRecipe",
-
+        request=None,
+        responses=RecipeSerializer,
     )
     @action(detail=True, methods=["post"], url_path="clone")
     def clone(self, request, pk) -> Response:
         recipe = get_object_or_404(self.queryset, pk=pk)
         new_recipe = recipe.clone(request.user)
-        return new_recipe
-
+        return Response(RecipeSerializer(new_recipe, context=self.get_serializer_context()).data)
 
 
 class RecipeTagViewSet(RecipeNestedViewSet):
@@ -139,7 +141,9 @@ class RecipeTagViewSet(RecipeNestedViewSet):
         serializer.save(recipe=recipe)
 
 
-class RecipeIngredientViewSet(RecipeNestedViewSet):
+class RecipeIngredientViewSet(OrderableNestedMixin, RecipeNestedViewSet):
+    order_setter_name = "set_recipeingredient_order"
+
     queryset = RecipeIngredient.objects.select_related("recipe", "recipe__author").all()
     serializer_class = RecipeIngredientSerializer
 
@@ -175,7 +179,9 @@ class RecipeCommentViewSet(RecipeNestedViewSet):
         serializer.save(recipe=self.get_parent_recipe(), user=self.request.user)
 
 
-class RecipeStepViewSet(RecipeNestedViewSet):
+class RecipeStepViewSet(OrderableNestedMixin, RecipeNestedViewSet):
+    order_setter_name = "set_recipestep_order"
+
     queryset = RecipeStep.objects.select_related("recipe", "recipe__author").prefetch_related(
         "ingredients"
     )
