@@ -4,6 +4,57 @@
  */
 
 export interface paths {
+    "/api/auth/login/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Start a session for an existing account. */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/logout/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description End the current session. */
+        post: operations["logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/register/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Create an account from an email address and start a session. */
+        post: operations["register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/health/": {
         parameters: {
             query?: never;
@@ -53,6 +104,22 @@ export interface paths {
         patch: operations["recipesPartialUpdate"];
         trace?: never;
     };
+    "/api/recipes/{id}/clone/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["cloneRecipe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/recipes/{recipePk}/comments/": {
         parameters: {
             query?: never;
@@ -92,8 +159,32 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         get: operations["recipesIngredientsList"];
         put?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         post: operations["recipesIngredientsCreate"];
         delete?: never;
         options?: never;
@@ -108,13 +199,89 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         get: operations["recipesIngredientsRetrieve"];
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         put: operations["recipesIngredientsUpdate"];
         post?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         delete: operations["recipesIngredientsDestroy"];
         options?: never;
         head?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         patch: operations["recipesIngredientsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/ingredients/reorder/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
+        post: operations["recipesIngredientsReorderCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/recipes/{recipePk}/photos/": {
@@ -220,8 +387,32 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         get: operations["recipesStepsList"];
         put?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         post: operations["recipesStepsCreate"];
         delete?: never;
         options?: never;
@@ -236,13 +427,89 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         get: operations["recipesStepsRetrieve"];
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         put: operations["recipesStepsUpdate"];
         post?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         delete: operations["recipesStepsDestroy"];
         options?: never;
         head?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
         patch: operations["recipesStepsPartialUpdate"];
+        trace?: never;
+    };
+    "/api/recipes/{recipePk}/steps/reorder/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * @description Adds a reorder action to a nested collection using order_with_respect_to.
+         *
+         *     Django generates set_<model>_order() on the parent for every child declaring
+         *     order_with_respect_to, so the reordering itself is a one-liner. What this
+         *     adds is the endpoint, the ownership check, and validation that the submitted
+         *     list is a complete permutation of the children that exist.
+         *
+         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
+         *     the bulk update passes through states where two rows briefly share a
+         *     position, which an immediately-checked constraint would reject.
+         */
+        post: operations["recipesStepsReorderCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/recipes/{recipePk}/tags/": {
@@ -325,6 +592,23 @@ export interface paths {
         patch: operations["shoppingListsPartialUpdate"];
         trace?: never;
     };
+    "/api/shopping-lists/{id}/copy_from_recipe/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Copy ingredients from a recipe into the shopping list. */
+        post: operations["shoppingListsCopyFromRecipeCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/shopping-lists/{shoppingListPk}/items/": {
         parameters: {
             query?: never;
@@ -378,8 +662,46 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        FullRecipe: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly createdAt: string;
+            /** Format: date-time */
+            readonly updatedAt: string;
+            name: string;
+            readonly author: number;
+            description: string;
+            readonly originalRecipe: number | null;
+            readonly originalAuthor: number;
+            readonly ingredients: components["schemas"]["RecipeIngredient"][];
+            readonly steps: components["schemas"]["RecipeStep"][];
+            readonly tags: components["schemas"]["RecipeTag"][];
+            readonly photos: components["schemas"]["RecipePhoto"][];
+            readonly reviews: components["schemas"]["RecipeReview"][];
+            readonly comments: components["schemas"]["RecipeComment"][];
+        };
         Health: {
             status: string;
+        };
+        Login: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        PaginatedFullRecipeList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["FullRecipe"][];
         };
         PaginatedRecipeCommentList: {
             /** @example 123 */
@@ -425,21 +747,6 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["RecipeIngredient"][];
-        };
-        PaginatedRecipeList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=4
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null;
-            results: components["schemas"]["Recipe"][];
         };
         PaginatedRecipePhotoList: {
             /** @example 123 */
@@ -546,7 +853,7 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["ShoppingList"][];
         };
-        PatchedRecipe: {
+        PatchedFullRecipe: {
             readonly id?: number;
             /** Format: date-time */
             readonly createdAt?: string;
@@ -555,8 +862,14 @@ export interface components {
             name?: string;
             readonly author?: number;
             description?: string;
-            originalRecipe?: number | null;
+            readonly originalRecipe?: number | null;
             readonly originalAuthor?: number;
+            readonly ingredients?: components["schemas"]["RecipeIngredient"][];
+            readonly steps?: components["schemas"]["RecipeStep"][];
+            readonly tags?: components["schemas"]["RecipeTag"][];
+            readonly photos?: components["schemas"]["RecipePhoto"][];
+            readonly reviews?: components["schemas"]["RecipeReview"][];
+            readonly comments?: components["schemas"]["RecipeComment"][];
         };
         PatchedRecipeComment: {
             readonly id?: number;
@@ -682,6 +995,18 @@ export interface components {
         };
         RecipeGridCard: {
             readonly id: number;
+            /**
+             * @description Return the first photo's URL, relative to the current origin.
+             *
+             *     build_absolute_uri() would use the Host header, and the dev server
+             *     proxies with changeOrigin, so under Docker that produced
+             *     http://backend:8000/media/... -- a hostname that only resolves inside
+             *     the compose network, leaving every grid image broken in the browser.
+             *
+             *     The SPA is served from the same origin as the API, so a root-relative
+             *     path is both correct and immune to whatever Host the request arrived
+             *     with. An API served cross-origin would need the absolute form back.
+             */
             readonly image: string | null;
             name: string;
             /** Format: double */
@@ -698,7 +1023,7 @@ export interface components {
             name: string;
             /** Format: decimal */
             quantity: string;
-            unit: string;
+            unit?: string;
             readonly position: number;
         };
         RecipePhoto: {
@@ -754,6 +1079,21 @@ export interface components {
             name: string;
             readonly position: number;
         };
+        Register: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        /**
+         * @description The complete set of child ids, in their new order.
+         *
+         *     Must be complete rather than partial: Django's set_RELATED_order assigns
+         *     positions 0..n-1 to exactly the ids it is given and leaves everything else
+         *     untouched, so a partial list would collide with the rows it skipped.
+         */
+        Reorder: {
+            order: number[];
+        };
         ShoppingList: {
             readonly id: number;
             /** Format: date-time */
@@ -774,14 +1114,19 @@ export interface components {
             name: string;
             /** Format: decimal */
             quantity?: string | null;
-            unit: string;
+            unit?: string;
             purchased?: boolean;
             readonly position: number;
+        };
+        ShoppingListItemFromRecipe: {
+            recipe: number;
         };
         WhoAmI: {
             authenticated: boolean;
             id?: number;
-            username?: string;
+            /** Format: email */
+            email?: string;
+            displayName?: string;
             isStaff?: boolean;
             groups?: string[];
         };
@@ -794,6 +1139,74 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Login"];
+                "application/x-www-form-urlencoded": components["schemas"]["Login"];
+                "multipart/form-data": components["schemas"]["Login"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WhoAmI"];
+                };
+            };
+        };
+    };
+    logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Register"];
+                "application/x-www-form-urlencoded": components["schemas"]["Register"];
+                "multipart/form-data": components["schemas"]["Register"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WhoAmI"];
+                };
+            };
+        };
+    };
     health: {
         parameters: {
             query?: never;
@@ -830,7 +1243,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedRecipeList"];
+                    "application/json": components["schemas"]["PaginatedFullRecipeList"];
                 };
             };
         };
@@ -844,9 +1257,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Recipe"];
-                "application/x-www-form-urlencoded": components["schemas"]["Recipe"];
-                "multipart/form-data": components["schemas"]["Recipe"];
+                "application/json": components["schemas"]["FullRecipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["FullRecipe"];
+                "multipart/form-data": components["schemas"]["FullRecipe"];
             };
         };
         responses: {
@@ -855,7 +1268,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Recipe"];
+                    "application/json": components["schemas"]["FullRecipe"];
                 };
             };
         };
@@ -877,7 +1290,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Recipe"];
+                    "application/json": components["schemas"]["FullRecipe"];
                 };
             };
         };
@@ -894,9 +1307,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Recipe"];
-                "application/x-www-form-urlencoded": components["schemas"]["Recipe"];
-                "multipart/form-data": components["schemas"]["Recipe"];
+                "application/json": components["schemas"]["FullRecipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["FullRecipe"];
+                "multipart/form-data": components["schemas"]["FullRecipe"];
             };
         };
         responses: {
@@ -905,7 +1318,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Recipe"];
+                    "application/json": components["schemas"]["FullRecipe"];
                 };
             };
         };
@@ -943,11 +1356,33 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PatchedRecipe"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedRecipe"];
-                "multipart/form-data": components["schemas"]["PatchedRecipe"];
+                "application/json": components["schemas"]["PatchedFullRecipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedFullRecipe"];
+                "multipart/form-data": components["schemas"]["PatchedFullRecipe"];
             };
         };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FullRecipe"];
+                };
+            };
+        };
+    };
+    cloneRecipe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this recipe. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
@@ -1264,6 +1699,32 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["RecipeIngredient"];
                 };
+            };
+        };
+    };
+    recipesIngredientsReorderCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Reorder"];
+                "application/x-www-form-urlencoded": components["schemas"]["Reorder"];
+                "multipart/form-data": components["schemas"]["Reorder"];
+            };
+        };
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -1883,6 +2344,32 @@ export interface operations {
             };
         };
     };
+    recipesStepsReorderCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipePk: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Reorder"];
+                "application/x-www-form-urlencoded": components["schemas"]["Reorder"];
+                "multipart/form-data": components["schemas"]["Reorder"];
+            };
+        };
+        responses: {
+            /** @description No response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     recipesTagsList: {
         parameters: {
             query?: {
@@ -2214,6 +2701,34 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ShoppingList"];
+                };
+            };
+        };
+    };
+    shoppingListsCopyFromRecipeCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this shopping list. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingListItemFromRecipe"];
+                "application/x-www-form-urlencoded": components["schemas"]["ShoppingListItemFromRecipe"];
+                "multipart/form-data": components["schemas"]["ShoppingListItemFromRecipe"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListItem"][];
                 };
             };
         };
