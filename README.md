@@ -15,10 +15,11 @@ and build a shopping list from the ingredients.
 ```
 config/            settings, urls, wsgi
 core/              the Django app
-  models/          TimestampedModel for now
+  models/          recipe, shopping, and the custom user model
   views/           split by API area and SPA serving
   serializers/     split by API area with shared serializer base classes
   urls.py          API routes with nested recipe and shopping-list children
+  seed_assets/     placeholder photos the seed copies into MEDIA_ROOT
 frontend/src/
   api/client.ts    fetch wrapper, handles CSRF
   api/index.ts     the endpoints
@@ -63,6 +64,23 @@ docker compose exec backend python manage.py seed_data
 By default this seeds the 5 curated demo recipes plus synthetic load data for query testing.
 Use `--recipes 0` when you only want the curated demo dataset.
 
+### Seeded credentials
+
+Every seeded account shares one password, set by `--password`:
+
+| | |
+| --- | --- |
+| Demo users | `ava@example.com`, `marco@example.com`, `nina@example.com` |
+| Load users | `cook_00001@example.local` up to the `--authors` count |
+| Password | `Password@1` |
+
+The seed writes password hashes directly, so `--password` never runs through
+`AUTH_PASSWORD_VALIDATORS`. The default satisfies them anyway, so it works as a
+registration password too.
+
+Email is the login field, so `createsuperuser` prompts for an email address
+rather than a username.
+
 ## Authorization
 
 Default Django auth groups are provisioned after migrate:
@@ -74,6 +92,26 @@ Default Django auth groups are provisioned after migrate:
 API writes require both the relevant Django model permission from one of those groups
 and object ownership. Anonymous reads remain public where the app is public, and
 superusers bypass group and ownership checks.
+
+## Regenerating the API schema
+
+`schema.yaml` and `frontend/src/schema.ts` are both generated. Change a
+serializer, viewset or route and both need regenerating, or the frontend types
+drift from what the API actually returns.
+
+```bash
+uv run python manage.py spectacular --file schema.yaml
+cd frontend && npm run generate-schema
+```
+
+Under Docker the first step becomes:
+
+```bash
+docker compose exec backend python manage.py spectacular --file schema.yaml
+```
+
+The second step stays on the host. The frontend container only mounts
+`./frontend`, so `../schema.yaml` is outside it.
 
 ## Running it without Docker
 
