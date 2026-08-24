@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Link as RouterLink, useNavigate, useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import type { ReactNode } from "react";
+import { Link as RouterLink, useParams } from "react-router";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,17 +15,14 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { errorMessage } from "~/api/errors";
-import { recipeQueries } from "~/api/queries";
 import { AddToShoppingList } from "~/components/AddToShoppingList";
 import { ConfirmButton } from "~/components/ConfirmButton";
-import { useConfirm } from "~/components/ConfirmProvider";
 import { PageShell } from "~/components/PageShell";
-import { formatIngredient } from "~/formatIngredient";
 import { Placeholder } from "~/components/Placeholder";
-import { useCloneRecipe, useRecipeMutations } from "~/hooks/useRecipeMutations";
-import { useWhoamiQuery } from "~/hooks/useWhoamiQuery";
+import { formatIngredient } from "~/formatIngredient";
+import { useRecipeDetail } from "~/hooks/useRecipeDetail";
 
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const Section = ({ title, children }: { title: string; children: ReactNode }) => (
     <Paper sx={{ p: 2.5 }}>
         <Typography variant="h6" gutterBottom>
             {title}
@@ -37,55 +33,34 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 export const RecipeDetailPage = () => {
     const { recipeId = "" } = useParams();
-    const navigate = useNavigate();
-    const { data: whoami } = useWhoamiQuery();
-    const { data: recipe, isPending, isError, error } = useQuery(recipeQueries.detail(recipeId));
+    const detail = useRecipeDetail(recipeId);
+    const { recipe, commentForm } = detail;
 
-    const clone = useCloneRecipe();
-    const { addReview, updateReview, addComment, removeComment, deleteRecipe } =
-        useRecipeMutations(recipeId);
-
-    const [comment, setComment] = useState("");
-    const confirm = useConfirm();
-
-    if (isPending) return <Skeleton variant="rounded" height={480} />;
-    if (isError) {
-        return <Alert severity="error">{errorMessage(error, "Could not load this recipe.")}</Alert>;
+    if (detail.isPending) return <Skeleton variant="rounded" height={480} />;
+    if (detail.isError || !recipe) {
+        return (
+            <Alert severity="error">
+                {errorMessage(detail.error, "Could not load this recipe.")}
+            </Alert>
+        );
     }
-
-    const isOwner = whoami?.authenticated && whoami.id === recipe.author;
-    const canWrite = Boolean(whoami?.authenticated);
-    // Mirrors is_admin_user() on the server: staff, superusers, or the Admin
-    // group. Without this the admin override the brief asks for exists in the
-    // API but is invisible in the UI.
-    const isAdmin = Boolean(whoami?.isStaff) || Boolean(whoami?.groups?.includes("Admin"));
-    const canManage = Boolean(isOwner) || isAdmin;
-    const myReview = recipe.reviews.find((review) => review.user === whoami?.id);
-    const ratings = recipe.reviews.map((review) => review.rating);
-    const average = ratings.length
-        ? ratings.reduce((total, value) => total + value, 0) / ratings.length
-        : null;
 
     return (
         <PageShell
             title={recipe.name}
             action={
                 <Stack direction="row" spacing={1}>
-                    {canWrite && !isOwner && (
+                    {detail.canWrite && !detail.isOwner && (
                         <Button
                             variant="outlined"
-                            loading={clone.isPending}
-                            onClick={() =>
-                                clone.mutate(recipe.id, {
-                                    onSuccess: (copy) => void navigate(`/recipes/${copy.id}/edit`),
-                                })
-                            }
+                            loading={detail.copying}
+                            onClick={detail.copyToMine}
                         >
                             Copy to my recipes
                         </Button>
                     )}
-                    {canWrite && <AddToShoppingList recipeId={recipe.id} />}
-                    {canManage && (
+                    {detail.canWrite && <AddToShoppingList recipeId={recipe.id} />}
+                    {detail.canManage && (
                         <Button
                             component={RouterLink}
                             to={`/recipes/${recipe.id}/edit`}
@@ -94,24 +69,17 @@ export const RecipeDetailPage = () => {
                             Edit
                         </Button>
                     )}
-                    {canManage && (
+                    {detail.canManage && (
                         <ConfirmButton
                             label="Delete"
                             title="Delete this recipe?"
                             message={
-                                isOwner
+                                detail.isOwner
                                     ? "This removes the recipe and everything attached to it. It cannot be undone."
                                     : "You are deleting someone else's recipe as an admin. This cannot be undone."
                             }
-                            loading={deleteRecipe.isPending}
-                            onConfirm={() =>
-                                // updatedAt is the concurrency token: if the recipe
-                                // changed since this page loaded, the server answers
-                                // 409 rather than deleting a version we never saw.
-                                deleteRecipe.mutate(recipe.updatedAt, {
-                                    onSuccess: () => void navigate("/", { replace: true }),
-                                })
-                            }
+                            loading={detail.deleting}
+                            onConfirm={detail.deleteRecipe}
                         />
                     )}
                 </Stack>
@@ -128,16 +96,16 @@ export const RecipeDetailPage = () => {
             )}
 
             <Stack direction="row" spacing={2} sx={{ alignItems: "center", flexWrap: "wrap" }}>
-                {average === null ? (
+                {detail.average === null ? (
                     <Typography variant="body2" color="text.secondary">
                         Not yet rated
                     </Typography>
                 ) : (
                     <>
-                        <Rating value={average} precision={0.1} readOnly size="small" />
+                        <Rating value={detail.average} precision={0.1} readOnly size="small" />
                         <Typography variant="body2" color="text.secondary">
-                            {average.toFixed(1)} from {ratings.length} review
-                            {ratings.length === 1 ? "" : "s"}
+                            {detail.average.toFixed(1)} from {detail.reviewCount} review
+                            {detail.reviewCount === 1 ? "" : "s"}
                         </Typography>
                     </>
                 )}
@@ -171,9 +139,7 @@ export const RecipeDetailPage = () => {
                     <List dense disablePadding>
                         {recipe.ingredients.map((ingredient) => (
                             <ListItem key={ingredient.id} disableGutters>
-                                <ListItemText
-                                    primary={formatIngredient(ingredient)}
-                                />
+                                <ListItemText primary={formatIngredient(ingredient)} />
                             </ListItem>
                         ))}
                     </List>
@@ -195,38 +161,19 @@ export const RecipeDetailPage = () => {
             </Section>
 
             <Section title="Your rating">
-                {!canWrite ? (
+                {!detail.canWrite ? (
                     <Typography variant="body2" color="text.secondary">
                         Sign in to rate this recipe.
                     </Typography>
-                ) : isOwner ? (
+                ) : detail.isOwner ? (
                     <Typography variant="body2" color="text.secondary">
                         You cannot review your own recipe.
                     </Typography>
                 ) : (
-                    <Stack spacing={1}>
-                        <Rating
-                            value={myReview?.rating ?? null}
-                            // One review per user is a database constraint, so an
-                            // existing review is updated rather than added again.
-                            onChange={(_event, value) => {
-                                if (!value) return;
-                                if (myReview) {
-                                    updateReview.mutate({ id: myReview.id, rating: value });
-                                } else {
-                                    addReview.mutate({ rating: value });
-                                }
-                            }}
-                        />
-                        {(addReview.isError || updateReview.isError) && (
-                            <Alert severity="error">
-                                {errorMessage(
-                                    addReview.error ?? updateReview.error,
-                                    "Could not save your rating."
-                                )}
-                            </Alert>
-                        )}
-                    </Stack>
+                    <Rating
+                        value={detail.myRating}
+                        onChange={(_event, value) => detail.rate(value)}
+                    />
                 )}
             </Section>
 
@@ -245,17 +192,11 @@ export const RecipeDetailPage = () => {
                                 <Typography variant="caption" color="text.secondary">
                                     {new Date(entry.createdAt).toLocaleDateString()}
                                 </Typography>
-                                {entry.user === whoami?.id && (
+                                {entry.user === detail.currentUserId && (
                                     <Button
                                         size="small"
                                         color="error"
-                                        onClick={async () => {
-                                            const ok = await confirm({
-                                                title: "Delete this comment?",
-                                                message: "Your comment will be removed from this recipe.",
-                                            });
-                                            if (ok) removeComment.mutate(entry.id);
-                                        }}
+                                        onClick={detail.removeComment(entry.id)}
                                     >
                                         Delete
                                     </Button>
@@ -265,32 +206,23 @@ export const RecipeDetailPage = () => {
                         </Box>
                     ))}
 
-                    {canWrite && (
-                        <Stack
-                            component="form"
-                            spacing={1}
-                            onSubmit={(event) => {
-                                event.preventDefault();
-                                if (!comment.trim()) return;
-                                addComment.mutate(
-                                    { content: comment.trim() },
-                                    { onSuccess: () => setComment("") }
-                                );
-                            }}
-                        >
+                    {detail.canWrite && (
+                        <Stack component="form" spacing={1} onSubmit={commentForm.submit}>
                             <TextField
                                 label="Add a comment"
                                 multiline
                                 minRows={2}
-                                value={comment}
-                                onChange={(event) => setComment(event.target.value)}
+                                value={commentForm.values.content}
+                                onChange={(event) =>
+                                    commentForm.setField("content")(event.target.value)
+                                }
                             />
                             <Box>
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    loading={addComment.isPending}
-                                    disabled={!comment.trim()}
+                                    loading={commentForm.pending}
+                                    disabled={!commentForm.canSubmit}
                                 >
                                     Post comment
                                 </Button>

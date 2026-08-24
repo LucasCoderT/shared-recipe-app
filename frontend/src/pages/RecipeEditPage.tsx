@@ -1,6 +1,5 @@
-import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate, useParams } from "react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { ReactNode } from "react";
+import { useParams } from "react-router";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,21 +15,16 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { errorMessage } from "~/api/errors";
-import { keys, recipeQueries } from "~/api/queries";
 import { ConfirmButton } from "~/components/ConfirmButton";
-import { useConfirm } from "~/components/ConfirmProvider";
 import { PageShell } from "~/components/PageShell";
 import { QuantityField } from "~/components/QuantityField";
-import { formatIngredient } from "~/formatIngredient";
 import { SortableSteps } from "~/components/SortableSteps";
 import { StaleWriteAlert } from "~/components/StaleWriteAlert";
 import { UnitField } from "~/components/UnitField";
-import { useRecipeMutations } from "~/hooks/useRecipeMutations";
-import { QUANTITY_PATTERN } from "~/schemas";
+import { formatIngredient } from "~/formatIngredient";
+import { MAX_TAGS, useRecipeEditor } from "~/hooks/useRecipeEditor";
 
-const MAX_TAGS = 5;
-
-const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const Section = ({ title, children }: { title: string; children: ReactNode }) => (
     <Paper sx={{ p: 2.5 }}>
         <Typography variant="h6" gutterBottom>
             {title}
@@ -41,91 +35,53 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 export const RecipeEditPage = () => {
     const { recipeId = "" } = useParams();
-    const navigate = useNavigate();
-    const client = useQueryClient();
-    const { data: recipe, isPending, isError, error } = useQuery(recipeQueries.detail(recipeId));
-    const m = useRecipeMutations(recipeId);
-    const confirm = useConfirm();
+    const editor = useRecipeEditor(recipeId);
+    const { recipe, details, tagForm, ingredientForm, stepForm } = editor;
 
-    /** Every destructive action routes through the same prompt. */
-    const confirmThen = (title: string, message: string, action: () => void) => async () => {
-        if (await confirm({ title, message })) action();
-    };
-
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [ingredient, setIngredient] = useState({ name: "", quantity: "", unit: "" });
-    // "1." passes the typing guard but is not a submittable quantity.
-    const quantityValid = QUANTITY_PATTERN.test(ingredient.quantity);
-    const [step, setStep] = useState("");
-    const [tag, setTag] = useState("");
-
-    // Seed the form once the recipe arrives, and again after a reload.
-    useEffect(() => {
-        if (recipe) {
-            setName(recipe.name);
-            setDescription(recipe.description ?? "");
-        }
-    }, [recipe?.id, recipe?.updatedAt]);
-
-    if (isPending) return <Skeleton variant="rounded" height={480} />;
-    if (isError) {
-        return <Alert severity="error">{errorMessage(error, "Could not load this recipe.")}</Alert>;
+    if (editor.isPending) return <Skeleton variant="rounded" height={480} />;
+    if (editor.isError || !recipe) {
+        return (
+            <Alert severity="error">
+                {errorMessage(editor.error, "Could not load this recipe.")}
+            </Alert>
+        );
     }
-
-    const reload = () => client.invalidateQueries({ queryKey: keys.recipes.detail(recipeId) });
-
-    const saveDetails = (event: FormEvent) => {
-        event.preventDefault();
-        // updatedAt is the concurrency token: the server rejects the write with
-        // a 409 if the row has changed since this page loaded it.
-        m.updateRecipe.mutate({ name, description, updatedAt: recipe.updatedAt });
-    };
-
-    const submit = <T,>(value: T, action: () => void) => (event: FormEvent) => {
-        event.preventDefault();
-        if (value) action();
-    };
 
     return (
         <PageShell
             title="Edit recipe"
             action={
                 <Stack direction="row" spacing={1}>
-                    <Button onClick={() => void navigate(`/recipes/${recipe.id}`)}>View</Button>
+                    <Button onClick={editor.viewRecipe}>View</Button>
                     <ConfirmButton
                         label="Delete"
                         title="Delete this recipe?"
                         message="This removes the recipe and everything attached to it. It cannot be undone."
-                        loading={m.deleteRecipe.isPending}
-                        onConfirm={() =>
-                            m.deleteRecipe.mutate(recipe.updatedAt, {
-                                onSuccess: () => void navigate("/", { replace: true }),
-                            })
-                        }
+                        loading={editor.deletingRecipe}
+                        onConfirm={editor.deleteRecipe}
                     />
                 </Stack>
             }
         >
-            <StaleWriteAlert error={m.updateRecipe.error} onReload={reload} />
-            <StaleWriteAlert error={m.deleteRecipe.error} onReload={reload} />
+            <StaleWriteAlert error={editor.staleError.update} onReload={editor.reload} />
+            <StaleWriteAlert error={editor.staleError.remove} onReload={editor.reload} />
 
             <Section title="Details">
-                <Stack component="form" spacing={2} onSubmit={saveDetails}>
+                <Stack component="form" spacing={2} onSubmit={details.save}>
                     <TextField
                         label="Name"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        value={details.name}
+                        onChange={(event) => details.setName(event.target.value)}
                     />
                     <TextField
-                        label="Description"
+                        label="Description (optional)"
                         multiline
                         minRows={3}
-                        value={description}
-                        onChange={(event) => setDescription(event.target.value)}
+                        value={details.description}
+                        onChange={(event) => details.setDescription(event.target.value)}
                     />
                     <Box>
-                        <Button type="submit" variant="contained" loading={m.updateRecipe.isPending}>
+                        <Button type="submit" variant="contained" loading={details.saving}>
                             Save details
                         </Button>
                     </Box>
@@ -135,15 +91,11 @@ export const RecipeEditPage = () => {
             <Section title={`Tags (${recipe.tags.length} of ${MAX_TAGS})`}>
                 <Stack spacing={2}>
                     <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
-                        {recipe.tags.map((entry) => (
+                        {recipe.tags.map((tag) => (
                             <Chip
-                                key={entry.id}
-                                label={entry.name}
-                                onDelete={confirmThen(
-                                    "Remove this tag?",
-                                    `"${entry.name}" will be removed from this recipe.`,
-                                    () => m.removeTag.mutate(entry.id)
-                                )}
+                                key={tag.id}
+                                label={tag.name}
+                                onDelete={editor.removeTag(tag.id, tag.name)}
                             />
                         ))}
                         {recipe.tags.length === 0 && (
@@ -153,32 +105,20 @@ export const RecipeEditPage = () => {
                         )}
                     </Box>
 
-                    <Stack
-                        component="form"
-                        direction="row"
-                        spacing={1}
-                        onSubmit={submit(tag.trim(), () =>
-                            m.addTag.mutate({ name: tag.trim() }, { onSuccess: () => setTag("") })
-                        )}
-                    >
+                    <Stack component="form" direction="row" spacing={1} onSubmit={tagForm.submit}>
                         <TextField
                             label="Add a tag"
-                            value={tag}
-                            onChange={(event) => setTag(event.target.value)}
-                            disabled={recipe.tags.length >= MAX_TAGS}
+                            value={tagForm.values.name}
+                            onChange={(event) => tagForm.setField("name")(event.target.value)}
+                            disabled={editor.tagsAtLimit}
                             sx={{ maxWidth: 260 }}
                         />
-                        <Button
-                            type="submit"
-                            loading={m.addTag.isPending}
-                            disabled={!tag.trim() || recipe.tags.length >= MAX_TAGS}
-                        >
+                        <Button type="submit" loading={tagForm.pending} disabled={!tagForm.canSubmit}>
                             Add
                         </Button>
                     </Stack>
 
-                    {/* The cap is enforced server-side by a signal; this mirrors it. */}
-                    {recipe.tags.length >= MAX_TAGS && (
+                    {editor.tagsAtLimit && (
                         <Alert severity="info" variant="outlined">
                             A recipe can have at most {MAX_TAGS} tags.
                         </Alert>
@@ -197,19 +137,13 @@ export const RecipeEditPage = () => {
                                     <IconButton
                                         edge="end"
                                         aria-label="Delete ingredient"
-                                        onClick={confirmThen(
-                                            "Remove this ingredient?",
-                                            `"${entry.name}" will be removed from this recipe.`,
-                                            () => m.removeIngredient.mutate(entry.id)
-                                        )}
+                                        onClick={editor.removeIngredient(entry.id, entry.name)}
                                     >
                                         <DeleteOutlinedIcon fontSize="small" />
                                     </IconButton>
                                 }
                             >
-                                <ListItemText
-                                    primary={formatIngredient(entry)}
-                                />
+                                <ListItemText primary={formatIngredient(entry)} />
                             </ListItem>
                         ))}
                     </List>
@@ -218,47 +152,37 @@ export const RecipeEditPage = () => {
                         component="form"
                         direction={{ xs: "column", sm: "row" }}
                         spacing={1}
-                        onSubmit={submit(
-                            ingredient.name && quantityValid,
-                            () =>
-                                m.addIngredient.mutate(ingredient, {
-                                    onSuccess: () =>
-                                        setIngredient({ name: "", quantity: "", unit: "" }),
-                                })
-                        )}
+                        onSubmit={ingredientForm.submit}
                     >
                         <QuantityField
-                            value={ingredient.quantity}
-                            onChange={(quantity) => setIngredient({ ...ingredient, quantity })}
-                            error={Boolean(ingredient.quantity) && !quantityValid}
+                            value={ingredientForm.values.quantity}
+                            onChange={ingredientForm.setField("quantity")}
+                            error={editor.quantityInvalid}
                             helperText={
-                                ingredient.quantity && !quantityValid
-                                    ? "Up to 2 decimal places."
-                                    : undefined
+                                editor.quantityInvalid ? "Up to 2 decimal places." : undefined
                             }
                             sx={{ maxWidth: { sm: 150 } }}
                         />
                         <UnitField
-                            value={ingredient.unit}
-                            onChange={(unit) => setIngredient({ ...ingredient, unit })}
+                            value={ingredientForm.values.unit}
+                            onChange={ingredientForm.setField("unit")}
                             sx={{ minWidth: { sm: 170 } }}
                         />
                         <TextField
                             label="Ingredient"
-                            value={ingredient.name}
+                            value={ingredientForm.values.name}
                             onChange={(event) =>
-                                setIngredient({ ...ingredient, name: event.target.value })
+                                ingredientForm.setField("name")(event.target.value)
                             }
                         />
                         <Button
                             type="submit"
-                            loading={m.addIngredient.isPending}
-                            disabled={!ingredient.name.trim() || !quantityValid}
+                            loading={ingredientForm.pending}
+                            disabled={!ingredientForm.canSubmit}
                         >
                             Add
                         </Button>
                     </Stack>
-
                 </Stack>
             </Section>
 
@@ -266,34 +190,23 @@ export const RecipeEditPage = () => {
                 <Stack spacing={2}>
                     <SortableSteps
                         steps={recipe.steps}
-                        onReorder={(order) => m.reorderSteps.mutate(order)}
-                        onRemove={(id, description) =>
-                            void confirm({
-                                title: "Remove this step?",
-                                message: `"${description}" will be removed from this recipe.`,
-                            }).then((ok) => {
-                                if (ok) m.removeStep.mutate(id);
-                            })
-                        }
+                        onReorder={editor.reorderSteps}
+                        onRemove={editor.removeStep}
                     />
 
-                    <Stack
-                        component="form"
-                        direction="row"
-                        spacing={1}
-                        onSubmit={submit(step.trim(), () =>
-                            m.addStep.mutate(
-                                { description: step.trim() },
-                                { onSuccess: () => setStep("") }
-                            )
-                        )}
-                    >
+                    <Stack component="form" direction="row" spacing={1} onSubmit={stepForm.submit}>
                         <TextField
                             label="Add a step"
-                            value={step}
-                            onChange={(event) => setStep(event.target.value)}
+                            value={stepForm.values.description}
+                            onChange={(event) =>
+                                stepForm.setField("description")(event.target.value)
+                            }
                         />
-                        <Button type="submit" loading={m.addStep.isPending} disabled={!step.trim()}>
+                        <Button
+                            type="submit"
+                            loading={stepForm.pending}
+                            disabled={!stepForm.canSubmit}
+                        >
                             Add
                         </Button>
                     </Stack>
@@ -319,11 +232,7 @@ export const RecipeEditPage = () => {
                                 <IconButton
                                     size="small"
                                     aria-label="Delete photo"
-                                    onClick={confirmThen(
-                                        "Remove this photo?",
-                                        "The photo will be removed from this recipe.",
-                                        () => m.removePhoto.mutate(photo.id)
-                                    )}
+                                    onClick={editor.removePhoto(photo.id)}
                                     sx={{
                                         position: "absolute",
                                         top: 4,
@@ -338,21 +247,23 @@ export const RecipeEditPage = () => {
                     </Box>
 
                     <Box>
-                        <Button component="label" variant="outlined" loading={m.uploadPhoto.isPending}>
+                        <Button
+                            component="label"
+                            variant="outlined"
+                            loading={editor.uploadingPhoto}
+                        >
                             Upload photo
                             <input
                                 type="file"
                                 accept="image/*"
                                 hidden
                                 onChange={(event) => {
-                                    const image = event.target.files?.[0];
-                                    if (image) m.uploadPhoto.mutate({ image });
+                                    editor.uploadPhoto(event.target.files?.[0]);
                                     event.target.value = "";
                                 }}
                             />
                         </Button>
                     </Box>
-
                 </Stack>
             </Section>
         </PageShell>
