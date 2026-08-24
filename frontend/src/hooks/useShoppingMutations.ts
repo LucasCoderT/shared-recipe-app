@@ -15,9 +15,15 @@ export const useShoppingListMutations = () => {
             onSuccess,
         }),
         remove: useMutation({
-            meta: { success: 'Removed.' },
+            meta: { success: "List deleted." },
             mutationFn: (id: Id) => api.shoppingLists.destroy(id),
-            onSuccess,
+            // Same reason as deleting a recipe: refetching the deleted list
+            // would 404 and stall the redirect behind the retries.
+            onSuccess: (_data, id) => {
+                client.removeQueries({ queryKey: keys.shoppingLists.detail(id) });
+                client.removeQueries({ queryKey: keys.shoppingLists.items(id) });
+                void client.invalidateQueries({ queryKey: keys.shoppingLists.all });
+            },
         }),
     };
 };

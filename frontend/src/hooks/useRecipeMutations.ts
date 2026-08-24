@@ -35,9 +35,18 @@ export const useRecipeMutations = (recipeId: Id) => {
             onSuccess,
         }),
         deleteRecipe: useMutation({
-            meta: { success: 'Recipe deleted.' },
+            meta: { success: "Recipe deleted." },
             mutationFn: (updatedAt?: string) => api.recipes.destroy(recipeId, updatedAt),
-            onSuccess,
+            // Drop the detail query rather than invalidating it. Invalidation
+            // refetches, and refetching a deleted recipe means a 404 plus
+            // retries that the caller's onSuccess waits behind -- so the page
+            // sits on the deleted recipe for seconds before redirecting.
+            onSuccess: () => {
+                client.removeQueries({ queryKey: keys.recipes.detail(recipeId) });
+                // Not awaited: the caller redirects in its own onSuccess, and
+                // waiting on the grid refetch first would delay it.
+                void client.invalidateQueries({ queryKey: keys.recipes.all });
+            },
         }),
         addIngredient: useMutation({
             meta: { success: 'Ingredient added.' },

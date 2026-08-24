@@ -18,6 +18,8 @@ import Typography from "@mui/material/Typography";
 import { errorMessage } from "~/api/errors";
 import { recipeQueries } from "~/api/queries";
 import { AddToShoppingList } from "~/components/AddToShoppingList";
+import { ConfirmButton } from "~/components/ConfirmButton";
+import { useConfirm } from "~/components/ConfirmProvider";
 import { PageShell } from "~/components/PageShell";
 import { formatIngredient } from "~/formatIngredient";
 import { Placeholder } from "~/components/Placeholder";
@@ -40,9 +42,11 @@ export const RecipeDetailPage = () => {
     const { data: recipe, isPending, isError, error } = useQuery(recipeQueries.detail(recipeId));
 
     const clone = useCloneRecipe();
-    const { addReview, updateReview, addComment, removeComment } = useRecipeMutations(recipeId);
+    const { addReview, updateReview, addComment, removeComment, deleteRecipe } =
+        useRecipeMutations(recipeId);
 
     const [comment, setComment] = useState("");
+    const confirm = useConfirm();
 
     if (isPending) return <Skeleton variant="rounded" height={480} />;
     if (isError) {
@@ -51,6 +55,11 @@ export const RecipeDetailPage = () => {
 
     const isOwner = whoami?.authenticated && whoami.id === recipe.author;
     const canWrite = Boolean(whoami?.authenticated);
+    // Mirrors is_admin_user() on the server: staff, superusers, or the Admin
+    // group. Without this the admin override the brief asks for exists in the
+    // API but is invisible in the UI.
+    const isAdmin = Boolean(whoami?.isStaff) || Boolean(whoami?.groups?.includes("Admin"));
+    const canManage = Boolean(isOwner) || isAdmin;
     const myReview = recipe.reviews.find((review) => review.user === whoami?.id);
     const ratings = recipe.reviews.map((review) => review.rating);
     const average = ratings.length
@@ -76,7 +85,7 @@ export const RecipeDetailPage = () => {
                         </Button>
                     )}
                     {canWrite && <AddToShoppingList recipeId={recipe.id} />}
-                    {isOwner && (
+                    {canManage && (
                         <Button
                             component={RouterLink}
                             to={`/recipes/${recipe.id}/edit`}
@@ -84,6 +93,26 @@ export const RecipeDetailPage = () => {
                         >
                             Edit
                         </Button>
+                    )}
+                    {canManage && (
+                        <ConfirmButton
+                            label="Delete"
+                            title="Delete this recipe?"
+                            message={
+                                isOwner
+                                    ? "This removes the recipe and everything attached to it. It cannot be undone."
+                                    : "You are deleting someone else's recipe as an admin. This cannot be undone."
+                            }
+                            loading={deleteRecipe.isPending}
+                            onConfirm={() =>
+                                // updatedAt is the concurrency token: if the recipe
+                                // changed since this page loaded, the server answers
+                                // 409 rather than deleting a version we never saw.
+                                deleteRecipe.mutate(recipe.updatedAt, {
+                                    onSuccess: () => void navigate("/", { replace: true }),
+                                })
+                            }
+                        />
                     )}
                 </Stack>
             }
@@ -220,7 +249,13 @@ export const RecipeDetailPage = () => {
                                     <Button
                                         size="small"
                                         color="error"
-                                        onClick={() => removeComment.mutate(entry.id)}
+                                        onClick={async () => {
+                                            const ok = await confirm({
+                                                title: "Delete this comment?",
+                                                message: "Your comment will be removed from this recipe.",
+                                            });
+                                            if (ok) removeComment.mutate(entry.id);
+                                        }}
                                     >
                                         Delete
                                     </Button>

@@ -18,6 +18,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { errorMessage } from "~/api/errors";
 import { shoppingListQueries } from "~/api/queries";
 import { ConfirmButton } from "~/components/ConfirmButton";
+import { useConfirm } from "~/components/ConfirmProvider";
 import { PageShell } from "~/components/PageShell";
 import { QuantityField } from "~/components/QuantityField";
 import { formatIngredient } from "~/formatIngredient";
@@ -35,6 +36,7 @@ export const ShoppingListDetailPage = () => {
     const { remove: removeList } = useShoppingListMutations();
 
     const [entry, setEntry] = useState({ name: "", quantity: "", unit: "" });
+    const confirm = useConfirm();
     // Blank is allowed here; anything else has to be a well formed decimal.
     const quantityValid = !entry.quantity || QUANTITY_PATTERN.test(entry.quantity);
 
@@ -139,7 +141,17 @@ export const ShoppingListDetailPage = () => {
                             <ListItem
                                 key={row.id}
                                 secondaryAction={
-                                    <IconButton edge="end" onClick={() => remove.mutate(row.id)}>
+                                    <IconButton
+                                        edge="end"
+                                        aria-label="Delete item"
+                                        onClick={async () => {
+                                            const ok = await confirm({
+                                                title: "Remove this item?",
+                                                message: `"${row.name}" will be removed from this list.`,
+                                            });
+                                            if (ok) remove.mutate(row.id);
+                                        }}
+                                    >
                                         <DeleteOutlinedIcon fontSize="small" />
                                     </IconButton>
                                 }

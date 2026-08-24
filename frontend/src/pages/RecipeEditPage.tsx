@@ -18,6 +18,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { errorMessage } from "~/api/errors";
 import { keys, recipeQueries } from "~/api/queries";
 import { ConfirmButton } from "~/components/ConfirmButton";
+import { useConfirm } from "~/components/ConfirmProvider";
 import { PageShell } from "~/components/PageShell";
 import { QuantityField } from "~/components/QuantityField";
 import { formatIngredient } from "~/formatIngredient";
@@ -44,6 +45,12 @@ export const RecipeEditPage = () => {
     const client = useQueryClient();
     const { data: recipe, isPending, isError, error } = useQuery(recipeQueries.detail(recipeId));
     const m = useRecipeMutations(recipeId);
+    const confirm = useConfirm();
+
+    /** Every destructive action routes through the same prompt. */
+    const confirmThen = (title: string, message: string, action: () => void) => async () => {
+        if (await confirm({ title, message })) action();
+    };
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -132,7 +139,11 @@ export const RecipeEditPage = () => {
                             <Chip
                                 key={entry.id}
                                 label={entry.name}
-                                onDelete={() => m.removeTag.mutate(entry.id)}
+                                onDelete={confirmThen(
+                                    "Remove this tag?",
+                                    `"${entry.name}" will be removed from this recipe.`,
+                                    () => m.removeTag.mutate(entry.id)
+                                )}
                             />
                         ))}
                         {recipe.tags.length === 0 && (
@@ -185,7 +196,12 @@ export const RecipeEditPage = () => {
                                 secondaryAction={
                                     <IconButton
                                         edge="end"
-                                        onClick={() => m.removeIngredient.mutate(entry.id)}
+                                        aria-label="Delete ingredient"
+                                        onClick={confirmThen(
+                                            "Remove this ingredient?",
+                                            `"${entry.name}" will be removed from this recipe.`,
+                                            () => m.removeIngredient.mutate(entry.id)
+                                        )}
                                     >
                                         <DeleteOutlinedIcon fontSize="small" />
                                     </IconButton>
@@ -251,7 +267,14 @@ export const RecipeEditPage = () => {
                     <SortableSteps
                         steps={recipe.steps}
                         onReorder={(order) => m.reorderSteps.mutate(order)}
-                        onRemove={(id) => m.removeStep.mutate(id)}
+                        onRemove={(id, description) =>
+                            void confirm({
+                                title: "Remove this step?",
+                                message: `"${description}" will be removed from this recipe.`,
+                            }).then((ok) => {
+                                if (ok) m.removeStep.mutate(id);
+                            })
+                        }
                     />
 
                     <Stack
@@ -295,7 +318,12 @@ export const RecipeEditPage = () => {
                                 />
                                 <IconButton
                                     size="small"
-                                    onClick={() => m.removePhoto.mutate(photo.id)}
+                                    aria-label="Delete photo"
+                                    onClick={confirmThen(
+                                        "Remove this photo?",
+                                        "The photo will be removed from this recipe.",
+                                        () => m.removePhoto.mutate(photo.id)
+                                    )}
                                     sx={{
                                         position: "absolute",
                                         top: 4,

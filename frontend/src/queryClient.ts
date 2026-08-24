@@ -1,4 +1,5 @@
 import { MutationCache, QueryClient } from "@tanstack/react-query";
+import { ApiError } from "~/api/client";
 import { errorMessage } from "~/api/errors";
 import { toast } from "~/toast";
 
@@ -13,6 +14,22 @@ import { toast } from "~/toast";
  * for. Query definitions live in ~/api/queries.
  */
 export const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            /**
+             * Never retry a 4xx. The default policy retries three times, which
+             * for a deleted resource means four 404s and several seconds of the
+             * page sitting there before a redirect can run. A client error will
+             * not become a success by asking again.
+             */
+            retry: (failureCount, error) => {
+                if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+                    return false;
+                }
+                return failureCount < 2;
+            },
+        },
+    },
     mutationCache: new MutationCache({
         onError: (error, _variables, _context, mutation) => {
             const fallback =
