@@ -5,7 +5,6 @@ from decimal import Decimal
 from random import Random
 
 import factory
-from django.contrib.auth.models import User
 from factory.django import DjangoModelFactory
 
 from core.models import (
@@ -18,6 +17,7 @@ from core.models import (
     RecipeTag,
     ShoppingList,
     ShoppingListItem,
+    User,
 )
 from core.utils.seed_data import RecipeSpec
 
@@ -35,10 +35,8 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    username = factory.Sequence(lambda n: f"user_{n:05d}")
-    email = factory.LazyAttribute(lambda obj: f"{obj.username}@example.local")
-    first_name = "Cook"
-    last_name = factory.Sequence(lambda n: f"{n:05d}")
+    email = factory.Sequence(lambda n: f"user_{n:05d}@example.local")
+    display_name = factory.Sequence(lambda n: f"user_{n:05d}")
     password = ""
     is_staff = False
     is_superuser = False
@@ -85,7 +83,7 @@ class RecipePhotoFactory(DjangoModelFactory):
         model = RecipePhoto
 
     recipe = factory.SubFactory(RecipeFactory)
-    image = "recipe_photos/default.jpg"
+    image = "recipe_photos/placeholder_1"
     description = ""
 
 
@@ -146,22 +144,18 @@ def _slugify_recipe_name(name: str) -> str:
 def build_user(seed_user: dict[str, str], password_hash: str, now=None) -> User:
     _ = now
     return UserFactory.build(
-        username=seed_user["username"],
         email=seed_user["email"],
-        first_name=seed_user["first_name"],
-        last_name=seed_user["last_name"],
+        display_name=seed_user["username"],
         password=password_hash,
     )
 
 
 def build_load_user(index: int, password_hash: str, now=None) -> User:
     _ = now
-    username = f"cook_{index:05d}"
+    handle = f"cook_{index:05d}"
     return UserFactory.build(
-        username=username,
-        email=f"{username}@example.local",
-        first_name="Cook",
-        last_name=f"{index:05d}",
+        email=f"{handle}@example.local",
+        display_name=handle,
         password=password_hash,
     )
 
@@ -231,7 +225,7 @@ def build_recipe_photos(recipe: Recipe, spec: RecipeSpec, now=None) -> list[Reci
     photos = [
         RecipePhotoFactory.build(
             recipe=recipe,
-            image=f"recipe_photos/{slug}_1.jpg",
+            image="recipe_photos/placeholder_1.jpg",
             description=f"Plated {spec.name.lower()}",
             _order=0,
         )
@@ -240,7 +234,7 @@ def build_recipe_photos(recipe: Recipe, spec: RecipeSpec, now=None) -> list[Reci
         photos.append(
             RecipePhotoFactory.build(
                 recipe=recipe,
-                image=f"recipe_photos/{slug}_2.jpg",
+                image="recipe_photos/placeholder_2.jpg",
                 description="In-progress cooking photo",
                 _order=1,
             )
@@ -286,7 +280,7 @@ def build_comments(
 def build_shopping_list(user: User, title: str, now=None) -> ShoppingList:
     _ = now
     return ShoppingListFactory.build(
-        name=f"{user.first_name} {title}",
+        name=f"{user.display_name} {title}",
         user=user,
     )
 

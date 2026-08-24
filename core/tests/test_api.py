@@ -1,6 +1,7 @@
 import pytest
-from django.contrib.auth.models import User
 from django.test import Client
+
+from core.models import User
 
 # ATOMIC_REQUESTS wraps every request in a transaction, so any view test hits the db.
 pytestmark = pytest.mark.django_db
@@ -19,7 +20,7 @@ def test__given_anonymous_client__then_whoami_reports_logged_out() -> None:
 
 
 def test__given_staff_user__then_whoami_uses_camel_case_fields() -> None:
-    user = User.objects.create_user("lucas", password="pw", is_staff=True)
+    user = User.objects.create_user("lucas@example.com", password="pw", is_staff=True)
     client = Client()
     client.force_login(user)
 
@@ -27,3 +28,5 @@ def test__given_staff_user__then_whoami_uses_camel_case_fields() -> None:
 
     assert body["isStaff"] is True
     assert "is_staff" not in body
+    assert body["email"] == "lucas@example.com"
+    assert "displayName" in body

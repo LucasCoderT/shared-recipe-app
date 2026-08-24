@@ -10,6 +10,7 @@ from .recipe import (
     RecipeTag,
 )
 from .shopping import ShoppingList, ShoppingListItem
+from .user import User, UserManager
 
 __all__ = (
     "TimestampedModel",
@@ -23,4 +24,6 @@ __all__ = (
     "RecipeTag",
     "ShoppingList",
     "ShoppingListItem",
+    "User",
+    "UserManager",
 )

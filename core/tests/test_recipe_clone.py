@@ -1,15 +1,13 @@
 import pytest
-from django.contrib.auth.models import User
 
-from core.models import Recipe, RecipeStepIngredient
+from core.models import Recipe, RecipeStepIngredient, User
 
 pytestmark = pytest.mark.django_db
 
 
-
 def test_when_recipe_cloned_expect_children_cloned(seed_data_factory):
     seed_data_factory()
-    cloner = User.objects.get(username="marco_kitchen")
+    cloner = User.objects.get(email="marco@example.com")
     original = Recipe.objects.get(name="Classic Spaghetti Bolognese")
 
     # Store all the original data in memory to compare
@@ -42,12 +40,12 @@ def test_when_recipe_cloned_expect_children_cloned(seed_data_factory):
     # Assert that the tags/ingredients/steps were properly cloned with ordering preserved
     assert list(clone.tags.order_by("_order").values_list("name", flat=True)) == original_tag_names
     assert (
-            list(clone.ingredients.order_by("_order").values_list("name", flat=True))
-            == original_ingredient_names
+        list(clone.ingredients.order_by("_order").values_list("name", flat=True))
+        == original_ingredient_names
     )
     assert (
-            list(clone.steps.order_by("_order").values_list("description", flat=True))
-            == original_step_descriptions
+        list(clone.steps.order_by("_order").values_list("description", flat=True))
+        == original_step_descriptions
     )
 
     # Assert that the new ideas are in fact new

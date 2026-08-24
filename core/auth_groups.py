@@ -1,7 +1,12 @@
 from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
-from django.contrib.auth.models import Group, Permission, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
 from django.db.models import Model
+
+if TYPE_CHECKING:
+    from core.models import User
 
 from core.models import (
     Recipe,
@@ -84,7 +89,7 @@ def ensure_default_groups() -> None:
         group.permissions.set(permissions_for_models(models))
 
 
-def assign_default_groups_to_users(users: Iterable[User]) -> None:
+def assign_default_groups_to_users(users: Iterable["User"]) -> None:
     users = [
         user
         for user in users
@@ -95,7 +100,7 @@ def assign_default_groups_to_users(users: Iterable[User]) -> None:
 
     ensure_default_groups()
     groups = list(Group.objects.filter(name__in=DEFAULT_USER_GROUPS))
-    membership_model = User.groups.through
+    membership_model = get_user_model().groups.through
     membership_model.objects.bulk_create(
         [
             membership_model(user_id=user.pk, group_id=group.pk)

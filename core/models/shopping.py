@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from core.models import base
@@ -17,7 +18,7 @@ class ShoppingListItem(base.OrderableModelMixin, base.TimestampedModel):
     )
     name = models.CharField(max_length=255)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    unit = models.CharField(max_length=50, validators=[validate_unit])
+    unit = models.CharField(max_length=50, blank=True, validators=[validate_unit])
     purchased = models.BooleanField(default=False)
 
     class Meta:
@@ -36,7 +37,9 @@ class ShoppingListItem(base.OrderableModelMixin, base.TimestampedModel):
 
 class ShoppingList(base.TimestampedModel):
     name = models.CharField(max_length=255)
-    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="shopping_lists")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="shopping_lists"
+    )
 
     class Meta:
         indexes = [

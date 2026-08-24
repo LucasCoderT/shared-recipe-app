@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction
 
@@ -28,7 +29,9 @@ class RecipeTag(base.OrderableModelMixin, base.TimestampedModel):
 
 class RecipeComment(base.TimestampedModel):
     recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="comments")
-    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipe_comments")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipe_comments"
+    )
     content = models.TextField()
 
     class Meta:
@@ -38,12 +41,14 @@ class RecipeComment(base.TimestampedModel):
         ]
 
     def __str__(self):
-        return f"Comment by {self.user.username} on {self.recipe.name}"
+        return f"Comment by {self.user} on {self.recipe.name}"
 
 
 class RecipeReview(base.TimestampedModel):
     recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="reviews")
-    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipe_reviews")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipe_reviews"
+    )
     rating = models.IntegerField(
         null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(5)]
     )
@@ -103,12 +108,11 @@ class RecipeStepIngredient(base.TimestampedModel):
 
 
 class RecipeIngredient(base.OrderableModelMixin, base.TimestampedModel):
-    recipe = models.ForeignKey(
-        "Recipe", on_delete=models.CASCADE, related_name="ingredients"
-    )
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="ingredients")
     name = models.CharField(max_length=255)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
-    unit = models.CharField(max_length=50, validators=[validate_unit])
+    # Optional: a countable ingredient has no unit, only a quantity.
+    unit = models.CharField(max_length=50, blank=True, validators=[validate_unit])
 
     class Meta:
         order_with_respect_to = "recipe"
@@ -150,13 +154,15 @@ class RecipePhoto(base.OrderableModelMixin, base.TimestampedModel):
 
 class Recipe(base.TimestampedModel):
     name = models.CharField(max_length=255)
-    author = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="recipes")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="recipes"
+    )
     description = models.TextField()
     original_recipe = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="derivatives"
     )
     original_author = models.ForeignKey(
-        "auth.User",
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -179,16 +185,12 @@ class Recipe(base.TimestampedModel):
         :return:
         """
         with transaction.atomic():
-
             relations = [
                 "tags",
                 "photos",
             ]
 
-            children_entities = {
-                child: list(getattr(self, child).all())
-                for child in relations
-            }
+            children_entities = {child: list(getattr(self, child).all()) for child in relations}
             self.original_author = self.author
             self.original_recipe_id = self.pk
             self.author = user
@@ -226,9 +228,7 @@ class Recipe(base.TimestampedModel):
                 RecipeStepIngredient.objects.create(
                     recipe=self,
                     step=steps[link.step_id],
-                    ingredient=ingredients[link.ingredient_id]
+                    ingredient=ingredients[link.ingredient_id],
                 )
 
             return self
-
-
