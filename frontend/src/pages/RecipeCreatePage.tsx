@@ -49,7 +49,12 @@ export const RecipeCreatePage = () => {
     return (
         <PageShell title="New recipe">
             <Paper sx={{ p: 2.5, maxWidth: 640 }}>
-                <Stack component="form" spacing={2} onSubmit={onSubmit} noValidate>
+                <Stack
+                    component="form"
+                    spacing={2}
+                    onSubmit={(event) => void onSubmit(event)}
+                    noValidate
+                >
                     <TextField
                         label="Name"
                         error={Boolean(errors.name)}

@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
-import { useConfirm } from "~/components/ConfirmProvider";
+import { useConfirmedAction } from "~/hooks/useConfirmedAction";
 
-/** A destructive button that asks first. Thin wrapper over useConfirm. */
+/** A destructive button that asks first. */
 export const ConfirmButton = ({
     label,
     title,
@@ -15,16 +15,14 @@ export const ConfirmButton = ({
     onConfirm: () => void;
     loading?: boolean | undefined;
 }) => {
-    const confirm = useConfirm();
+    const confirmed = useConfirmedAction();
 
     return (
         <Button
             color="error"
             variant="outlined"
             loading={loading}
-            onClick={async () => {
-                if (await confirm({ title, message, confirmLabel: label })) onConfirm();
-            }}
+            onClick={confirmed({ title, message, confirmLabel: label }, onConfirm)}
         >
             {label}
         </Button>

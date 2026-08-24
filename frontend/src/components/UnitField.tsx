@@ -47,7 +47,7 @@ export const UnitField = ({
 }) => (
     <Autocomplete
         freeSolo
-        options={UNIT_SUGGESTIONS as readonly string[]}
+        options={UNIT_SUGGESTIONS}
         value={value}
         onChange={(_event, next) => onChange(next ?? "")}
         onInputChange={(_event, next) => onChange(next)}

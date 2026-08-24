@@ -36,6 +36,10 @@ export const useRecipeEditor = (recipeId: string) => {
             setName(recipe.name);
             setDescription(recipe.description ?? "");
         }
+        // Keyed on identity and version rather than the object: depending on
+        // `recipe` would reseed the form on every refetch and discard edits in
+        // progress.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recipe?.id, recipe?.updatedAt]);
 
     const saveDetails = (event: FormEvent) => {
@@ -46,10 +50,9 @@ export const useRecipeEditor = (recipeId: string) => {
         m.updateRecipe.mutate({ name, description, updatedAt: recipe.updatedAt });
     };
 
-    const reload = useCallback(
-        () => client.invalidateQueries({ queryKey: keys.recipes.detail(recipeId) }),
-        [client, recipeId]
-    );
+    const reload = useCallback(() => {
+        void client.invalidateQueries({ queryKey: keys.recipes.detail(recipeId) });
+    }, [client, recipeId]);
 
     // ---- add forms -----------------------------------------------------
     const tagForm = useAddForm({
@@ -96,7 +99,7 @@ export const useRecipeEditor = (recipeId: string) => {
         );
 
     const removeStep = (id: number, label: string) =>
-        void confirmed(
+        confirmed(
             { title: "Remove this step?", message: `"${label}" will be removed from this recipe.` },
             () => m.removeStep.mutate(id)
         )();

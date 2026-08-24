@@ -41,7 +41,9 @@ export class ApiError extends Error {
  * dropped so an unset filter does not become "?q=", and arrays are repeated
  * (?tag=a&tag=b) because that is what DRF's ListField reads off a QueryDict.
  */
-export const toQuery = (params: Record<string, unknown>): string => {
+type QueryValue = string | number | boolean | null | undefined | (string | number)[];
+
+export const toQuery = (params: Record<string, QueryValue>): string => {
     const search = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {

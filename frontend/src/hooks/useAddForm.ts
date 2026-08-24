@@ -40,10 +40,7 @@ export const useAddForm = <T extends Fields>({
 
     const canSubmit = !pending && (isValid ? isValid(values) : true);
 
-    const submit = async (event: FormEvent) => {
-        event.preventDefault();
-        if (!canSubmit) return;
-
+    const run = async () => {
         setPending(true);
         try {
             await onSubmit(values);
@@ -53,6 +50,17 @@ export const useAddForm = <T extends Fields>({
         } finally {
             setPending(false);
         }
+    };
+
+    /**
+     * Void-returning rather than async: an async handler on onSubmit leaves a
+     * floating promise nothing can observe. preventDefault still runs
+     * synchronously, because run() only suspends at its first await.
+     */
+    const submit = (event: FormEvent) => {
+        event.preventDefault();
+        if (!canSubmit) return;
+        void run();
     };
 
     return { values, setField, canSubmit, pending, submit, reset };

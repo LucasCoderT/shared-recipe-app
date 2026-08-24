@@ -1,21 +1,11 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
-type ConfirmOptions = {
-    title: string;
-    message: string;
-    /** Label on the destructive action. Defaults to "Delete". */
-    confirmLabel?: string;
-};
-
-type ConfirmFn = (options: ConfirmOptions) => Promise<boolean>;
-
-const ConfirmContext = createContext<ConfirmFn | null>(null);
+import { ConfirmContext, type ConfirmFn, type ConfirmOptions } from "~/confirmContext";
 
 /**
  * One dialog for the whole app, requested through a promise.
@@ -62,12 +52,4 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
             </Dialog>
         </ConfirmContext.Provider>
     );
-};
-
-export const useConfirm = (): ConfirmFn => {
-    const confirm = useContext(ConfirmContext);
-    if (!confirm) {
-        throw new Error("useConfirm must be used inside a ConfirmProvider");
-    }
-    return confirm;
 };

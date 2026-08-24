@@ -28,6 +28,9 @@ export const requireAuth: MiddlewareFunction = async ({ request }, next) => {
         // Preserve where they were going so login can send them back.
         const target = new URL(request.url);
         const next = `${target.pathname}${target.search}`;
+        // React Router signals a redirect by throwing a Response; this is the
+        // documented contract for middleware, not an error being thrown.
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw redirect(`/login?next=${encodeURIComponent(next)}`);
     }
 

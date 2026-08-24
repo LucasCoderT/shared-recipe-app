@@ -63,7 +63,7 @@ export const AuthPanel = () => {
     };
 
     return (
-        <Box component="form" onSubmit={onSubmit} noValidate>
+        <Box component="form" onSubmit={(event) => void onSubmit(event)} noValidate>
             <Tabs value={mode} onChange={switchTo} sx={{ mb: 2 }}>
                 <Tab value="login" label="Sign in" />
                 <Tab value="register" label="Register" />
