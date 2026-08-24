@@ -40,11 +40,21 @@ export const optionalText = z.string().trim().default("");
  * produce strings, and going through a JS number would lose precision on the
  * way. The regex enforces the column shape before the range check runs.
  */
+/** Decimal(10, 2): up to 8 digits before the point, up to 2 after. */
+export const QUANTITY_PATTERN = /^\d{1,8}(\.\d{1,2})?$/;
+
+/**
+ * The same shape, relaxed for a half-typed value. "1." and "" are not valid
+ * quantities but are valid things to be partway through typing, so the input
+ * accepts them and QUANTITY_PATTERN rejects them on submit.
+ */
+export const PARTIAL_QUANTITY_PATTERN = /^\d{0,8}(\.\d{0,2})?$/;
+
 export const quantity = z
     .string()
     .trim()
     .min(1, { error: "Quantity is required." })
-    .regex(/^\d{1,8}(\.\d{1,2})?$/, {
+    .regex(QUANTITY_PATTERN, {
         error: "Use a number with up to 2 decimal places.",
     })
     .refine((value) => Number(value) >= 0.01, {

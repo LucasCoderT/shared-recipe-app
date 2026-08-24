@@ -19,9 +19,11 @@ import { errorMessage } from "~/api/errors";
 import { shoppingListQueries } from "~/api/queries";
 import { ConfirmButton } from "~/components/ConfirmButton";
 import { PageShell } from "~/components/PageShell";
+import { QuantityField } from "~/components/QuantityField";
 import { formatIngredient } from "~/formatIngredient";
 import { UnitField } from "~/components/UnitField";
 import { useShoppingItemMutations, useShoppingListMutations } from "~/hooks/useShoppingMutations";
+import { QUANTITY_PATTERN } from "~/schemas";
 
 export const ShoppingListDetailPage = () => {
     const { shoppingListId = "" } = useParams();
@@ -33,10 +35,12 @@ export const ShoppingListDetailPage = () => {
     const { remove: removeList } = useShoppingListMutations();
 
     const [entry, setEntry] = useState({ name: "", quantity: "", unit: "" });
+    // Blank is allowed here; anything else has to be a well formed decimal.
+    const quantityValid = !entry.quantity || QUANTITY_PATTERN.test(entry.quantity);
 
     const submit = (event: FormEvent) => {
         event.preventDefault();
-        if (!entry.name.trim()) return;
+        if (!entry.name.trim() || !quantityValid) return;
         add.mutate(
             {
                 name: entry.name.trim(),
@@ -85,11 +89,15 @@ export const ShoppingListDetailPage = () => {
                     spacing={1}
                     onSubmit={submit}
                 >
-                    <TextField
-                        label="Quantity"
+                    <QuantityField
+                        label="Quantity (optional)"
                         value={entry.quantity}
-                        onChange={(event) => setEntry({ ...entry, quantity: event.target.value })}
-                        sx={{ maxWidth: { sm: 120 } }}
+                        onChange={(quantity) => setEntry({ ...entry, quantity })}
+                        error={Boolean(entry.quantity) && !quantityValid}
+                        helperText={
+                            entry.quantity && !quantityValid ? "Up to 2 decimal places." : undefined
+                        }
+                        sx={{ minWidth: { sm: 170 } }}
                     />
                     <UnitField
                         value={entry.unit}
@@ -101,7 +109,12 @@ export const ShoppingListDetailPage = () => {
                         value={entry.name}
                         onChange={(event) => setEntry({ ...entry, name: event.target.value })}
                     />
-                    <Button type="submit" variant="contained" loading={add.isPending}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        loading={add.isPending}
+                        disabled={!entry.name.trim() || !quantityValid}
+                    >
                         Add
                     </Button>
                 </Stack>

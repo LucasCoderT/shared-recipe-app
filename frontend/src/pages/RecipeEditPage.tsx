@@ -19,11 +19,13 @@ import { errorMessage } from "~/api/errors";
 import { keys, recipeQueries } from "~/api/queries";
 import { ConfirmButton } from "~/components/ConfirmButton";
 import { PageShell } from "~/components/PageShell";
+import { QuantityField } from "~/components/QuantityField";
 import { formatIngredient } from "~/formatIngredient";
 import { SortableSteps } from "~/components/SortableSteps";
 import { StaleWriteAlert } from "~/components/StaleWriteAlert";
 import { UnitField } from "~/components/UnitField";
 import { useRecipeMutations } from "~/hooks/useRecipeMutations";
+import { QUANTITY_PATTERN } from "~/schemas";
 
 const MAX_TAGS = 5;
 
@@ -46,6 +48,8 @@ export const RecipeEditPage = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [ingredient, setIngredient] = useState({ name: "", quantity: "", unit: "" });
+    // "1." passes the typing guard but is not a submittable quantity.
+    const quantityValid = QUANTITY_PATTERN.test(ingredient.quantity);
     const [step, setStep] = useState("");
     const [tag, setTag] = useState("");
 
@@ -199,7 +203,7 @@ export const RecipeEditPage = () => {
                         direction={{ xs: "column", sm: "row" }}
                         spacing={1}
                         onSubmit={submit(
-                            ingredient.name && ingredient.quantity,
+                            ingredient.name && quantityValid,
                             () =>
                                 m.addIngredient.mutate(ingredient, {
                                     onSuccess: () =>
@@ -207,13 +211,16 @@ export const RecipeEditPage = () => {
                                 })
                         )}
                     >
-                        <TextField
-                            label="Quantity"
+                        <QuantityField
                             value={ingredient.quantity}
-                            onChange={(event) =>
-                                setIngredient({ ...ingredient, quantity: event.target.value })
+                            onChange={(quantity) => setIngredient({ ...ingredient, quantity })}
+                            error={Boolean(ingredient.quantity) && !quantityValid}
+                            helperText={
+                                ingredient.quantity && !quantityValid
+                                    ? "Up to 2 decimal places."
+                                    : undefined
                             }
-                            sx={{ maxWidth: { sm: 120 } }}
+                            sx={{ maxWidth: { sm: 150 } }}
                         />
                         <UnitField
                             value={ingredient.unit}
@@ -227,7 +234,11 @@ export const RecipeEditPage = () => {
                                 setIngredient({ ...ingredient, name: event.target.value })
                             }
                         />
-                        <Button type="submit" loading={m.addIngredient.isPending}>
+                        <Button
+                            type="submit"
+                            loading={m.addIngredient.isPending}
+                            disabled={!ingredient.name.trim() || !quantityValid}
+                        >
                             Add
                         </Button>
                     </Stack>
