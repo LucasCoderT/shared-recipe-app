@@ -1,3 +1,4 @@
+from .auth import LoginView, LogoutView, RegisterView
 from .meta import HealthView, WhoAmIView
 from .recipes import (
     RecipeCommentViewSet,
@@ -14,6 +15,9 @@ from .spa import spa_index
 
 __all__ = (
     "HealthView",
+    "LoginView",
+    "LogoutView",
+    "RegisterView",
     "WhoAmIView",
     "RecipeCommentViewSet",
     "RecipeIngredientViewSet",

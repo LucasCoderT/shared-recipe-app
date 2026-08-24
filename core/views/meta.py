@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.utils import extend_schema
 from rest_framework import views
 from rest_framework.permissions import AllowAny
@@ -19,8 +21,13 @@ class HealthView(views.APIView):
         return Response({"status": "ok"})
 
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class WhoAmIView(views.APIView):
-    """Returns the current user, or an anonymous marker when logged out."""
+    """Returns the current user, or an anonymous marker when logged out.
+
+    Also seeds the csrftoken cookie. The SPA calls this on load, so the token is
+    in place before any mutating request needs to send it back.
+    """
 
     serializer_class = WhoAmISerializer
 

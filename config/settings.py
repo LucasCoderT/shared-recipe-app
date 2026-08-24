@@ -24,7 +24,20 @@ else:
     if not SECRET_KEY:
         raise ImproperlyConfigured("DJANGO_SECRET_KEY must not be empty when DEBUG is false.")
 
+# Email-first user model. Set before the first migration because Django cannot
+# repoint the auth foreign keys afterwards without rebuilding every table.
+AUTH_USER_MODEL = "core.User"
+
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+
+# The Vite dev server proxies /api to Django with changeOrigin, so Django sees its
+# own host paired with the dev server's Origin header. Without these entries every
+# authenticated write from the SPA fails Django's CSRF origin check. Anonymous
+# requests are unaffected, which is why login and register worked without it.
+CSRF_TRUSTED_ORIGINS = env.list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    default=["http://localhost:5173", "http://127.0.0.1:5173"],
+)
 
 INSTALLED_APPS = [
     "django.contrib.admin",

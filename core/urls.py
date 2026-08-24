@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
@@ -31,6 +29,9 @@ shopping_list_router.register("items", views.ShoppingListItemViewSet, basename="
 
 urlpatterns = [
     path("health/", views.HealthView.as_view(), name="health"),
+    path("auth/register/", views.RegisterView.as_view(), name="register"),
+    path("auth/login/", views.LoginView.as_view(), name="login"),
+    path("auth/logout/", views.LogoutView.as_view(), name="logout"),
     path("whoami/", views.WhoAmIView.as_view(), name="whoami"),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("docs/", SpectacularSwaggerView.as_view(url_name="core:schema"), name="docs"),
@@ -38,6 +39,3 @@ urlpatterns = [
     *recipe_router.urls,
     *shopping_list_router.urls,
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
