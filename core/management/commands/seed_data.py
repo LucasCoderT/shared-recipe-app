@@ -45,6 +45,7 @@ DEFAULT_AUTHORS = 300
 DEFAULT_INSERT_BATCH = 1_000
 DEFAULT_RECIPE_CHUNK = 500
 DEFAULT_SHOPPING_LISTS = 0
+ADMIN_EMAIL = "admin@example.com"
 
 
 class Command(BaseCommand):
@@ -144,7 +145,8 @@ class Command(BaseCommand):
             self.style.SUCCESS(
                 "Seeded data: "
                 f"{len(demo_users) + len(load_authors)} users "
-                f"({len(demo_users)} curated + {len(load_authors)} synthetic), "
+                f"({len(demo_users)} curated + {len(load_authors)} synthetic) "
+                f"plus the {ADMIN_EMAIL} superuser, "
                 f"{demo_recipes + synthetic_recipes} recipes "
                 f"({demo_recipes} curated + {synthetic_recipes} synthetic)."
             )
@@ -164,6 +166,19 @@ class Command(BaseCommand):
         demo_users = [build_user(user, password_hash) for user in users]
         created_demo_users = User.objects.bulk_create(demo_users, batch_size=insert_batch_size)
         assign_default_groups_to_users(created_demo_users)
+
+        # Creates/Updates the default admin user with the provided password.
+        # This ensures that the admin user always exists and has the correct password,
+        # even if the database is reset or the user is deleted.
+        User.objects.update_or_create(
+            email=ADMIN_EMAIL,
+            defaults={
+                "is_staff": True,
+                "is_superuser": True,
+                "display_name": "admin",
+                "password": password_hash,
+            },
+        )
 
         load_users = [
             build_load_user(index, password_hash) for index in range(1, authors_requested + 1)
