@@ -15,6 +15,14 @@ export default defineConfig(({ command }) => ({
         outDir: "dist",
         emptyOutDir: true,
         manifest: true,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    mui: ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"],
+                    vendor: ["react", "react-dom", "react-router", "@tanstack/react-query"],
+                },
+            },
+        },
     },
     server: {
         host: true,

@@ -1,44 +1,55 @@
+import { lazy, Suspense, type ReactNode } from "react";
 import { createBrowserRouter } from "react-router";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 import { requireAuth } from "~/auth/requireAuth";
+import { RouteSpinner } from "~/components/RouteSpinner";
 import { AppLayout } from "~/layouts/AppLayout";
-import { LoginPage } from "~/pages/LoginPage";
+import { ErrorPage } from "~/pages/ErrorPage";
 import { NotFoundPage } from "~/pages/NotFoundPage";
-import { RecipeCreatePage } from "~/pages/RecipeCreatePage";
-import { RecipeDetailPage } from "~/pages/RecipeDetailPage";
-import { RecipeEditPage } from "~/pages/RecipeEditPage";
 import { RecipeGridPage } from "~/pages/RecipeGridPage";
-import { ShoppingListDetailPage } from "~/pages/ShoppingListDetailPage";
-import { ShoppingListsPage } from "~/pages/ShoppingListsPage";
+
+const RecipeDetailPage = lazy(() =>
+    import("~/pages/RecipeDetailPage").then((m) => ({ default: m.RecipeDetailPage }))
+);
+const RecipeCreatePage = lazy(() =>
+    import("~/pages/RecipeCreatePage").then((m) => ({ default: m.RecipeCreatePage }))
+);
+const RecipeEditPage = lazy(() =>
+    import("~/pages/RecipeEditPage").then((m) => ({ default: m.RecipeEditPage }))
+);
+const ShoppingListsPage = lazy(() =>
+    import("~/pages/ShoppingListsPage").then((m) => ({ default: m.ShoppingListsPage }))
+);
+const ShoppingListDetailPage = lazy(() =>
+    import("~/pages/ShoppingListDetailPage").then((m) => ({ default: m.ShoppingListDetailPage }))
+);
+const LoginPage = lazy(() =>
+    import("~/pages/LoginPage").then((m) => ({ default: m.LoginPage }))
+);
+
+const withSuspense = (element: ReactNode) => <Suspense fallback={<RouteSpinner />}>{element}</Suspense>;
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <AppLayout />,
-        hydrateFallbackElement: (
-            <Box sx={{ display: "grid", placeItems: "center", minHeight: "60vh" }}>
-                <CircularProgress />
-            </Box>
-        ),
+        errorElement: <ErrorPage />,
+        hydrateFallbackElement: <RouteSpinner />,
         children: [
             { index: true, element: <RecipeGridPage /> },
-            { path: "recipes/:recipeId", element: <RecipeDetailPage /> },
-            { path: "login", element: <LoginPage /> },
-
+            { path: "recipes/:recipeId", element: withSuspense(<RecipeDetailPage />) },
+            { path: "login", element: withSuspense(<LoginPage />) },
             {
                 middleware: [requireAuth],
                 children: [
-                    { path: "recipes/new", element: <RecipeCreatePage /> },
-                    { path: "recipes/:recipeId/edit", element: <RecipeEditPage /> },
-                    { path: "shopping-lists", element: <ShoppingListsPage /> },
+                    { path: "recipes/new", element: withSuspense(<RecipeCreatePage />) },
+                    { path: "recipes/:recipeId/edit", element: withSuspense(<RecipeEditPage />) },
+                    { path: "shopping-lists", element: withSuspense(<ShoppingListsPage />) },
                     {
                         path: "shopping-lists/:shoppingListId",
-                        element: <ShoppingListDetailPage />,
+                        element: withSuspense(<ShoppingListDetailPage />),
                     },
                 ],
             },
-
             { path: "*", element: <NotFoundPage /> },
         ],
     },
