@@ -31,6 +31,31 @@ This separation keeps settings and feature work distinct.
 Using `djangorestframework-camel-case` allows for conversion at the renderer
 and parser layer, so each language can stick to its own naming conventions.
 
+**Optimistic locking rather than locking the row while someone edits.**
+Just because someone is on the edit page does not mean they are always editing the item.
+Not locking lets everyone open the page, but only one person can send an update at any given time.
+The user with the out of date information gets a 409 back and has to reload the page to get the
+latest data, so their edit is refused rather than silently overwriting someone else's.
+
+**Ownership is checked separately from group permissions.**
+Model permissions are per model, not per row. Without the ownership check, anyone in Recipe Editors
+could edit anyone's recipe.
+
+**Read scoping lives in `get_queryset`, not in the permission class.**
+Recipes are meant to be public and shopping lists aren't, and one shared permission class cannot say
+both. So the read scoping moved into `get_queryset` on the shopping list viewsets.
+
+**The grid gets its rating from a subquery, not an aggregate over a join.**
+The subquery keeps the rating filter in `WHERE` instead of `HAVING`, so rows are discarded before
+the average is computed rather than after. Aggregating over a join is also fragile once you combine
+it with the tag join or add a second aggregate, and I would rather not have that pattern in the
+query at all.
+
+**Each column on the grid card is loaded a different way.**
+The rating comes from the subquery above, photos and tags from `Prefetch` with `to_attr` so they are
+ordered in SQL rather than in Python, and the author from `select_related`. Pages are 24 rows, so
+the number of queries stays flat no matter how many recipes exist.
+
 ## Frontend
 
 **TypeScript with strict mode.**
