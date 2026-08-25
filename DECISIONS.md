@@ -9,11 +9,11 @@ Keeping everything under the same origin simplifies session authentication and C
 CORS or a token scheme. Plus, it means there's just one application to run.
 
 **Django serves the built React bundle.**
-With Vite writing assets directly to `/static/`, which is where Django already looks, we can streamline production into
-a single process.
+With Vite writing assets directly to `/static/`, which is where Django already looks, production runs as a single
+process.
 
 **Any route that is not `/api/`, `/admin/`, `/static/` or `/media/` falls through to React.**
-This approach ensures that deep links work seamlessly on a cold page load, avoiding those frustrating 404 errors.
+Deep links keep working on a cold page load instead of turning into 404s.
 
 ## Backend
 
@@ -55,13 +55,19 @@ The rating comes from the subquery above, photos and tags from `Prefetch` with `
 rather than in Python, and the author from `select_related`. Pages are 24 rows, so the number of queries stays flat no
 matter how many recipes exist.
 
+**A fixed unit list instead of a units library.**
+The first version used pint. A recipe needs clove, pinch and can far more than it needs picoinch,
+and a general units registry happily accepts the latter while rejecting the former. The unit field
+is now a select over one shared list, so the server only has to check membership, and the
+dependency went away.
+
 ## Frontend
 
 **TypeScript with strict mode.**
 
 **API types are generated from the OpenAPI schema, never written by hand.**
 This means any changes made on the backend are automatically reflected on the frontend, without any extra manual effort.
-The types are utilized in the API client, React Query hooks, and form validation.
+The types are used in the API client, React Query hooks, and form validation.
 
 **The API client is handwritten rather than generated.**
 It's about fifty lines of code that cover CSRF, credentials, and error handling, which is simpler and more manageable
@@ -91,3 +97,28 @@ permissions on every request.
 The server is the source of truth, so the client only validates what it can know without talking to the server. For
 example, the client can check that a quantity is a valid decimal, but it cannot check that the unit is valid because the
 server is the source of truth for that.
+
+## Known gaps
+
+**Test coverage.**
+The original suite was written against Django's default user model and none of it survived the
+switch to the custom one. That was mostly a time constraint: I chose finishing the spec over
+keeping the tests up to date. The suite that replaced it is focused on dedicated, small tests that
+are easy to follow: the grid query, uniqueness rules, units, the detail payload, shopping lists and
+the seed command. Permissions and the stale-write checks are what I would cover next, since those
+are the claims with the least backing right now.
+
+**The bugs that only showed up in a browser.**
+The two worst bugs never appeared in any backend test. Image URLs were built from the Host header,
+which the dev proxy rewrites, so under Docker every image pointed at a hostname only other
+containers could resolve. CSRF trusted origins were unset, and that stayed hidden because
+anonymous requests skip the CSRF check, so login worked while every authenticated write failed.
+Each layer was correct on its own and both bugs lived where the layers met. Every layer added
+introduces new complexities that must be considered, and the test that catches this kind is
+running the assembled application the way a user does.
+
+**Creating a recipe takes two screens.**
+Ingredients, steps, tags and photos are separate resources that need the recipe's id before they
+can exist, so create captures the name and description and hands off to the edit screen. Given the
+time I would prefer writing a nested writable serializer that accepts the whole recipe in one
+request; for now each request stays scoped to one resource rather than adding that surface late.
