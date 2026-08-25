@@ -115,8 +115,6 @@ export const api = {
         },
     },
 
-    // A user's lists and their items are returned whole, not paginated: the UI
-    // always renders them in full and counts what is still to buy.
     shoppingLists: {
         ...rootResource<Schemas["ShoppingList"]>("shopping-lists"),
         list: (options?: RequestInit) =>

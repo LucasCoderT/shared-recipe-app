@@ -114,8 +114,7 @@ class RecipeTagSerializer(TimestampedModelSerializer):
         name = validate_nonblank_text(value=value, field_name="Tag name")
         # The unique constraint is (recipe, name), but recipe is read-only here so
         # DRF cannot build the validator itself. Without this the duplicate would
-        # surface as an IntegrityError. Case-insensitive on purpose: "Vegan" and
-        # "vegan" on one recipe is never what anyone means.
+        # surface as an IntegrityError.
         recipe = self.context.get("recipe")
         if recipe is not None:
             duplicates = RecipeTag.objects.filter(recipe=recipe, name__iexact=name)
@@ -180,8 +179,6 @@ class RecipeReviewSerializer(TimestampedModelSerializer):
         read_only_fields = ("id", "created_at", "updated_at", "recipe", "user")
 
     def validate(self, attrs):
-        # Same situation as tags: (recipe, user) is unique but both are read-only,
-        # so the duplicate has to be caught here to come back as a 400.
         if self.instance is None:
             recipe = self.context.get("recipe")
             request = self.context.get("request")
@@ -274,9 +271,6 @@ class RecipeStepIngredientSerializer(TimestampedModelSerializer):
 
 class FullRecipeSerializer(RecipeSerializer):
     author_name = serializers.SerializerMethodField()
-    # Both are null unless the recipe is a copy. original_recipe_name goes null
-    # again if the original is deleted (SET_NULL) while original_author_name
-    # survives, so the banner can still credit the person.
     original_recipe_name = serializers.CharField(
         source="original_recipe.name", read_only=True, allow_null=True, default=None
     )

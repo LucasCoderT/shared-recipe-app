@@ -24,8 +24,7 @@ class TooManyRecipeTags(APIException):
 
 class AlreadyExists(APIException):
     """
-    Exception raised when a write collides with a unique constraint that the
-    serializer did not (or could not, in a race) catch first.
+    Exception raised when a write violates a unique constraint.
     """
 
     status_code = status.HTTP_409_CONFLICT

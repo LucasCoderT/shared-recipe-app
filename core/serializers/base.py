@@ -27,7 +27,15 @@ class TimestampedModelSerializer(serializers.ModelSerializer):
 
 
 def user_label(user) -> str | None:
-    """The name shown for a user anywhere the API exposes one."""
+    """Returns the name shown for a user anywhere the API exposes one.
+
+    Args:
+        user: A User instance, or None for an unset relation.
+
+    Returns:
+        The user's display name, falling back to their email address, or None
+        when no user was given.
+    """
     if user is None:
         return None
     return user.display_name or user.email

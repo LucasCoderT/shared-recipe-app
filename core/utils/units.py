@@ -38,7 +38,18 @@ UNITS: tuple[str, ...] = (
 
 
 def normalize_unit(value: str) -> str:
-    """Return the unit as it will be stored, or "" for no unit."""
+    """Normalizes a unit string to the value that is stored.
+
+    Args:
+        value: The unit as entered. Blank or whitespace means no unit.
+
+    Returns:
+        The unit with surrounding whitespace removed, or an empty string when
+        no unit was given.
+
+    Raises:
+        ValidationError: If the unit is not one of UNITS.
+    """
     unit = (value or "").strip()
     if not unit:
         return ""
@@ -48,7 +59,14 @@ def normalize_unit(value: str) -> str:
 
 
 def validate_unit(value: str) -> None:
-    """Model field validator: blank or one of UNITS."""
+    """Validates the unit stored on a model field.
+
+    Args:
+        value: The unit to check. Blank is allowed and means no unit.
+
+    Raises:
+        ValidationError: If the unit is not blank and not one of UNITS.
+    """
     unit = (value or "").strip()
     if unit and unit not in UNITS:
         raise ValidationError(f"Unknown unit: {value}")

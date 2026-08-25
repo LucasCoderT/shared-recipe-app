@@ -80,6 +80,15 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
         but two requests can still race past that check. The savepoint keeps the
         request transaction usable after the failed INSERT so the error response
         can be written.
+
+        Args:
+            serializer: A validated serializer ready to be saved.
+            **kwargs: Extra values passed through to serializer.save(), such as
+                the owner or parent recipe set by the viewset.
+
+        Raises:
+            AlreadyExists: If the save violates a unique constraint.
+            IntegrityError: Any other integrity error, re-raised unchanged.
         """
         try:
             with transaction.atomic():

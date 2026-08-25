@@ -240,8 +240,6 @@ class Command(BaseCommand):
         RecipeReview.objects.bulk_create(review_rows, batch_size=insert_batch_size)
         RecipeComment.objects.bulk_create(comment_rows, batch_size=insert_batch_size)
 
-        # One real copy, made the same way a user makes one, so the "copied from"
-        # banner has an honest example: Nina keeps a copy of Ava's Bolognese.
         # Fetched fresh because clone() repurposes the instance it is called on.
         Recipe.objects.get(pk=recipes_by_name["Classic Spaghetti Bolognese"].pk).clone(
             users_by_username["nina_bakes"]
@@ -439,8 +437,7 @@ class Command(BaseCommand):
             created_total += len(created_recipes)
 
         if recipes_requested and load_authors:
-            # A few real copies so the "copied from" banner is discoverable in the
-            # load data too. Constant count on purpose: clone() saves row by row.
+            # Constant count on purpose: clone() saves row by row.
             originals = list(
                 Recipe.objects.filter(author__in=demo_users, original_recipe__isnull=True)
                 .order_by("pk")
