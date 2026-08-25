@@ -55,7 +55,7 @@ Three containers. Postgres starts first, the backend waits for it, migrates, the
 | API docs | http://localhost:8000/api/docs/   |
 | Admin    | http://localhost:8000/admin/      |
 
-Use 5173 for the app. Vite proxies `/api` and `/media` through to Django. It does not proxy `/static`, so open the
+Use 5173 for the app. Vite proxies `/api`, `/admin` and `/media` through to Django, but not `/static`, so open the
 Django admin on 8000 or it loads without its stylesheets. Both source trees are mounted into the containers, so edits
 reload.
 
@@ -106,8 +106,8 @@ Email is the login field, so it asks for an email address rather than a username
 
 ## Trying it out
 
-Sign in as `nina@example.com` and open Classic Spaghetti Bolognese, which is Ava's. Change the rating, leave a comment,
-then use
+Sign in as `nina@example.com` and open Classic Spaghetti Bolognese, the one by ava_cooks. The seed also makes copies of
+it, so go by the author on the card. Change the rating, leave a comment, then use
 "Copy to my recipes". The copy opens in the editor with the same tags, ingredients, steps and photos, and its page says
 where it came from.
 
