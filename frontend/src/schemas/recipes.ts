@@ -1,11 +1,5 @@
 import { z } from "zod";
-import {
-    nonBlankProse,
-    nonBlankText,
-    optionalText,
-    quantity,
-    unit,
-} from "~/schemas/common";
+import { nonBlankProse, nonBlankText, optionalText, quantity, unit } from "~/schemas/common";
 
 export const recipeSchema = z.object({
     name: nonBlankText(255, "Name"),

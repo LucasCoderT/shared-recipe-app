@@ -601,6 +601,8 @@ export interface components {
             readonly originalRecipe: number | null;
             readonly originalAuthor: number;
             readonly authorName: string;
+            readonly originalRecipeName: string | null;
+            readonly originalAuthorName: string | null;
             readonly ingredients: components["schemas"]["RecipeIngredient"][];
             readonly steps: components["schemas"]["RecipeStep"][];
             readonly tags: components["schemas"]["RecipeTag"][];
@@ -751,36 +753,6 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["RecipeTag"][];
         };
-        PaginatedShoppingListItemList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=4
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null;
-            results: components["schemas"]["ShoppingListItem"][];
-        };
-        PaginatedShoppingListList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=4
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null;
-            results: components["schemas"]["ShoppingList"][];
-        };
         PatchedFullRecipe: {
             readonly id?: number;
             /** Format: date-time */
@@ -793,6 +765,8 @@ export interface components {
             readonly originalRecipe?: number | null;
             readonly originalAuthor?: number;
             readonly authorName?: string;
+            readonly originalRecipeName?: string | null;
+            readonly originalAuthorName?: string | null;
             readonly ingredients?: components["schemas"]["RecipeIngredient"][];
             readonly steps?: components["schemas"]["RecipeStep"][];
             readonly tags?: components["schemas"]["RecipeTag"][];
@@ -808,6 +782,7 @@ export interface components {
             readonly updatedAt?: string;
             readonly recipe?: number;
             readonly user?: number;
+            readonly userName?: string;
             content?: string;
         };
         PatchedRecipeIngredient: {
@@ -920,6 +895,7 @@ export interface components {
             readonly updatedAt: string;
             readonly recipe: number;
             readonly user: number;
+            readonly userName: string;
             content: string;
         };
         RecipeGridCard: {
@@ -2510,10 +2486,7 @@ export interface operations {
     };
     shoppingListsList: {
         parameters: {
-            query?: {
-                /** @description A page number within the paginated result set. */
-                page?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -2525,7 +2498,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedShoppingListList"];
+                    "application/json": components["schemas"]["ShoppingList"][];
                 };
             };
         };
@@ -2684,10 +2657,7 @@ export interface operations {
     };
     shoppingListsItemsList: {
         parameters: {
-            query?: {
-                /** @description A page number within the paginated result set. */
-                page?: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 shoppingListPk: number;
@@ -2701,7 +2671,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedShoppingListItemList"];
+                    "application/json": components["schemas"]["ShoppingListItem"][];
                 };
             };
         };

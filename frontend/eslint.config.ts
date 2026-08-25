@@ -8,10 +8,7 @@ export default tseslint.config(
     { ignores: ["dist", "node_modules", "src/schema.ts"] },
     {
         files: ["**/*.{ts,tsx}"],
-        extends: [
-            js.configs.recommended,
-            ...tseslint.configs.recommendedTypeChecked,
-        ],
+        extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
         languageOptions: {
             ecmaVersion: 2022,
             globals: globals.browser,
@@ -26,10 +23,7 @@ export default tseslint.config(
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
-            "react-refresh/only-export-components": [
-                "warn",
-                { allowConstantExport: true },
-            ],
+            "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
         },
     }
 );

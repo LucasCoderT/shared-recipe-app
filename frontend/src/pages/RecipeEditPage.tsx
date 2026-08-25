@@ -113,7 +113,11 @@ export const RecipeEditPage = () => {
                             disabled={editor.tagsAtLimit}
                             sx={{ maxWidth: 260 }}
                         />
-                        <Button type="submit" loading={tagForm.pending} disabled={!tagForm.canSubmit}>
+                        <Button
+                            type="submit"
+                            loading={tagForm.pending}
+                            disabled={!tagForm.canSubmit}
+                        >
                             Add
                         </Button>
                     </Stack>

@@ -1,10 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
-import {
-    normalizeGridFilters,
-    recipeGridSortValues,
-    type RecipeGridFilterValues,
-} from "~/schemas";
+import { normalizeGridFilters, recipeGridSortValues, type RecipeGridFilterValues } from "~/schemas";
 
 type Sort = RecipeGridFilterValues["sort"];
 

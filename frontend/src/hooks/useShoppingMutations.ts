@@ -10,7 +10,7 @@ export const useShoppingListMutations = () => {
 
     return {
         create: useMutation({
-            meta: { success: 'List created.' },
+            meta: { success: "List created." },
             mutationFn: (body: { name: string }) => api.shoppingLists.create(body),
             onSuccess,
         }),
@@ -37,13 +37,13 @@ export const useShoppingItemMutations = (listId: Id) => {
 
     return {
         add: useMutation({
-            meta: { success: 'Item added.' },
+            meta: { success: "Item added." },
             mutationFn: (body: { name: string; quantity?: string; unit: string }) =>
                 api.shoppingListItems.create(listId, body),
             onSuccess,
         }),
         toggle: useMutation({
-            meta: { success: 'Updated.' },
+            meta: { success: "Updated." },
             mutationFn: ({ id, purchased }: { id: number; purchased: boolean }) =>
                 api.shoppingListItems.update(listId, id, { purchased }),
             onSuccess,
@@ -53,7 +53,7 @@ export const useShoppingItemMutations = (listId: Id) => {
             onSuccess,
         }),
         copyFromRecipe: useMutation({
-            meta: { success: 'Ingredients added to your list.' },
+            meta: { success: "Ingredients added to your list." },
             mutationFn: (recipeId: number) => api.shoppingLists.copyFromRecipe(listId, recipeId),
             onSuccess,
         }),

@@ -35,8 +35,9 @@ const SortableStep = ({
     index: number;
     onRemove: (id: number, description: string) => void;
 }) => {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-        useSortable({ id: step.id });
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+        id: step.id,
+    });
 
     return (
         <Paper
@@ -119,12 +120,7 @@ export const SortableSteps = ({
             >
                 <Stack spacing={1}>
                     {steps.map((step, index) => (
-                        <SortableStep
-                            key={step.id}
-                            step={step}
-                            index={index}
-                            onRemove={onRemove}
-                        />
+                        <SortableStep key={step.id} step={step} index={index} onRemove={onRemove} />
                     ))}
                 </Stack>
             </SortableContext>

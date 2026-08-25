@@ -14,8 +14,8 @@ export const StaleWriteAlert = ({ error, onReload }: { error: unknown; onReload:
                 </Button>
             }
         >
-            This recipe was changed by someone else after you opened it. Reload to see
-            their version before saving again.
+            This recipe was changed by someone else after you opened it. Reload to see their version
+            before saving again.
         </Alert>
     );
 };

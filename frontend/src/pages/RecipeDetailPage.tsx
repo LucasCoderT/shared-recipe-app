@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -85,13 +86,19 @@ export const RecipeDetailPage = () => {
                 </Stack>
             }
         >
-            {recipe.originalRecipe && (
+            {(recipe.originalRecipe || recipe.originalAuthorName) && (
                 <Alert severity="info" variant="outlined">
-                    Copied from{" "}
-                    <RouterLink to={`/recipes/${recipe.originalRecipe}`}>
-                        the original recipe
-                    </RouterLink>
-                    .
+                    {recipe.originalRecipe ? (
+                        <>
+                            Copied from{" "}
+                            <Link component={RouterLink} to={`/recipes/${recipe.originalRecipe}`}>
+                                {recipe.originalRecipeName ?? "the original recipe"}
+                            </Link>
+                        </>
+                    ) : (
+                        "Copied from a recipe that has since been deleted"
+                    )}
+                    {recipe.originalAuthorName && <> by {recipe.originalAuthorName}</>}.
                 </Alert>
             )}
 
@@ -216,6 +223,7 @@ export const RecipeDetailPage = () => {
                             <Typography variant="body2">{entry.content}</Typography>
                             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                                 <Typography variant="caption" color="text.secondary">
+                                    {entry.userName} &middot;{" "}
                                     {new Date(entry.createdAt).toLocaleDateString()}
                                 </Typography>
                                 {entry.user === detail.currentUserId && (

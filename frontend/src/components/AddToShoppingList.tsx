@@ -41,7 +41,7 @@ export const AddToShoppingList = ({ recipeId }: { recipeId: number }) => {
         enabled: open,
     });
 
-    const lists = data?.results ?? [];
+    const lists = data ?? [];
 
     return (
         <>

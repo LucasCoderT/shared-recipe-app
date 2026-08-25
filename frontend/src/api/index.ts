@@ -42,8 +42,7 @@ const childResource = <T>(parent: string, segment: string) => {
             apiFetch<Paginated<T>>(list(parentId), options),
         retrieve: (parentId: Id, id: Id, options?: RequestInit) =>
             apiFetch<T>(url(parentId, id), options),
-        create: (parentId: Id, body: Payload<T>) =>
-            apiFetch<T>(list(parentId), send("POST", body)),
+        create: (parentId: Id, body: Payload<T>) => apiFetch<T>(list(parentId), send("POST", body)),
         update: (parentId: Id, id: Id, body: Payload<T>) =>
             apiFetch<T>(url(parentId, id), send("PATCH", body)),
         replace: (parentId: Id, id: Id, body: Payload<T>) =>
@@ -76,8 +75,7 @@ export const api = {
                 options
             ),
         clone: (id: Id) => apiFetch<Schemas["Recipe"]>(`/recipes/${id}/clone/`, send("POST")),
-        tagOptions: (options?: RequestInit) =>
-            apiFetch<string[]>("/recipes/tag-options/", options),
+        tagOptions: (options?: RequestInit) => apiFetch<string[]>("/recipes/tag-options/", options),
     },
 
     recipeTags: childResource<Schemas["RecipeTag"]>("recipes", "tags"),
@@ -117,8 +115,12 @@ export const api = {
         },
     },
 
+    // A user's lists and their items are returned whole, not paginated: the UI
+    // always renders them in full and counts what is still to buy.
     shoppingLists: {
         ...rootResource<Schemas["ShoppingList"]>("shopping-lists"),
+        list: (options?: RequestInit) =>
+            apiFetch<Schemas["ShoppingList"][]>("/shopping-lists/", options),
         copyFromRecipe: (id: Id, recipe: number) =>
             apiFetch<Schemas["ShoppingListItem"][]>(
                 `/shopping-lists/${id}/copy_from_recipe/`,
@@ -126,5 +128,9 @@ export const api = {
             ),
     },
 
-    shoppingListItems: childResource<Schemas["ShoppingListItem"]>("shopping-lists", "items"),
+    shoppingListItems: {
+        ...childResource<Schemas["ShoppingListItem"]>("shopping-lists", "items"),
+        list: (listId: Id, options?: RequestInit) =>
+            apiFetch<Schemas["ShoppingListItem"][]>(`/shopping-lists/${listId}/items/`, options),
+    },
 };

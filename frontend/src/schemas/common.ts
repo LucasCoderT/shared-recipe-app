@@ -46,9 +46,7 @@ export const email = z
 
 export const currentPassword = z.string().min(1, { error: "Password is required." });
 
-export const newPassword = z
-    .string()
-    .min(8, { error: "Password must be at least 8 characters." });
+export const newPassword = z.string().min(8, { error: "Password must be at least 8 characters." });
 
 export const staleWriteToken = z.object({
     updatedAt: z.iso.datetime({ offset: true }).optional(),

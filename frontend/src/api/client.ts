@@ -54,10 +54,7 @@ const getCookie = (name: string) => {
     return match?.[1] ? decodeURIComponent(match[1]) : null;
 };
 
-export const apiFetch = async <T>(
-    path: string,
-    options: RequestInit = {}
-): Promise<T> => {
+export const apiFetch = async <T>(path: string, options: RequestInit = {}): Promise<T> => {
     const method = (options.method ?? "GET").toUpperCase();
     const headers = new Headers(options.headers);
 
@@ -83,11 +80,7 @@ export const apiFetch = async <T>(
     const body: unknown = text ? JSON.parse(text) : null;
 
     if (!response.ok) {
-        throw new ApiError(
-            response.status,
-            body,
-            `${method} /api${path} failed`
-        );
+        throw new ApiError(response.status, body, `${method} /api${path} failed`);
     }
     return body as T;
 };

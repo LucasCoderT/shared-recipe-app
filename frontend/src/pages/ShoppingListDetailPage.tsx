@@ -91,8 +91,8 @@ export const ShoppingListDetailPage = () => {
                 <Skeleton variant="rounded" height={200} />
             ) : rows.length === 0 ? (
                 <Alert severity="info" variant="outlined">
-                    Nothing on this list yet. Add an item above, or open a recipe and use
-                    &ldquo;Add to shopping list&rdquo;.
+                    Nothing on this list yet. Add an item above, or open a recipe and use &ldquo;Add
+                    to shopping list&rdquo;.
                 </Alert>
             ) : (
                 <Paper>

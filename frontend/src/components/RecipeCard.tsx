@@ -45,7 +45,11 @@ export const RecipeCard = ({ recipe }: { recipe: GridCard }) => (
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                     {recipe.name}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
+                <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ display: "block", mb: 1 }}
+                >
                     by {recipe.authorName}
                 </Typography>
 
@@ -56,12 +60,7 @@ export const RecipeCard = ({ recipe }: { recipe: GridCard }) => (
                         </Typography>
                     ) : (
                         <>
-                            <Rating
-                                value={recipe.rating}
-                                precision={0.1}
-                                size="small"
-                                readOnly
-                            />
+                            <Rating value={recipe.rating} precision={0.1} size="small" readOnly />
                             <Typography variant="body2" color="text.secondary">
                                 {recipe.rating.toFixed(1)}
                             </Typography>

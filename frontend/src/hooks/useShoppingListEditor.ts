@@ -27,7 +27,7 @@ export const useShoppingListEditor = (listId: string) => {
             }),
     });
 
-    const rows = items.data?.results ?? [];
+    const rows = items.data ?? [];
 
     return {
         list: list.data,

@@ -62,7 +62,7 @@ export const ShoppingListsPage = () => {
 
             {isPending || !data ? (
                 <Skeleton variant="rounded" height={200} />
-            ) : data.results.length === 0 ? (
+            ) : data.length === 0 ? (
                 <Alert severity="info" variant="outlined">
                     You have no shopping lists yet. Create one above, then add items directly or
                     copy the ingredients from a recipe.
@@ -70,7 +70,7 @@ export const ShoppingListsPage = () => {
             ) : (
                 <Paper>
                     <List disablePadding>
-                        {data.results.map((list) => (
+                        {data.map((list) => (
                             <ListItemButton
                                 key={list.id}
                                 component={RouterLink}

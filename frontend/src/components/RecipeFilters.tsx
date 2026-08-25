@@ -12,8 +12,8 @@ import { useDebouncedValue } from "~/hooks/useDebouncedValue";
 import type { RecipeGridFilterValues } from "~/schemas";
 
 const SORT_OPTIONS = [
-    { value: "name", label: "Name (A–Z)" },
-    { value: "-name", label: "Name (Z–A)" },
+    { value: "name", label: "Name (A-Z)" },
+    { value: "-name", label: "Name (Z-A)" },
     { value: "-rating", label: "Highest rated" },
     { value: "rating", label: "Lowest rated" },
     { value: "-createdAt", label: "Newest" },

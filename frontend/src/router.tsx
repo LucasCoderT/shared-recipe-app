@@ -22,11 +22,11 @@ const ShoppingListsPage = lazy(() =>
 const ShoppingListDetailPage = lazy(() =>
     import("~/pages/ShoppingListDetailPage").then((m) => ({ default: m.ShoppingListDetailPage }))
 );
-const LoginPage = lazy(() =>
-    import("~/pages/LoginPage").then((m) => ({ default: m.LoginPage }))
-);
+const LoginPage = lazy(() => import("~/pages/LoginPage").then((m) => ({ default: m.LoginPage })));
 
-const withSuspense = (element: ReactNode) => <Suspense fallback={<RouteSpinner />}>{element}</Suspense>;
+const withSuspense = (element: ReactNode) => (
+    <Suspense fallback={<RouteSpinner />}>{element}</Suspense>
+);
 
 export const router = createBrowserRouter([
     {
