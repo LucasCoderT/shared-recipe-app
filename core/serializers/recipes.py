@@ -58,10 +58,15 @@ class RecipeGridCardSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     rating = serializers.FloatField(source="average_rating", read_only=True, allow_null=True)
     tags = serializers.SerializerMethodField()
+    author = serializers.IntegerField(source="author_id", read_only=True)
+    author_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
-        fields = ("id", "image", "name", "rating", "tags")
+        fields = ("id", "image", "name", "rating", "tags", "author", "author_name")
+
+    def get_author_name(self, obj: Recipe) -> str:
+        return obj.author.display_name or obj.author.email
 
     def get_image(self, obj: Recipe) -> str | None:
         photo = next(iter(getattr(obj, "ordered_photos", [])), None)
@@ -85,6 +90,7 @@ class RecipeGridQuerySerializer(serializers.Serializer):
         choices=["name", "-name", "rating", "-rating", "createdAt", "-createdAt"],
         required=False,
     )
+    mine = serializers.BooleanField(required=False)
 
     def validate_tag(self, value: list[str]) -> list[str]:
         return [tag.strip() for raw_value in value for tag in raw_value.split(",") if tag.strip()]
@@ -232,6 +238,7 @@ class RecipeStepIngredientSerializer(TimestampedModelSerializer):
 
 
 class FullRecipeSerializer(RecipeSerializer):
+    author_name = serializers.SerializerMethodField()
     ingredients = RecipeIngredientSerializer(many=True, read_only=True)
     steps = RecipeStepSerializer(many=True, read_only=True)
     tags = RecipeTagSerializer(many=True, read_only=True)
@@ -250,6 +257,7 @@ class FullRecipeSerializer(RecipeSerializer):
             "description",
             "original_recipe",
             "original_author",
+            "author_name",
             "ingredients",
             "steps",
             "tags",
@@ -265,3 +273,6 @@ class FullRecipeSerializer(RecipeSerializer):
             "original_recipe",
             "original_author",
         )
+
+    def get_author_name(self, obj: Recipe) -> str:
+        return obj.author.display_name or obj.author.email

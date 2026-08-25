@@ -42,8 +42,11 @@ export const RecipeCard = ({ recipe }: { recipe: GridCard }) => (
             )}
 
             <CardContent sx={{ flexGrow: 1, width: "100%" }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }} gutterBottom>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                     {recipe.name}
+                </Typography>
+                <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
+                    by {recipe.authorName}
                 </Typography>
 
                 <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>

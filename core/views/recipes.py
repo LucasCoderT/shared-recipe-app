@@ -1,5 +1,6 @@
 from django.db.models import Avg, FloatField, OuterRef, Prefetch, QuerySet, Subquery
 from drf_spectacular.utils import extend_schema
+from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -87,6 +88,12 @@ class RecipeViewSet(OwnedResourceViewSet):
         if min_rating := validated_filters.get("minRating"):
             queryset = queryset.filter(average_rating__gte=min_rating)
 
+        if validated_filters.get("mine"):
+            user = self.request.user
+            queryset = (
+                queryset.filter(author=user) if user.is_authenticated else queryset.none()
+            )
+
         tags = validated_filters.get("tag", [])
         if tags:
             for tag in tags:
@@ -116,6 +123,17 @@ class RecipeViewSet(OwnedResourceViewSet):
         if page is not None:
             return self.get_paginated_response(serializer.data)
         return Response(serializer.data)
+
+    @extend_schema(
+        operation_id="recipeTagOptions",
+        responses={200: serializers.ListSerializer(child=serializers.CharField())},
+    )
+    @action(detail=False, methods=["get"], url_path="tag-options")
+    def tag_options(self, request) -> Response:
+        names = (
+            RecipeTag.objects.order_by("name").values_list("name", flat=True).distinct()
+        )
+        return Response(list(names))
 
     @extend_schema(
         operation_id="cloneRecipe",

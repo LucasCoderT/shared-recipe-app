@@ -30,8 +30,13 @@ export const useRecipeDetail = (recipeId: string) => {
         ? ratings.reduce((total, value) => total + value, 0) / ratings.length
         : null;
 
+    const ingredientsById = new Map(
+        (recipe?.ingredients ?? []).map((ingredient) => [ingredient.id, ingredient])
+    );
+
     return {
         recipe,
+        ingredientsById,
         isPending,
         isError,
         error,

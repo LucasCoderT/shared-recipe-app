@@ -13,7 +13,6 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Start a session for an existing account. */
         post: operations["login"];
         delete?: never;
         options?: never;
@@ -30,7 +29,6 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description End the current session. */
         post: operations["logout"];
         delete?: never;
         options?: never;
@@ -47,7 +45,6 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Create an account from an email address and start a session. */
         post: operations["register"];
         delete?: never;
         options?: never;
@@ -62,7 +59,6 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Return the simplest possible ok response. */
         get: operations["health"];
         put?: never;
         post?: never;
@@ -160,30 +156,18 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         get: operations["recipesIngredientsList"];
         put?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         post: operations["recipesIngredientsCreate"];
         delete?: never;
@@ -200,58 +184,34 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         get: operations["recipesIngredientsRetrieve"];
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         put: operations["recipesIngredientsUpdate"];
         post?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         delete: operations["recipesIngredientsDestroy"];
         options?: never;
         head?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         patch: operations["recipesIngredientsPartialUpdate"];
         trace?: never;
@@ -266,16 +226,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         post: operations["recipesIngredientsReorderCreate"];
         delete?: never;
@@ -388,30 +342,18 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         get: operations["recipesStepsList"];
         put?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         post: operations["recipesStepsCreate"];
         delete?: never;
@@ -428,58 +370,34 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         get: operations["recipesStepsRetrieve"];
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         put: operations["recipesStepsUpdate"];
         post?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         delete: operations["recipesStepsDestroy"];
         options?: never;
         head?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         patch: operations["recipesStepsPartialUpdate"];
         trace?: never;
@@ -494,16 +412,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * @description Adds a reorder action to a nested collection using order_with_respect_to.
-         *
-         *     Django generates set_<model>_order() on the parent for every child declaring
-         *     order_with_respect_to, so the reordering itself is a one-liner. What this
-         *     adds is the endpoint, the ownership check, and validation that the submitted
-         *     list is a complete permutation of the children that exist.
-         *
-         *     The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-         *     the bulk update passes through states where two rows briefly share a
-         *     position, which an immediately-checked constraint would reject.
+         * @description Mixin for nested viewsets that support reordering of items within a parent resource.
+         *     Requires the viewset to define an `order_setter_name` attribute, which should be
+         *     the name of a method on the parent resource that accepts a
+         *     list of item IDs in the desired order.
          */
         post: operations["recipesStepsReorderCreate"];
         delete?: never;
@@ -552,6 +464,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["recipesGrid"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/recipes/tag-options/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["recipeTagOptions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -648,7 +576,6 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Return the current user, or an anonymous marker when logged out. */
         get: operations["whoami"];
         put?: never;
         post?: never;
@@ -673,6 +600,7 @@ export interface components {
             description?: string;
             readonly originalRecipe: number | null;
             readonly originalAuthor: number;
+            readonly authorName: string;
             readonly ingredients: components["schemas"]["RecipeIngredient"][];
             readonly steps: components["schemas"]["RecipeStep"][];
             readonly tags: components["schemas"]["RecipeTag"][];
@@ -864,6 +792,7 @@ export interface components {
             description?: string;
             readonly originalRecipe?: number | null;
             readonly originalAuthor?: number;
+            readonly authorName?: string;
             readonly ingredients?: components["schemas"]["RecipeIngredient"][];
             readonly steps?: components["schemas"]["RecipeStep"][];
             readonly tags?: components["schemas"]["RecipeTag"][];
@@ -995,23 +924,13 @@ export interface components {
         };
         RecipeGridCard: {
             readonly id: number;
-            /**
-             * @description Return the first photo's URL, relative to the current origin.
-             *
-             *     build_absolute_uri() would use the Host header, and the dev server
-             *     proxies with changeOrigin, so under Docker that produced
-             *     http://backend:8000/media/... -- a hostname that only resolves inside
-             *     the compose network, leaving every grid image broken in the browser.
-             *
-             *     The SPA is served from the same origin as the API, so a root-relative
-             *     path is both correct and immune to whatever Host the request arrived
-             *     with. An API served cross-origin would need the absolute form back.
-             */
             readonly image: string | null;
             name: string;
             /** Format: double */
             readonly rating: number | null;
             readonly tags: string[];
+            readonly author: number;
+            readonly authorName: string;
         };
         RecipeIngredient: {
             readonly id: number;
@@ -1084,13 +1003,6 @@ export interface components {
             email: string;
             password: string;
         };
-        /**
-         * @description The complete set of child ids, in their new order.
-         *
-         *     Must be complete rather than partial: Django's set_RELATED_order assigns
-         *     positions 0..n-1 to exactly the ids it is given and leaves everything else
-         *     untouched, so a partial list would collide with the rows it skipped.
-         */
         Reorder: {
             order: number[];
         };
@@ -2528,6 +2440,7 @@ export interface operations {
         parameters: {
             query?: {
                 minRating?: number;
+                mine?: boolean;
                 /** @description A page number within the paginated result set. */
                 page?: number;
                 q?: string;
@@ -2555,6 +2468,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PaginatedRecipeGridCardList"];
+                };
+            };
+        };
+    };
+    recipeTagOptions: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example 123 */
+                        count: number;
+                        /**
+                         * Format: uri
+                         * @example http://api.example.org/accounts/?page=4
+                         */
+                        next?: string | null;
+                        /**
+                         * Format: uri
+                         * @example http://api.example.org/accounts/?page=2
+                         */
+                        previous?: string | null;
+                        results: string[];
+                    };
                 };
             };
         };

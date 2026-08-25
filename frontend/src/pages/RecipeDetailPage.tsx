@@ -95,6 +95,10 @@ export const RecipeDetailPage = () => {
                 </Alert>
             )}
 
+            <Typography variant="body2" color="text.secondary">
+                by {recipe.authorName}
+            </Typography>
+
             <Stack direction="row" spacing={2} sx={{ alignItems: "center", flexWrap: "wrap" }}>
                 {detail.average === null ? (
                     <Typography variant="body2" color="text.secondary">
@@ -150,11 +154,33 @@ export const RecipeDetailPage = () => {
                 {recipe.steps.length === 0 ? (
                     <Placeholder note="No steps yet." />
                 ) : (
-                    <Stack component="ol" spacing={1} sx={{ pl: 3, m: 0 }}>
+                    <Stack component="ol" spacing={2} sx={{ pl: 3, m: 0 }}>
                         {recipe.steps.map((step) => (
-                            <Typography key={step.id} component="li">
-                                {step.description}
-                            </Typography>
+                            <Box key={step.id} component="li">
+                                <Typography>{step.description}</Typography>
+                                {step.ingredientIds.length > 0 && (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            gap: 0.5,
+                                            flexWrap: "wrap",
+                                            mt: 0.5,
+                                        }}
+                                    >
+                                        {step.ingredientIds.map((id) => {
+                                            const used = detail.ingredientsById.get(id);
+                                            return used ? (
+                                                <Chip
+                                                    key={id}
+                                                    size="small"
+                                                    variant="outlined"
+                                                    label={formatIngredient(used)}
+                                                />
+                                            ) : null;
+                                        })}
+                                    </Box>
+                                )}
+                            </Box>
                         ))}
                     </Stack>
                 )}
