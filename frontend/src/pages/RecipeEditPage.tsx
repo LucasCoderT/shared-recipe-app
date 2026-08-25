@@ -51,7 +51,7 @@ export const RecipeEditPage = () => {
         <PageShell
             title="Edit recipe"
             action={
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap" }}>
                     <Button onClick={editor.viewRecipe}>View</Button>
                     <ConfirmButton
                         label="Delete"

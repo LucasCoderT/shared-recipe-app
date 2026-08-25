@@ -17,7 +17,7 @@ const NAV = [
 export const AppLayout = () => (
     <>
         <AppBar position="static" color="transparent" elevation={0}>
-            <Toolbar sx={{ gap: 2, borderBottom: 1, borderColor: "divider" }}>
+            <Toolbar sx={{ gap: 2, flexWrap: "wrap", borderBottom: 1, borderColor: "divider" }}>
                 <Typography variant="h6" component="span" sx={{ fontWeight: 600 }}>
                     Shared Recipes
                 </Typography>

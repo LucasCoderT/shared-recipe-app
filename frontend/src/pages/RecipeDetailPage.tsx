@@ -50,7 +50,7 @@ export const RecipeDetailPage = () => {
         <PageShell
             title={recipe.name}
             action={
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap" }}>
                     {detail.canWrite && !detail.isOwner && (
                         <Button
                             variant="outlined"

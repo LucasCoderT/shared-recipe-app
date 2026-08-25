@@ -15,7 +15,8 @@ export const PageShell = ({
         <Stack
             direction="row"
             spacing={2}
-            sx={{ alignItems: "center", justifyContent: "space-between" }}
+            useFlexGap
+            sx={{ alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}
         >
             <Typography variant="h1">{title}</Typography>
             {action}
