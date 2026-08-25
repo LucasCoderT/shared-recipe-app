@@ -2,7 +2,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-export const UNIT_SUGGESTIONS = [
+// Mirrors UNITS in core/utils/units.py; the server rejects anything else.
+export const UNIT_OPTIONS = [
     "gram",
     "kilogram",
     "milligram",
@@ -10,14 +11,21 @@ export const UNIT_SUGGESTIONS = [
     "pound",
     "milliliter",
     "liter",
-    "cup",
-    "tablespoon",
     "teaspoon",
-    "fluid_ounce",
+    "tablespoon",
+    "fluid ounce",
+    "cup",
     "pint",
     "quart",
     "gallon",
+    "pinch",
+    "dash",
     "count",
+    "clove",
+    "slice",
+    "can",
+    "bunch",
+    "package",
 ] as const;
 
 export const UnitField = ({
@@ -30,14 +38,10 @@ export const UnitField = ({
     sx?: SxProps<Theme>;
 }) => (
     <Autocomplete
-        freeSolo
-        options={UNIT_SUGGESTIONS}
-        value={value}
+        options={UNIT_OPTIONS}
+        value={value || null}
         onChange={(_event, next) => onChange(next ?? "")}
-        onInputChange={(_event, next) => onChange(next)}
         sx={sx}
-        renderInput={(params) => (
-            <TextField {...params} label="Unit (optional)" placeholder="gram, cup" />
-        )}
+        renderInput={(params) => <TextField {...params} label="Unit (optional)" />}
     />
 );

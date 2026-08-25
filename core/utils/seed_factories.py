@@ -137,10 +137,6 @@ def _quantity_for_unit(unit: str, rng: Random) -> Decimal:
     return Decimal(rng.randint(1, 12))
 
 
-def _slugify_recipe_name(name: str) -> str:
-    return name.lower().replace(" ", "_").replace("-", "_").replace("#", "")
-
-
 def build_user(seed_user: dict[str, str], password_hash: str, now=None) -> User:
     _ = now
     return UserFactory.build(
@@ -221,7 +217,6 @@ def build_ordered_tags(
 
 def build_recipe_photos(recipe: Recipe, spec: RecipeSpec, now=None) -> list[RecipePhoto]:
     _ = now
-    slug = _slugify_recipe_name(spec.name)
     photos = [
         RecipePhotoFactory.build(
             recipe=recipe,
