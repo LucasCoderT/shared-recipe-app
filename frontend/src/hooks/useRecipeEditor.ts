@@ -9,14 +9,6 @@ import { QUANTITY_PATTERN } from "~/schemas";
 
 export const MAX_TAGS = 5;
 
-/**
- * Everything the edit screen does, so the screen itself only lays it out.
- *
- * One hook rather than five because the sections are not independent: they all
- * read the same recipe, they all invalidate the same query, and the tag form
- * needs to know how many tags exist. Splitting them would mean passing the
- * recipe back down to each one anyway.
- */
 export const useRecipeEditor = (recipeId: string) => {
     const navigate = useNavigate();
     const client = useQueryClient();
@@ -25,28 +17,20 @@ export const useRecipeEditor = (recipeId: string) => {
 
     const { data: recipe, isPending, isError, error } = useQuery(recipeQueries.detail(recipeId));
 
-    // ---- details -------------------------------------------------------
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
-    // Seeded when the recipe arrives and again after a reload, so an outside
-    // change is picked up rather than overwritten by a stale form.
     useEffect(() => {
         if (recipe) {
             setName(recipe.name);
             setDescription(recipe.description ?? "");
         }
-        // Keyed on identity and version rather than the object: depending on
-        // `recipe` would reseed the form on every refetch and discard edits in
-        // progress.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recipe?.id, recipe?.updatedAt]);
 
     const saveDetails = (event: FormEvent) => {
         event.preventDefault();
         if (!recipe) return;
-        // updatedAt is the concurrency token: the server answers 409 if the row
-        // moved on since this page loaded it.
         m.updateRecipe.mutate({ name, description, updatedAt: recipe.updatedAt });
     };
 
@@ -54,7 +38,6 @@ export const useRecipeEditor = (recipeId: string) => {
         void client.invalidateQueries({ queryKey: keys.recipes.detail(recipeId) });
     }, [client, recipeId]);
 
-    // ---- add forms -----------------------------------------------------
     const tagForm = useAddForm({
         initial: { name: "" },
         isValid: (v) => Boolean(v.name.trim()) && (recipe?.tags.length ?? 0) < MAX_TAGS,
@@ -82,7 +65,6 @@ export const useRecipeEditor = (recipeId: string) => {
         if (file) m.uploadPhoto.mutate({ image: file });
     };
 
-    // ---- destructive ---------------------------------------------------
     const removeTag = (id: number, label: string) =>
         confirmed(
             { title: "Remove this tag?", message: `"${label}" will be removed from this recipe.` },

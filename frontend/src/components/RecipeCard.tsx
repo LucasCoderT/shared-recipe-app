@@ -28,8 +28,6 @@ export const RecipeCard = ({ recipe }: { recipe: GridCard }) => (
                     sx={{ objectFit: "cover" }}
                 />
             ) : (
-                // A photo is optional in the spec, so a recipe without one is a
-                // normal state rather than a broken image.
                 <Box
                     sx={{
                         height: 160,
@@ -68,7 +66,6 @@ export const RecipeCard = ({ recipe }: { recipe: GridCard }) => (
                     )}
                 </Stack>
 
-                {/* Already limited to three, in position order, by the server. */}
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {recipe.tags.map((tag) => (
                         <Chip key={tag} label={tag} size="small" variant="outlined" />

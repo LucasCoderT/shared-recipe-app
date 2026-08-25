@@ -18,7 +18,6 @@ if (!container) {
 createRoot(container).render(
     <StrictMode>
         <ThemeProvider theme={theme}>
-            {/* Normalises browser defaults and applies the theme background. */}
             <CssBaseline />
             <QueryClientProvider client={queryClient}>
                 <ConfirmProvider>

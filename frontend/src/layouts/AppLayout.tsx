@@ -30,8 +30,6 @@ export const AppLayout = () => (
                             to={item.to}
                             end={item.end}
                             color="inherit"
-                            // NavLink sets aria-current on the active route, so the
-                            // active style keys off that rather than a render prop.
                             sx={{
                                 "&[aria-current='page']": {
                                     fontWeight: 700,

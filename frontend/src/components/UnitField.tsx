@@ -2,17 +2,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-/**
- * Units the server accepts and canonicalises to themselves.
- *
- * pint's registry holds thousands of units, so offering all of them would be
- * worse than a free text box. This is the cooking-relevant subset, each one
- * checked against normalize_unit().
- *
- * Deliberately absent: "pinch" and "unit". pint reads them as SI prefixes and
- * silently stores picoinch and micronit. They validate, so nothing catches it
- * later -- keeping them out of the suggestions is the only guard the UI has.
- */
 export const UNIT_SUGGESTIONS = [
     "gram",
     "kilogram",
@@ -31,11 +20,6 @@ export const UNIT_SUGGESTIONS = [
     "count",
 ] as const;
 
-/**
- * freeSolo, because the list is a convenience rather than the rule: the server
- * is still the authority and accepts anything pint knows. It just means a
- * typo like "tblsp" is now avoidable instead of costing a round trip.
- */
 export const UnitField = ({
     value,
     onChange,

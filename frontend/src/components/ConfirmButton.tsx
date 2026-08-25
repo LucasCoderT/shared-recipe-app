@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button";
 import { useConfirmedAction } from "~/hooks/useConfirmedAction";
 
-/** A destructive button that asks first. */
 export const ConfirmButton = ({
     label,
     title,

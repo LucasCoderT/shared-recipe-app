@@ -6,7 +6,6 @@ import { useConfirmedAction } from "~/hooks/useConfirmedAction";
 import { useCloneRecipe, useRecipeMutations } from "~/hooks/useRecipeMutations";
 import { useWhoamiQuery } from "~/hooks/useWhoamiQuery";
 
-/** Everything the detail screen needs, so the screen is only layout. */
 export const useRecipeDetail = (recipeId: string) => {
     const navigate = useNavigate();
     const confirmed = useConfirmedAction();
@@ -17,7 +16,6 @@ export const useRecipeDetail = (recipeId: string) => {
     const m = useRecipeMutations(recipeId);
 
     const isOwner = Boolean(whoami?.authenticated) && whoami?.id === recipe?.author;
-    // Mirrors is_admin_user() on the server: staff, superuser, or Admin group.
     const isAdmin = Boolean(whoami?.isStaff) || Boolean(whoami?.groups?.includes("Admin"));
 
     const commentForm = useAddForm({
@@ -46,8 +44,6 @@ export const useRecipeDetail = (recipeId: string) => {
         myRating: myReview?.rating ?? null,
         commentForm,
 
-        // One review per user is a database constraint, so an existing review
-        // is updated rather than added again.
         rate: (value: number | null) => {
             if (!value) return;
             if (myReview) m.updateReview.mutate({ id: myReview.id, rating: value });

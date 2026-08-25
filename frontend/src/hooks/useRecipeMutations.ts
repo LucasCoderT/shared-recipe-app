@@ -7,14 +7,6 @@ type FullRecipe = components["schemas"]["FullRecipe"];
 
 type Id = number | string;
 
-/**
- * Every recipe mutation refreshes the same key.
- *
- * FullRecipe carries ingredients, steps, tags, photos, reviews and comments in
- * one payload, so invalidating the detail query is enough to refresh any child
- * change. The grid is invalidated too, because name, rating and tags all show
- * on the card.
- */
 export const useRecipeMutations = (recipeId: Id) => {
     const client = useQueryClient();
 
@@ -37,14 +29,8 @@ export const useRecipeMutations = (recipeId: Id) => {
         deleteRecipe: useMutation({
             meta: { success: "Recipe deleted." },
             mutationFn: (updatedAt?: string) => api.recipes.destroy(recipeId, updatedAt),
-            // Drop the detail query rather than invalidating it. Invalidation
-            // refetches, and refetching a deleted recipe means a 404 plus
-            // retries that the caller's onSuccess waits behind -- so the page
-            // sits on the deleted recipe for seconds before redirecting.
             onSuccess: () => {
                 client.removeQueries({ queryKey: keys.recipes.detail(recipeId) });
-                // Not awaited: the caller redirects in its own onSuccess, and
-                // waiting on the grid refetch first would delay it.
                 void client.invalidateQueries({ queryKey: keys.recipes.all });
             },
         }),
@@ -59,13 +45,6 @@ export const useRecipeMutations = (recipeId: Id) => {
             mutationFn: (id: number) => api.recipeIngredients.destroy(recipeId, id),
             onSuccess,
         }),
-        /**
-         * Reorders optimistically: the list is rewritten in the cache before the
-         * request goes out, so the dragged row stays where it was dropped. A
-         * failure rolls the cache back to the snapshot taken here -- without
-         * that, a rejected drag would visually snap back a moment later and
-         * read as a bug.
-         */
         reorderSteps: useMutation({
             meta: { success: 'Steps reordered.' },
             mutationFn: (order: number[]) => api.recipeSteps.reorder(recipeId, order),
@@ -149,7 +128,6 @@ export const useRecipeMutations = (recipeId: Id) => {
     };
 };
 
-/** Cloning creates a new recipe, so it invalidates the list rather than one row. */
 export const useCloneRecipe = () => {
     const client = useQueryClient();
     return useMutation({

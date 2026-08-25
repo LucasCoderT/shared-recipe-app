@@ -16,14 +16,6 @@ type Mode = "login" | "register";
 
 const FIELDS = ["email", "password"] as const;
 
-/**
- * Reference implementation for every form in the app:
- *   zod schema -> zodResolver -> useForm -> MUI TextField -> applyServerErrors
- *
- * Client-side rules that can be checked in the browser run before the request.
- * Rules only the server can evaluate come back as field errors and are mapped
- * onto the same inputs, so both kinds of failure render identically.
- */
 export const AuthPanel = () => {
     const [mode, setMode] = useState<Mode>("login");
     const [formError, setFormError] = useState<string | null>(null);
@@ -54,8 +46,6 @@ export const AuthPanel = () => {
         }
     });
 
-    // Switching tabs swaps the schema, so the previous attempt's errors are
-    // cleared rather than left pointing at rules that no longer apply.
     const switchTo = (_event: SyntheticEvent, next: Mode) => {
         setMode(next);
         setFormError(null);

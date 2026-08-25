@@ -14,16 +14,6 @@ export type Paginated<T> = {
 
 type Id = number | string;
 
-/**
- * Request bodies are Partial<T> of the response type. The generated types mark
- * server-owned fields readonly, but filtering those out in the type system
- * costs more readability than it buys — the zod schemas in ~/schemas are what
- * actually constrain what a form sends.
- *
- * updatedAt is the optimistic-locking token: include it to opt into the
- * concurrency check, omit it to skip. The camel-case parser maps it to the
- * updated_at the view reads.
- */
 type Payload<T> = Partial<T> & { updatedAt?: string };
 
 const send = (method: string, body?: unknown): RequestInit => ({
@@ -31,7 +21,6 @@ const send = (method: string, body?: unknown): RequestInit => ({
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
 });
 
-/** A top-level collection: /recipes/, /shopping-lists/. */
 const rootResource = <T>(segment: string) => {
     const url = (id: Id) => `/${segment}/${id}/`;
     return {
@@ -45,7 +34,6 @@ const rootResource = <T>(segment: string) => {
     };
 };
 
-/** A collection nested under a parent: /recipes/{id}/tags/ and friends. */
 const childResource = <T>(parent: string, segment: string) => {
     const list = (parentId: Id) => `/${parent}/${parentId}/${segment}/`;
     const url = (parentId: Id, id: Id) => `${list(parentId)}${id}/`;
@@ -82,13 +70,11 @@ export const api = {
 
     recipes: {
         ...rootResource<Schemas["FullRecipe"]>("recipes"),
-        /** Card view: image, name, rating, three tags. Sortable and filterable. */
         grid: (filters?: Partial<RecipeGridFilterValues>, options?: RequestInit) =>
             apiFetch<Paginated<Schemas["RecipeGridCard"]>>(
                 `/recipes/grid/${toQuery(normalizeGridFilters(filters))}`,
                 options
             ),
-        /** Copies name, tags, steps, ingredients and photos to the caller. */
         clone: (id: Id) => apiFetch<Schemas["Recipe"]>(`/recipes/${id}/clone/`, send("POST")),
     },
 
@@ -103,7 +89,6 @@ export const api = {
     },
     recipeSteps: {
         ...childResource<Schemas["RecipeStep"]>("recipes", "steps"),
-        /** Send every step id exactly once, in the new order. */
         reorder: (recipeId: Id, order: number[]) =>
             apiFetch<Schemas["RecipeStep"][]>(
                 `/recipes/${recipeId}/steps/reorder/`,
@@ -119,7 +104,6 @@ export const api = {
 
     recipePhotos: {
         ...childResource<Schemas["RecipePhoto"]>("recipes", "photos"),
-        /** An image is a file, so this goes up as multipart rather than JSON. */
         create: (recipeId: Id, image: File, description = "") => {
             const form = new FormData();
             form.append("image", image);
@@ -133,7 +117,6 @@ export const api = {
 
     shoppingLists: {
         ...rootResource<Schemas["ShoppingList"]>("shopping-lists"),
-        /** Bulk-adds every ingredient from a recipe. Returns the created items. */
         copyFromRecipe: (id: Id, recipe: number) =>
             apiFetch<Schemas["ShoppingListItem"][]>(
                 `/shopping-lists/${id}/copy_from_recipe/`,

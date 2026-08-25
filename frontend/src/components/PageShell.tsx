@@ -2,10 +2,6 @@ import type { ReactNode } from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-/**
- * Common wrapper for every routed page: the h1 and the vertical rhythm live
- * here so individual pages only supply their content.
- */
 export const PageShell = ({
     title,
     action,

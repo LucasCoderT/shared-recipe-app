@@ -16,7 +16,6 @@ import { useWhoamiQuery } from "~/hooks/useWhoamiQuery";
 
 const PAGE_SIZE = 24;
 
-/** Matches the card footprint so the layout does not jump when results land. */
 const CardSkeletons = () => (
     <>
         {Array.from({ length: 8 }, (_, index) => (
@@ -31,8 +30,6 @@ export const RecipeGridPage = () => {
 
     const { data, isError, error, isPlaceholderData } = useQuery({
         ...recipeQueries.grid(filters),
-        // Keeps the previous page on screen while the next one loads, so paging
-        // does not flash empty.
         placeholderData: keepPreviousData,
     });
 
@@ -74,7 +71,6 @@ export const RecipeGridPage = () => {
                         md: "repeat(3, 1fr)",
                         lg: "repeat(4, 1fr)",
                     },
-                    // Dim rather than unmount while the next page is in flight.
                     opacity: isPlaceholderData ? 0.6 : 1,
                     transition: "opacity 150ms",
                 }}

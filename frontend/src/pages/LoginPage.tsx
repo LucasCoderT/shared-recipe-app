@@ -5,10 +5,6 @@ import { AuthPanel } from "~/components/AuthPanel";
 import { PageShell } from "~/components/PageShell";
 import { useWhoamiQuery } from "~/hooks/useWhoamiQuery";
 
-/**
- * Only relative paths are honoured, so a crafted ?next=https://evil.example
- * cannot turn the login redirect into an open redirect.
- */
 const safeNext = (value: string | null) =>
     value && value.startsWith("/") && !value.startsWith("//") ? value : "/";
 
@@ -18,8 +14,6 @@ export const LoginPage = () => {
     const { data } = useWhoamiQuery();
     const destination = safeNext(params.get("next"));
 
-    // Covers both arriving already signed in and signing in on this page: the
-    // whoami invalidation from the mutation flips this and the redirect fires.
     useEffect(() => {
         if (data?.authenticated) {
             void navigate(destination, { replace: true });

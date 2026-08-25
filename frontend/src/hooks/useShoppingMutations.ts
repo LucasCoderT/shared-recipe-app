@@ -17,8 +17,6 @@ export const useShoppingListMutations = () => {
         remove: useMutation({
             meta: { success: "List deleted." },
             mutationFn: (id: Id) => api.shoppingLists.destroy(id),
-            // Same reason as deleting a recipe: refetching the deleted list
-            // would 404 and stall the redirect behind the retries.
             onSuccess: (_data, id) => {
                 client.removeQueries({ queryKey: keys.shoppingLists.detail(id) });
                 client.removeQueries({ queryKey: keys.shoppingLists.items(id) });
@@ -54,7 +52,6 @@ export const useShoppingItemMutations = (listId: Id) => {
             mutationFn: (id: number) => api.shoppingListItems.destroy(listId, id),
             onSuccess,
         }),
-        /** Bulk-adds every ingredient from a recipe. */
         copyFromRecipe: useMutation({
             meta: { success: 'Ingredients added to your list.' },
             mutationFn: (recipeId: number) => api.shoppingLists.copyFromRecipe(listId, recipeId),

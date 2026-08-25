@@ -1,8 +1,3 @@
-/**
- * Thin fetch wrapper for Django's session-authenticated API.
- * Assumes JSON responses and adds CSRF for mutating requests.
- */
-
 import type { operations } from "~/schema";
 
 type JsonResponseBody<response> = response extends {
@@ -33,14 +28,6 @@ export class ApiError extends Error {
     }
 }
 
-/**
- * Serialise any params object into a query string.
- *
- * URLSearchParams is the built-in for this; the only thing it does not decide
- * for you is what to do with absent values and arrays. Empty and undefined are
- * dropped so an unset filter does not become "?q=", and arrays are repeated
- * (?tag=a&tag=b) because that is what DRF's ListField reads off a QueryDict.
- */
 type QueryValue = string | number | boolean | null | undefined | (string | number)[];
 
 export const toQuery = (params: Record<string, QueryValue>): string => {
@@ -75,8 +62,6 @@ export const apiFetch = async <T>(
     const headers = new Headers(options.headers);
 
     headers.set("Accept", "application/json");
-    // FormData must set its own Content-Type so the multipart boundary is
-    // included; anything else we send is JSON.
     if (options.body !== undefined && !(options.body instanceof FormData)) {
         headers.set("Content-Type", "application/json");
     }

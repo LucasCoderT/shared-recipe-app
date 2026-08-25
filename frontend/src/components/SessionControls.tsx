@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import { useLogoutMutation } from "~/hooks/useAuthMutations";
 import { useWhoamiQuery } from "~/hooks/useWhoamiQuery";
 
-/** Who is signed in, plus the way in and out. Lives in the app bar. */
 export const SessionControls = () => {
     const { data, isPending, isError } = useWhoamiQuery();
     const logout = useLogoutMutation();
@@ -32,8 +31,6 @@ export const SessionControls = () => {
             <Button
                 size="small"
                 variant="outlined"
-                // Signing out on a guarded page would otherwise leave the
-                // user sitting on it until their next navigation.
                 onClick={() =>
                     logout.mutate(undefined, {
                         onSuccess: () => void navigate("/", { replace: true }),

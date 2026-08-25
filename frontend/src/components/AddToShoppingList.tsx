@@ -11,10 +11,6 @@ import TextField from "@mui/material/TextField";
 import { shoppingListQueries } from "~/api/queries";
 import { useShoppingItemMutations } from "~/hooks/useShoppingMutations";
 
-/**
- * Copies a recipe's ingredients into a chosen list. The mutation is keyed on
- * the target list, so it is created after the user picks one.
- */
 const CopyAction = ({
     listId,
     recipeId,

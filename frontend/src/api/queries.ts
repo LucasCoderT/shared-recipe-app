@@ -5,15 +5,6 @@ import { normalizeGridFilters, type RecipeGridFilterValues } from "~/schemas";
 type Id = number | string;
 type GridFilters = Partial<RecipeGridFilterValues>;
 
-/**
- * Every cache key in the app, in one place.
- *
- * Hand-written key arrays scattered across components are the usual source of
- * stale-cache bugs: a mutation invalidates ["recipe", id] while the query that
- * fetched it used ["recipes", id], and nothing refreshes. Keys are nested so a
- * broad invalidation covers the narrow ones -- invalidating keys.recipes.all
- * clears the grid, every detail, and every child collection.
- */
 export const keys = {
     health: ["health"] as const,
     whoami: ["whoami"] as const,
@@ -30,7 +21,6 @@ export const keys = {
     },
 } as const;
 
-/** How long the route guard will trust a cached answer. See ~/auth/requireAuth. */
 export const WHOAMI_STALE_TIME = 30_000;
 
 export const whoamiQuery = queryOptions({
@@ -48,17 +38,8 @@ export const healthQuery = queryOptions({
     refetchOnWindowFocus: false,
 });
 
-/**
- * Read queries, ready to hand straight to useQuery:
- *
- *   const { data } = useQuery(recipeQueries.detail(recipeId));
- *
- * The key and the fetcher are defined together, so they cannot drift apart.
- */
 export const recipeQueries = {
     grid: (filters: GridFilters = {}) => {
-        // Normalise once so the cache key and the request URL are built from
-        // exactly the same object.
         const normalized = normalizeGridFilters(filters);
         return queryOptions({
             queryKey: keys.recipes.grid(normalized),

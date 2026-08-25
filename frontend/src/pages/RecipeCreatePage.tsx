@@ -12,14 +12,6 @@ import { PageShell } from "~/components/PageShell";
 import { useCreateRecipe } from "~/hooks/useRecipeMutations";
 import { recipeSchema, type RecipeInput, type RecipeValues } from "~/schemas";
 
-/**
- * Creates the recipe itself, then hands off to the edit screen.
- *
- * Ingredients, steps, tags and photos are separate resources with their own
- * URLs and permissions, so they cannot be posted until the recipe they belong
- * to has an id. Splitting it this way keeps each request to one resource rather
- * than inventing a bulk endpoint the API does not have.
- */
 export const RecipeCreatePage = () => {
     const navigate = useNavigate();
     const createRecipe = useCreateRecipe();
@@ -29,8 +21,6 @@ export const RecipeCreatePage = () => {
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-        // Three generics because the schema transforms: description is
-        // optional on input and always a string on output.
     } = useForm<RecipeInput, unknown, RecipeValues>({
         resolver: zodResolver(recipeSchema),
         defaultValues: { name: "", description: "" },

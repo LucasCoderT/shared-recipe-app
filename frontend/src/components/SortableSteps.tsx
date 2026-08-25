@@ -49,16 +49,12 @@ const SortableStep = ({
                 gap: 1,
                 transform: CSS.Transform.toString(transform),
                 transition,
-                // Lift the dragged row above its neighbours.
                 zIndex: isDragging ? 1 : 0,
                 position: "relative",
                 opacity: isDragging ? 0.85 : 1,
                 boxShadow: isDragging ? 4 : 0,
             }}
         >
-            {/* Only the handle starts a drag, so the row stays selectable. The
-                spread carries dnd-kit's keyboard bindings: space to pick up,
-                arrows to move, space to drop. */}
             <IconButton
                 size="small"
                 {...attributes}
@@ -94,8 +90,6 @@ export const SortableSteps = ({
     onRemove: (id: number, description: string) => void;
 }) => {
     const sensors = useSensors(
-        // A small distance threshold keeps a click on the delete button from
-        // being swallowed as the start of a drag.
         useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
         useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
     );
@@ -106,7 +100,6 @@ export const SortableSteps = ({
         const ids = steps.map((step) => step.id);
         const from = ids.indexOf(Number(active.id));
         const to = ids.indexOf(Number(over.id));
-        // The server wants the complete order, not a from/to pair.
         onReorder(arrayMove(ids, from, to));
     };
 

@@ -27,18 +27,14 @@ export const RecipeFilters = ({
     onChange: (patch: Partial<RecipeGridFilterValues>) => void;
     onClear: () => void;
 }) => {
-    // The search box is uncontrolled by the URL while typing, then debounced
-    // into it, so each keystroke does not become a request and a history entry.
     const [search, setSearch] = useState(filters.q ?? "");
     const debounced = useDebouncedValue(search);
 
     useEffect(() => {
         if (debounced !== (filters.q ?? "")) onChange({ q: debounced });
-        // onChange identity changes with the filters; depending on it would loop.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounced]);
 
-    // Keep the box in step when the URL changes from elsewhere, e.g. Clear.
     useEffect(() => setSearch(filters.q ?? ""), [filters.q]);
 
     const hasFilters =

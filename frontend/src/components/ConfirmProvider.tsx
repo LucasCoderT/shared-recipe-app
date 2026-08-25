@@ -7,19 +7,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ConfirmContext, type ConfirmFn, type ConfirmOptions } from "~/confirmContext";
 
-/**
- * One dialog for the whole app, requested through a promise.
- *
- *   if (await confirm({ title, message })) remove.mutate(id);
- *
- * A per-button component cannot cover a Chip's delete icon or an IconButton in
- * a list row without each caller carrying its own open/close state. Handing
- * back a promise keeps the call site to a single line wherever the trigger
- * lives, and there is only ever one Dialog mounted.
- */
 export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
     const [options, setOptions] = useState<ConfirmOptions | null>(null);
-    // Held in a ref so resolving does not depend on a re-render landing first.
     const resolver = useRef<((confirmed: boolean) => void) | null>(null);
 
     const confirm = useCallback<ConfirmFn>((next) => {
