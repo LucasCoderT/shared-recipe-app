@@ -1,4 +1,3 @@
 export * from "~/schemas/auth";
 export * from "~/schemas/common";
 export * from "~/schemas/recipes";
-export * from "~/schemas/shopping";

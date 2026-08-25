@@ -86,7 +86,7 @@ export const useRecipeEditor = (recipeId: string) => {
         confirmed(
             { title: "Remove this step?", message: `"${label}" will be removed from this recipe.` },
             () => m.removeStep.mutate(id)
-        )();
+        );
 
     const removePhoto = (id: number) =>
         confirmed(

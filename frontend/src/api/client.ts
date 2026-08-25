@@ -1,21 +1,3 @@
-import type { operations } from "~/schema";
-
-type JsonResponseBody<response> = response extends {
-    content: { "application/json": infer body };
-}
-    ? body
-    : never;
-
-type SuccessResponse<responseMap> = responseMap extends { "200": infer okResponse }
-    ? JsonResponseBody<okResponse>
-    : responseMap extends { "201": infer createdResponse }
-      ? JsonResponseBody<createdResponse>
-      : never;
-
-export type OperationResponse<key extends keyof operations> = SuccessResponse<
-    operations[key]["responses"]
->;
-
 export class ApiError extends Error {
     status: number;
     body: unknown;
@@ -77,7 +59,14 @@ export const apiFetch = async <T>(path: string, options: RequestInit = {}): Prom
     });
 
     const text = await response.text();
-    const body: unknown = text ? JSON.parse(text) : null;
+    let body: unknown = null;
+    try {
+        body = text ? JSON.parse(text) : null;
+    } catch {
+        // An HTML error page from the server or the proxy. Keep the raw text so
+        // the status code still reaches the caller instead of a SyntaxError.
+        body = text;
+    }
 
     if (!response.ok) {
         throw new ApiError(response.status, body, `${method} /api${path} failed`);

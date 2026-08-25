@@ -28,7 +28,6 @@ const rootResource = <T>(segment: string) => {
         retrieve: (id: Id, options?: RequestInit) => apiFetch<T>(url(id), options),
         create: (body: Payload<T>) => apiFetch<T>(`/${segment}/`, send("POST", body)),
         update: (id: Id, body: Payload<T>) => apiFetch<T>(url(id), send("PATCH", body)),
-        replace: (id: Id, body: Payload<T>) => apiFetch<T>(url(id), send("PUT", body)),
         destroy: (id: Id, updatedAt?: string) =>
             apiFetch<void>(url(id), send("DELETE", updatedAt ? { updatedAt } : undefined)),
     };
@@ -45,8 +44,6 @@ const childResource = <T>(parent: string, segment: string) => {
         create: (parentId: Id, body: Payload<T>) => apiFetch<T>(list(parentId), send("POST", body)),
         update: (parentId: Id, id: Id, body: Payload<T>) =>
             apiFetch<T>(url(parentId, id), send("PATCH", body)),
-        replace: (parentId: Id, id: Id, body: Payload<T>) =>
-            apiFetch<T>(url(parentId, id), send("PUT", body)),
         destroy: (parentId: Id, id: Id, updatedAt?: string) =>
             apiFetch<void>(
                 url(parentId, id),
@@ -56,7 +53,6 @@ const childResource = <T>(parent: string, segment: string) => {
 };
 
 export const api = {
-    health: (options?: RequestInit) => apiFetch<Schemas["Health"]>("/health/", options),
     whoami: (options?: RequestInit) => apiFetch<Schemas["WhoAmI"]>("/whoami/", options),
 
     auth: {
@@ -79,14 +75,7 @@ export const api = {
     },
 
     recipeTags: childResource<Schemas["RecipeTag"]>("recipes", "tags"),
-    recipeIngredients: {
-        ...childResource<Schemas["RecipeIngredient"]>("recipes", "ingredients"),
-        reorder: (recipeId: Id, order: number[]) =>
-            apiFetch<Schemas["RecipeIngredient"][]>(
-                `/recipes/${recipeId}/ingredients/reorder/`,
-                send("POST", { order })
-            ),
-    },
+    recipeIngredients: childResource<Schemas["RecipeIngredient"]>("recipes", "ingredients"),
     recipeSteps: {
         ...childResource<Schemas["RecipeStep"]>("recipes", "steps"),
         reorder: (recipeId: Id, order: number[]) =>
@@ -95,10 +84,6 @@ export const api = {
                 send("POST", { order })
             ),
     },
-    recipeStepIngredients: childResource<Schemas["RecipeStepIngredient"]>(
-        "recipes",
-        "step-ingredients"
-    ),
     recipeReviews: childResource<Schemas["RecipeReview"]>("recipes", "reviews"),
     recipeComments: childResource<Schemas["RecipeComment"]>("recipes", "comments"),
 

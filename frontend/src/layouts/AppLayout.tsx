@@ -6,7 +6,6 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { ApiStatus } from "~/components/ApiStatus";
 import { SessionControls } from "~/components/SessionControls";
 
 const NAV = [
@@ -43,7 +42,6 @@ export const AppLayout = () => (
                 </Stack>
 
                 <Box sx={{ flexGrow: 1 }} />
-                <ApiStatus />
                 <SessionControls />
             </Toolbar>
         </AppBar>

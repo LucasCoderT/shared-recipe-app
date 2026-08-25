@@ -33,7 +33,7 @@ const SortableStep = ({
 }: {
     step: Step;
     index: number;
-    onRemove: (id: number, description: string) => void;
+    onRemove: (id: number, description: string) => () => void;
 }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: step.id,
@@ -71,10 +71,7 @@ const SortableStep = ({
             </Typography>
             <Typography sx={{ flexGrow: 1 }}>{step.description}</Typography>
 
-            <IconButton
-                onClick={() => onRemove(step.id, step.description)}
-                aria-label="Delete step"
-            >
+            <IconButton onClick={onRemove(step.id, step.description)} aria-label="Delete step">
                 <DeleteOutlinedIcon fontSize="small" />
             </IconButton>
         </Paper>
@@ -88,7 +85,7 @@ export const SortableSteps = ({
 }: {
     steps: Step[];
     onReorder: (order: number[]) => void;
-    onRemove: (id: number, description: string) => void;
+    onRemove: (id: number, description: string) => () => void;
 }) => {
     const sensors = useSensors(
         useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),

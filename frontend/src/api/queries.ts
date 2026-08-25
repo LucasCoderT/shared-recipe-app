@@ -6,13 +6,11 @@ type Id = number | string;
 type GridFilters = Partial<RecipeGridFilterValues>;
 
 export const keys = {
-    health: ["health"] as const,
     whoami: ["whoami"] as const,
     recipes: {
         all: ["recipes"] as const,
         grid: (filters: GridFilters = {}) => ["recipes", "grid", filters] as const,
         detail: (id: Id) => ["recipes", "detail", id] as const,
-        children: (id: Id, segment: string) => ["recipes", "detail", id, segment] as const,
     },
     shoppingLists: {
         all: ["shopping-lists"] as const,
@@ -27,13 +25,6 @@ export const whoamiQuery = queryOptions({
     queryKey: keys.whoami,
     queryFn: () => api.whoami(),
     staleTime: WHOAMI_STALE_TIME,
-    retry: false,
-    refetchOnWindowFocus: false,
-});
-
-export const healthQuery = queryOptions({
-    queryKey: keys.health,
-    queryFn: () => api.health(),
     retry: false,
     refetchOnWindowFocus: false,
 });
@@ -56,36 +47,6 @@ export const recipeQueries = {
             queryKey: [...keys.recipes.all, "tag-options"],
             queryFn: () => api.recipes.tagOptions(),
             staleTime: 5 * 60_000,
-        }),
-    tags: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "tags"),
-            queryFn: () => api.recipeTags.list(id),
-        }),
-    ingredients: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "ingredients"),
-            queryFn: () => api.recipeIngredients.list(id),
-        }),
-    steps: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "steps"),
-            queryFn: () => api.recipeSteps.list(id),
-        }),
-    photos: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "photos"),
-            queryFn: () => api.recipePhotos.list(id),
-        }),
-    reviews: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "reviews"),
-            queryFn: () => api.recipeReviews.list(id),
-        }),
-    comments: (id: Id) =>
-        queryOptions({
-            queryKey: keys.recipes.children(id, "comments"),
-            queryFn: () => api.recipeComments.list(id),
         }),
 };
 
