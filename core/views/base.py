@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import is_aware
@@ -10,7 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.response import Response
 
-from core.exceptions import StaleWrite
+from core.exceptions import AlreadyExists, StaleWrite
 from core.models import Recipe, ShoppingList
 from core.permissions import HasGroupPermissionAndOwnershipOrReadOnly, is_admin_user
 from core.serializers import ReorderSerializer
@@ -64,6 +64,30 @@ def ensure_shopping_list_owned(*, user, shopping_list: ShoppingList) -> None:
 
 class OwnedResourceViewSet(viewsets.ModelViewSet):
     permission_classes = [HasGroupPermissionAndOwnershipOrReadOnly]
+
+    def perform_create(self, serializer) -> None:
+        self._save_or_conflict(serializer)
+
+    def perform_update(self, serializer) -> None:
+        self._save_or_conflict(serializer)
+
+    @staticmethod
+    def _save_or_conflict(serializer, **kwargs) -> None:
+        """
+        Saves the serializer, turning a unique-constraint violation into a 409.
+
+        The serializers catch the obvious duplicates up front with a field error,
+        but two requests can still race past that check. The savepoint keeps the
+        request transaction usable after the failed INSERT so the error response
+        can be written.
+        """
+        try:
+            with transaction.atomic():
+                serializer.save(**kwargs)
+        except IntegrityError as exc:
+            if "unique" not in str(exc).lower():
+                raise
+            raise AlreadyExists() from exc
 
     def _check_stale_write(self, instance):
         """

@@ -26,6 +26,13 @@ class TimestampedModelSerializer(serializers.ModelSerializer):
     updated_at = serializers.DateTimeField(read_only=True)
 
 
+def user_label(user) -> str | None:
+    """The name shown for a user anywhere the API exposes one."""
+    if user is None:
+        return None
+    return user.display_name or user.email
+
+
 def validate_nonblank_text(*, value: str, field_name: str) -> str:
     normalized = value.strip()
     if not normalized:

@@ -26,7 +26,7 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.
 
 # The Vite dev server reverse-proxies /api to Django with changeOrigin, meaning Django
 # gets its own domain name along with the Origin header that the dev server sets.
-# Otherwise, every authenticated write request coming from the SPA will fail Django’s
+# Otherwise, every authenticated write request coming from the SPA will fail Django's
 # CSRF origin verification test. Anonymous requests are not impacted, hence the reason
 # why login and registration were working fine without it.
 CSRF_TRUSTED_ORIGINS = env.list(

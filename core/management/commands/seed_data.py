@@ -144,9 +144,9 @@ class Command(BaseCommand):
             self.style.SUCCESS(
                 "Seeded data: "
                 f"{len(demo_users) + len(load_authors)} users "
-                f"(3 curated + {len(load_authors)} synthetic), "
+                f"({len(demo_users)} curated + {len(load_authors)} synthetic), "
                 f"{demo_recipes + synthetic_recipes} recipes "
-                f"(5 curated + {synthetic_recipes} synthetic)."
+                f"({demo_recipes} curated + {synthetic_recipes} synthetic)."
             )
         )
 
@@ -185,12 +185,6 @@ class Command(BaseCommand):
         ]
         created_recipes = Recipe.objects.bulk_create(recipe_rows, batch_size=insert_batch_size)
         recipes_by_name = {recipe.name: recipe for recipe in created_recipes}
-
-        original_recipe = recipes_by_name["Classic Spaghetti Bolognese"]
-        banana_recipe = recipes_by_name["Banana Oat Pancakes"]
-        banana_recipe.original_recipe = original_recipe
-        banana_recipe.original_author = original_recipe.author
-        banana_recipe.save(update_fields=["original_recipe", "original_author"])
 
         ingredient_pool: list[RecipeIngredient] = []
         tag_rows: list[RecipeTag] = []
@@ -246,6 +240,13 @@ class Command(BaseCommand):
         RecipeReview.objects.bulk_create(review_rows, batch_size=insert_batch_size)
         RecipeComment.objects.bulk_create(comment_rows, batch_size=insert_batch_size)
 
+        # One real copy, made the same way a user makes one, so the "copied from"
+        # banner has an honest example: Nina keeps a copy of Ava's Bolognese.
+        # Fetched fresh because clone() repurposes the instance it is called on.
+        Recipe.objects.get(pk=recipes_by_name["Classic Spaghetti Bolognese"].pk).clone(
+            users_by_username["nina_bakes"]
+        )
+
         shopping_list_rows = [
             build_shopping_list(user, title)
             for user in users_by_username.values()
@@ -275,7 +276,7 @@ class Command(BaseCommand):
             )
         ShoppingListItem.objects.bulk_create(shopping_item_rows, batch_size=insert_batch_size)
 
-        return len(recipe_rows)
+        return len(recipe_rows) + 1  # plus the copy
 
     @staticmethod
     def _seed_synthetic_load(
@@ -436,6 +437,19 @@ class Command(BaseCommand):
             RecipeComment.objects.bulk_create(comment_rows, batch_size=insert_batch_size)
 
             created_total += len(created_recipes)
+
+        if recipes_requested and load_authors:
+            # A few real copies so the "copied from" banner is discoverable in the
+            # load data too. Constant count on purpose: clone() saves row by row.
+            originals = list(
+                Recipe.objects.filter(author__in=demo_users, original_recipe__isnull=True)
+                .order_by("pk")
+                .select_related("author")
+            )
+            cloners = rng.sample(load_authors, k=min(len(originals), len(load_authors)))
+            for cloner, original in zip(cloners, originals, strict=False):
+                original.clone(cloner)
+                created_total += 1
 
         if shopping_lists_requested:
             generated_lists = [

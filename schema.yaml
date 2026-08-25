@@ -1721,13 +1721,6 @@ paths:
   /api/shopping-lists/:
     get:
       operationId: shoppingListsList
-      parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       tags:
       - shopping-lists
       security:
@@ -1737,7 +1730,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedShoppingListList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingList'
           description: ''
     post:
       operationId: shoppingListsCreate
@@ -1904,12 +1899,6 @@ paths:
     get:
       operationId: shoppingListsItemsList
       parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       - in: path
         name: shoppingListPk
         schema:
@@ -1924,7 +1913,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedShoppingListItemList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingListItem'
           description: ''
     post:
       operationId: shoppingListsItemsCreate
@@ -2126,6 +2117,14 @@ components:
         authorName:
           type: string
           readOnly: true
+        originalRecipeName:
+          type: string
+          readOnly: true
+          nullable: true
+        originalAuthorName:
+          type: string
+          nullable: true
+          readOnly: true
         ingredients:
           type: array
           items:
@@ -2165,7 +2164,9 @@ components:
       - ingredients
       - name
       - originalAuthor
+      - originalAuthorName
       - originalRecipe
+      - originalRecipeName
       - photos
       - reviews
       - steps
@@ -2397,52 +2398,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RecipeTag'
-    PaginatedShoppingListItemList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShoppingListItem'
-    PaginatedShoppingListList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShoppingList'
     PatchedFullRecipe:
       type: object
       properties:
@@ -2474,6 +2429,14 @@ components:
           readOnly: true
         authorName:
           type: string
+          readOnly: true
+        originalRecipeName:
+          type: string
+          readOnly: true
+          nullable: true
+        originalAuthorName:
+          type: string
+          nullable: true
           readOnly: true
         ingredients:
           type: array
@@ -2524,6 +2487,9 @@ components:
           readOnly: true
         user:
           type: integer
+          readOnly: true
+        userName:
+          type: string
           readOnly: true
         content:
           type: string
@@ -2788,6 +2754,9 @@ components:
         user:
           type: integer
           readOnly: true
+        userName:
+          type: string
+          readOnly: true
         content:
           type: string
       required:
@@ -2797,6 +2766,7 @@ components:
       - recipe
       - updatedAt
       - user
+      - userName
     RecipeGridCard:
       type: object
       properties:

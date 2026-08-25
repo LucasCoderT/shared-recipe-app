@@ -16,6 +16,7 @@ from core.models import (
 from .base import (
     RelativeImageField,
     TimestampedModelSerializer,
+    user_label,
     validate_nonblank_text,
     validate_optional_text,
     validate_positive_decimal,
@@ -66,7 +67,7 @@ class RecipeGridCardSerializer(serializers.ModelSerializer):
         fields = ("id", "image", "name", "rating", "tags", "author", "author_name")
 
     def get_author_name(self, obj: Recipe) -> str:
-        return obj.author.display_name or obj.author.email
+        return user_label(obj.author)
 
     def get_image(self, obj: Recipe) -> str | None:
         photo = next(iter(getattr(obj, "ordered_photos", [])), None)
@@ -110,7 +111,19 @@ class RecipeTagSerializer(TimestampedModelSerializer):
         read_only_fields = ("id", "created_at", "updated_at", "recipe", "position")
 
     def validate_name(self, value: str) -> str:
-        return validate_nonblank_text(value=value, field_name="Tag name")
+        name = validate_nonblank_text(value=value, field_name="Tag name")
+        # The unique constraint is (recipe, name), but recipe is read-only here so
+        # DRF cannot build the validator itself. Without this the duplicate would
+        # surface as an IntegrityError. Case-insensitive on purpose: "Vegan" and
+        # "vegan" on one recipe is never what anyone means.
+        recipe = self.context.get("recipe")
+        if recipe is not None:
+            duplicates = RecipeTag.objects.filter(recipe=recipe, name__iexact=name)
+            if self.instance is not None:
+                duplicates = duplicates.exclude(pk=self.instance.pk)
+            if duplicates.exists():
+                raise serializers.ValidationError("This recipe already has that tag.")
+        return name
 
 
 class RecipeIngredientSerializer(TimestampedModelSerializer):
@@ -166,14 +179,36 @@ class RecipeReviewSerializer(TimestampedModelSerializer):
         fields = ("id", "created_at", "updated_at", "recipe", "user", "rating")
         read_only_fields = ("id", "created_at", "updated_at", "recipe", "user")
 
+    def validate(self, attrs):
+        # Same situation as tags: (recipe, user) is unique but both are read-only,
+        # so the duplicate has to be caught here to come back as a 400.
+        if self.instance is None:
+            recipe = self.context.get("recipe")
+            request = self.context.get("request")
+            user = getattr(request, "user", None)
+            if (
+                recipe is not None
+                and user is not None
+                and user.is_authenticated
+                and RecipeReview.objects.filter(recipe=recipe, user=user).exists()
+            ):
+                raise serializers.ValidationError(
+                    {"rating": "You have already reviewed this recipe. Edit your review instead."}
+                )
+        return attrs
+
 
 class RecipeCommentSerializer(TimestampedModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
+    user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = RecipeComment
-        fields = ("id", "created_at", "updated_at", "recipe", "user", "content")
-        read_only_fields = ("id", "created_at", "updated_at", "recipe", "user")
+        fields = ("id", "created_at", "updated_at", "recipe", "user", "user_name", "content")
+        read_only_fields = ("id", "created_at", "updated_at", "recipe", "user", "user_name")
+
+    def get_user_name(self, obj: RecipeComment) -> str:
+        return user_label(obj.user)
 
     def validate_content(self, value: str) -> str:
         return validate_nonblank_text(value=value, field_name="Content")
@@ -239,6 +274,13 @@ class RecipeStepIngredientSerializer(TimestampedModelSerializer):
 
 class FullRecipeSerializer(RecipeSerializer):
     author_name = serializers.SerializerMethodField()
+    # Both are null unless the recipe is a copy. original_recipe_name goes null
+    # again if the original is deleted (SET_NULL) while original_author_name
+    # survives, so the banner can still credit the person.
+    original_recipe_name = serializers.CharField(
+        source="original_recipe.name", read_only=True, allow_null=True, default=None
+    )
+    original_author_name = serializers.SerializerMethodField()
     ingredients = RecipeIngredientSerializer(many=True, read_only=True)
     steps = RecipeStepSerializer(many=True, read_only=True)
     tags = RecipeTagSerializer(many=True, read_only=True)
@@ -258,6 +300,8 @@ class FullRecipeSerializer(RecipeSerializer):
             "original_recipe",
             "original_author",
             "author_name",
+            "original_recipe_name",
+            "original_author_name",
             "ingredients",
             "steps",
             "tags",
@@ -275,4 +319,7 @@ class FullRecipeSerializer(RecipeSerializer):
         )
 
     def get_author_name(self, obj: Recipe) -> str:
-        return obj.author.display_name or obj.author.email
+        return user_label(obj.author)
+
+    def get_original_author_name(self, obj: Recipe) -> str | None:
+        return user_label(obj.original_author)

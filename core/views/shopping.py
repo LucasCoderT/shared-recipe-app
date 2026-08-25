@@ -18,6 +18,8 @@ from .base import OwnedResourceViewSet, ShoppingListNestedViewSet, ensure_shoppi
 class ShoppingListViewSet(OwnedResourceViewSet):
     queryset = ShoppingList.objects.select_related("user").order_by("name", "-created_at")
     serializer_class = ShoppingListSerializer
+    # A user's lists are a small owned collection the UI renders in full.
+    pagination_class = None
 
     def get_queryset(self) -> "QuerySet[ShoppingList]":
         """
@@ -28,7 +30,6 @@ class ShoppingListViewSet(OwnedResourceViewSet):
         Returns:
             QuerySet[ShoppingList]: The queryset of shopping lists the user is allowed to see.
         """
-        # Skips any permission checks and returns the base queryset of shopping lists.
         queryset = super().get_queryset()
         if is_admin_user(self.request.user):
             return queryset
@@ -37,7 +38,7 @@ class ShoppingListViewSet(OwnedResourceViewSet):
         return queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer) -> None:
-        serializer.save(user=self.request.user)
+        self._save_or_conflict(serializer, user=self.request.user)
 
     @extend_schema(
         request=ShoppingListItemFromRecipeSerializer,
@@ -81,8 +82,11 @@ class ShoppingListItemViewSet(ShoppingListNestedViewSet):
         "ingredient",
     ).all()
     serializer_class = ShoppingListItemSerializer
+    # Items are shown as one list with a running "still to buy" count, so the
+    # client needs all of them; paging at 24 hid everything past the first page.
+    pagination_class = None
 
     def perform_create(self, serializer) -> None:
         shopping_list = self.get_parent_shopping_list()
         ensure_shopping_list_owned(user=self.request.user, shopping_list=shopping_list)
-        serializer.save(shopping_list=shopping_list)
+        self._save_or_conflict(serializer, shopping_list=shopping_list)

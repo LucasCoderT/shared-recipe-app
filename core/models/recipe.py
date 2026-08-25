@@ -213,7 +213,7 @@ class Recipe(base.TimestampedModel):
             self.save()
 
             # Clone the related entities (tags and photos) for the new recipe
-            for rel_name, children in children_entities.items():
+            for children in children_entities.values():
                 for child in children:
                     child.pk = None
                     child.id = None

@@ -20,3 +20,14 @@ class TooManyRecipeTags(APIException):
     status_code = status.HTTP_400_BAD_REQUEST
     default_detail = "A recipe can have a maximum of 5 tags."
     default_code = "too_many_tags"
+
+
+class AlreadyExists(APIException):
+    """
+    Exception raised when a write collides with a unique constraint that the
+    serializer did not (or could not, in a race) catch first.
+    """
+
+    status_code = status.HTTP_409_CONFLICT
+    default_detail = "That already exists."
+    default_code = "already_exists"

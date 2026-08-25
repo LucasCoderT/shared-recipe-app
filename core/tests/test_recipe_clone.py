@@ -8,7 +8,9 @@ pytestmark = pytest.mark.django_db
 def test_when_recipe_cloned_expect_children_cloned(seed_data_factory):
     seed_data_factory()
     cloner = User.objects.get(email="marco@example.com")
-    original = Recipe.objects.get(name="Classic Spaghetti Bolognese")
+    original = Recipe.objects.get(
+        name="Classic Spaghetti Bolognese", original_recipe__isnull=True
+    )
 
     original_id = original.pk
     original_author_id = original.author_id

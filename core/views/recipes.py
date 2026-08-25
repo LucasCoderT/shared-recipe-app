@@ -1,4 +1,4 @@
-from django.db.models import Avg, FloatField, OuterRef, Prefetch, QuerySet, Subquery
+from django.db.models import Avg, F, FloatField, OuterRef, Prefetch, QuerySet, Subquery
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from rest_framework.decorators import action
@@ -38,21 +38,33 @@ from .base import (
 
 
 class RecipeViewSet(OwnedResourceViewSet):
-    queryset = Recipe.objects.prefetch_related(
-        "ingredients", "steps", "tags", "photos", "reviews", "comments"
-    ).all()
+    queryset = (
+        Recipe.objects.select_related("author", "original_recipe", "original_author")
+        .prefetch_related(
+            "ingredients",
+            "steps__ingredients",
+            "tags",
+            "photos",
+            "reviews",
+            Prefetch("comments", queryset=RecipeComment.objects.select_related("user")),
+        )
+        .all()
+    )
     serializer_class = FullRecipeSerializer
+    # Unrated recipes have a NULL average. Postgres sorts NULL as the largest
+    # value, so a plain "-average_rating" would put every unrated recipe at the
+    # top of "Highest rated". nulls_last keeps them at the bottom either way.
     recipe_grid_sort_fields = {
-        "name": "name",
-        "-name": "-name",
-        "rating": "average_rating",
-        "-rating": "-average_rating",
-        "createdAt": "created_at",
-        "-createdAt": "-created_at",
+        "name": F("name").asc(),
+        "-name": F("name").desc(),
+        "rating": F("average_rating").asc(nulls_last=True),
+        "-rating": F("average_rating").desc(nulls_last=True),
+        "createdAt": F("created_at").asc(),
+        "-createdAt": F("created_at").desc(),
     }
 
     def perform_create(self, serializer) -> None:
-        serializer.save(author=self.request.user)
+        self._save_or_conflict(serializer, author=self.request.user)
 
     def get_recipe_grid_queryset(self) -> QuerySet[Recipe]:
         average_rating_subquery = (
@@ -105,7 +117,7 @@ class RecipeViewSet(OwnedResourceViewSet):
         # tie on the sort columns can shift between the page-1 and page-2 queries,
         # so a row could appear on both pages or on neither.
         return queryset.order_by(
-            self.recipe_grid_sort_fields.get(sort, "name"),
+            self.recipe_grid_sort_fields[sort],
             "-created_at",
             "pk",
         )
@@ -160,7 +172,7 @@ class RecipeTagViewSet(RecipeNestedViewSet):
     def perform_create(self, serializer) -> None:
         recipe = self.get_parent_recipe()
         ensure_recipe_owned(user=self.request.user, recipe=recipe)
-        serializer.save(recipe=recipe)
+        self._save_or_conflict(serializer, recipe=recipe)
 
 
 class RecipeIngredientViewSet(OrderableNestedMixin, RecipeNestedViewSet):
@@ -172,7 +184,7 @@ class RecipeIngredientViewSet(OrderableNestedMixin, RecipeNestedViewSet):
     def perform_create(self, serializer) -> None:
         recipe = self.get_parent_recipe()
         ensure_recipe_owned(user=self.request.user, recipe=recipe)
-        serializer.save(recipe=recipe)
+        self._save_or_conflict(serializer, recipe=recipe)
 
 
 class RecipePhotoViewSet(RecipeNestedViewSet):
@@ -182,7 +194,7 @@ class RecipePhotoViewSet(RecipeNestedViewSet):
     def perform_create(self, serializer) -> None:
         recipe = self.get_parent_recipe()
         ensure_recipe_owned(user=self.request.user, recipe=recipe)
-        serializer.save(recipe=recipe)
+        self._save_or_conflict(serializer, recipe=recipe)
 
 
 class RecipeReviewViewSet(RecipeNestedViewSet):
@@ -190,7 +202,7 @@ class RecipeReviewViewSet(RecipeNestedViewSet):
     serializer_class = RecipeReviewSerializer
 
     def perform_create(self, serializer) -> None:
-        serializer.save(recipe=self.get_parent_recipe(), user=self.request.user)
+        self._save_or_conflict(serializer, recipe=self.get_parent_recipe(), user=self.request.user)
 
 
 class RecipeCommentViewSet(RecipeNestedViewSet):
@@ -198,7 +210,7 @@ class RecipeCommentViewSet(RecipeNestedViewSet):
     serializer_class = RecipeCommentSerializer
 
     def perform_create(self, serializer) -> None:
-        serializer.save(recipe=self.get_parent_recipe(), user=self.request.user)
+        self._save_or_conflict(serializer, recipe=self.get_parent_recipe(), user=self.request.user)
 
 
 class RecipeStepViewSet(OrderableNestedMixin, RecipeNestedViewSet):
@@ -212,7 +224,7 @@ class RecipeStepViewSet(OrderableNestedMixin, RecipeNestedViewSet):
     def perform_create(self, serializer) -> None:
         recipe = self.get_parent_recipe()
         ensure_recipe_owned(user=self.request.user, recipe=recipe)
-        serializer.save(recipe=recipe)
+        self._save_or_conflict(serializer, recipe=recipe)
 
 
 class RecipeStepIngredientViewSet(RecipeNestedViewSet):
@@ -227,4 +239,4 @@ class RecipeStepIngredientViewSet(RecipeNestedViewSet):
     def perform_create(self, serializer) -> None:
         recipe = self.get_parent_recipe()
         ensure_recipe_owned(user=self.request.user, recipe=recipe)
-        serializer.save(recipe=recipe)
+        self._save_or_conflict(serializer, recipe=recipe)
