@@ -101,9 +101,13 @@ class RecipeViewSet(OwnedResourceViewSet):
             queryset = queryset.distinct()
 
         sort = validated_filters.get("sort", "name")
+        # pk last makes the ordering total. Without a unique tiebreaker, rows that
+        # tie on the sort columns can shift between the page-1 and page-2 queries,
+        # so a row could appear on both pages or on neither.
         return queryset.order_by(
             self.recipe_grid_sort_fields.get(sort, "name"),
             "-created_at",
+            "pk",
         )
 
     @extend_schema(
