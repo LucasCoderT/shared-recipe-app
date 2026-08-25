@@ -209,6 +209,9 @@ class Recipe(base.TimestampedModel):
             self.author = user
             self.pk = None
             self.id = None
+            # Drop the source recipe's prefetched children; this instance is the
+            # copy now and must not answer .tags/.photos with the original's rows.
+            self._prefetched_objects_cache = {}
 
             self.save()
 

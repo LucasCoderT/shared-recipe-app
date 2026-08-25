@@ -35,5 +35,7 @@ def ensure_tag_limit(sender, instance: RecipeTag, **kwargs) -> None:
         TooManyRecipeTags: If the recipe has more than 5 tags.
 
     """
-    if instance.recipe.tags.count() >= 5 and not instance.pk:
+    # Counted with a fresh query to always be up to date with the database,
+    # in case of concurrent saves.
+    if instance.pk is None and RecipeTag.objects.filter(recipe_id=instance.recipe_id).count() >= 5:
         raise TooManyRecipeTags("A recipe can have a maximum of 5 tags.")
