@@ -39,6 +39,7 @@ export const RecipeFilters = ({
 
     useEffect(() => {
         if (debounced !== (filters.q ?? "")) onChange({ q: debounced });
+        // onChange identity changes with the filters, so depending on it would loop.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounced]);
 

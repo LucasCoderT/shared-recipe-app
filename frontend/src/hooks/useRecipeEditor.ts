@@ -25,6 +25,8 @@ export const useRecipeEditor = (recipeId: string) => {
             setName(recipe.name);
             setDescription(recipe.description ?? "");
         }
+        // Keyed on id and updatedAt on purpose: depending on the recipe object
+        // would reseed the form on every refetch and wipe edits in progress.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recipe?.id, recipe?.updatedAt]);
 

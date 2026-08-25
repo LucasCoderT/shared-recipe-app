@@ -83,9 +83,10 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
         client_ts = _parse_client_ts(self.request.data.get("updated_at"))
         if client_ts is None:
             return instance
-        # Locks the specific row in the database for update
-        # The of=("self",) argument ensures that only the row corresponding (Required by postgres)
-        # to the instance is locked.
+        # Locks the specific row in the database for update.
+        # of=("self",) restricts the lock to this table's own row, which postgres
+        # requires here: select_related adds nullable outer joins, and postgres
+        # refuses FOR UPDATE on the nullable side of an outer join.
         locked = self.get_queryset().select_for_update(of=("self",)).get(pk=instance.pk)
         if _truncate_to_ms(locked.updated_at) != _truncate_to_ms(client_ts):
             raise StaleWrite()
