@@ -76,6 +76,8 @@ export const api = {
                 options
             ),
         clone: (id: Id) => apiFetch<Schemas["Recipe"]>(`/recipes/${id}/clone/`, send("POST")),
+        tagOptions: (options?: RequestInit) =>
+            apiFetch<string[]>("/recipes/tag-options/", options),
     },
 
     recipeTags: childResource<Schemas["RecipeTag"]>("recipes", "tags"),

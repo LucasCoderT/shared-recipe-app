@@ -63,6 +63,7 @@ export const recipeGridFilterSchema = z.object({
     minRating: z.number().min(0).max(5).optional(),
     sort: z.enum(recipeGridSortValues).default("name"),
     page: z.number().int().positive().optional(),
+    mine: z.boolean().optional(),
 });
 
 export const normalizeGridFilters = (filters: Partial<RecipeGridFilterValues> = {}) =>

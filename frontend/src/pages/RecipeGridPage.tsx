@@ -33,6 +33,11 @@ export const RecipeGridPage = () => {
         placeholderData: keepPreviousData,
     });
 
+    const hasFilters =
+        Boolean(filters.q) ||
+        filters.tag.length > 0 ||
+        Boolean(filters.minRating) ||
+        Boolean(filters.mine);
     const pageCount = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
     const currentPage = filters.page ?? 1;
 
@@ -47,7 +52,12 @@ export const RecipeGridPage = () => {
                 ) : undefined
             }
         >
-            <RecipeFilters filters={filters} onChange={update} onClear={clear} />
+            <RecipeFilters
+                filters={filters}
+                onChange={update}
+                onClear={clear}
+                canFilterMine={Boolean(whoami?.authenticated)}
+            />
 
             {isError && (
                 <Alert severity="error">
@@ -82,11 +92,41 @@ export const RecipeGridPage = () => {
                 )}
             </Box>
 
-            {data?.count === 0 && (
-                <Alert severity="info" variant="outlined">
-                    No recipes match those filters.
-                </Alert>
-            )}
+            {data?.count === 0 &&
+                (hasFilters ? (
+                    <Alert
+                        severity="info"
+                        variant="outlined"
+                        action={
+                            <Button color="inherit" size="small" onClick={clear}>
+                                Clear filters
+                            </Button>
+                        }
+                    >
+                        No recipes match those filters.
+                    </Alert>
+                ) : (
+                    <Alert
+                        severity="info"
+                        variant="outlined"
+                        action={
+                            whoami?.authenticated ? (
+                                <Button
+                                    color="inherit"
+                                    size="small"
+                                    component={RouterLink}
+                                    to="/recipes/new"
+                                >
+                                    Add one
+                                </Button>
+                            ) : undefined
+                        }
+                    >
+                        {whoami?.authenticated
+                            ? "No recipes yet. Add the first one."
+                            : "No recipes yet. Sign in to add the first one."}
+                    </Alert>
+                ))}
 
             {pageCount > 1 && (
                 <Stack sx={{ alignItems: "center" }}>

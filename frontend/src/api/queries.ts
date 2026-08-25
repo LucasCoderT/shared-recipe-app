@@ -51,6 +51,12 @@ export const recipeQueries = {
             queryKey: keys.recipes.detail(id),
             queryFn: () => api.recipes.retrieve(id),
         }),
+    tagOptions: () =>
+        queryOptions({
+            queryKey: [...keys.recipes.all, "tag-options"],
+            queryFn: () => api.recipes.tagOptions(),
+            staleTime: 5 * 60_000,
+        }),
     tags: (id: Id) =>
         queryOptions({
             queryKey: keys.recipes.children(id, "tags"),

@@ -32,6 +32,8 @@ export const useGridFilters = () => {
         const page = Number(params.get("page"));
         if (page > 1) raw.page = page;
 
+        if (params.get("mine") === "true") raw.mine = true;
+
         return normalizeGridFilters(raw);
     }, [params]);
 
@@ -47,6 +49,7 @@ export const useGridFilters = () => {
             if (merged.sort && merged.sort !== "name") next.set("sort", merged.sort);
             for (const tag of merged.tag ?? []) next.append("tag", tag);
             if (page && page > 1) next.set("page", String(page));
+            if (merged.mine) next.set("mine", "true");
 
             setParams(next, { replace: true });
         },

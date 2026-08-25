@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import { useQuery } from "@tanstack/react-query";
+import { recipeQueries } from "~/api/queries";
 import { useDebouncedValue } from "~/hooks/useDebouncedValue";
 import type { RecipeGridFilterValues } from "~/schemas";
 
@@ -22,11 +26,14 @@ export const RecipeFilters = ({
     filters,
     onChange,
     onClear,
+    canFilterMine,
 }: {
     filters: RecipeGridFilterValues;
     onChange: (patch: Partial<RecipeGridFilterValues>) => void;
     onClear: () => void;
+    canFilterMine: boolean;
 }) => {
+    const { data: tagOptions = [] } = useQuery(recipeQueries.tagOptions());
     const [search, setSearch] = useState(filters.q ?? "");
     const debounced = useDebouncedValue(search);
 
@@ -38,7 +45,10 @@ export const RecipeFilters = ({
     useEffect(() => setSearch(filters.q ?? ""), [filters.q]);
 
     const hasFilters =
-        Boolean(filters.q) || filters.tag.length > 0 || Boolean(filters.minRating);
+        Boolean(filters.q) ||
+        filters.tag.length > 0 ||
+        Boolean(filters.minRating) ||
+        Boolean(filters.mine);
 
     return (
         <Stack
@@ -57,7 +67,7 @@ export const RecipeFilters = ({
             <Autocomplete
                 multiple
                 freeSolo
-                options={[] as string[]}
+                options={tagOptions}
                 value={filters.tag}
                 onChange={(_event, value) => onChange({ tag: value })}
                 sx={{ minWidth: { md: 240 }, flexGrow: 1 }}
@@ -95,6 +105,18 @@ export const RecipeFilters = ({
                     </MenuItem>
                 ))}
             </TextField>
+
+            {canFilterMine && (
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={Boolean(filters.mine)}
+                            onChange={(event) => onChange({ mine: event.target.checked })}
+                        />
+                    }
+                    label="Only mine"
+                />
+            )}
 
             <Button onClick={onClear} disabled={!hasFilters}>
                 Clear
