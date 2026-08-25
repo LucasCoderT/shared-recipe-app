@@ -11,7 +11,6 @@ User = get_user_model()
 
 
 class RegisterView(views.APIView):
-    """Create an account from an email address and start a session."""
 
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
@@ -30,9 +29,6 @@ class RegisterView(views.APIView):
             password=serializer.validated_data["password"],
         )
 
-        # login() resolves the backend itself: authenticate() annotates the user
-        # for the login view, and for a newly created user Django falls back to
-        # the single configured AUTHENTICATION_BACKENDS entry.
         login(request, user)
         return Response(
             WhoAmISerializer.from_user(user).data,
@@ -41,7 +37,6 @@ class RegisterView(views.APIView):
 
 
 class LoginView(views.APIView):
-    """Start a session for an existing account."""
 
     permission_classes = [AllowAny]
     serializer_class = LoginSerializer
@@ -61,7 +56,6 @@ class LoginView(views.APIView):
 
 
 class LogoutView(views.APIView):
-    """End the current session."""
 
     permission_classes = [IsAuthenticated]
 

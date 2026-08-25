@@ -4,7 +4,6 @@ from django.template.response import TemplateResponse
 
 
 def spa_index(request: HttpRequest) -> HttpResponse:
-    """Serves the React app shell, or a clear hint if the bundle is missing."""
     try:
         return TemplateResponse(request, "index.html")
     except TemplateDoesNotExist:

@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import QuerySet
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -18,14 +19,16 @@ class ShoppingListViewSet(OwnedResourceViewSet):
     queryset = ShoppingList.objects.select_related("user").order_by("name", "-created_at")
     serializer_class = ShoppingListSerializer
 
-    def get_queryset(self):
-        """Restrict reads to the caller's own lists.
-
-        The permission class allows any safe method, which is correct for
-        recipes -- the brief asks for those to be publicly viewable -- but a
-        shopping list is personal. Without this, listing returns every user's
-        lists and their items are readable by id.
+    def get_queryset(self) -> "QuerySet[ShoppingList]":
         """
+        Builds a queryset of shopping lists that the current user is allowed to see.
+        If the user is an admin, they can see all shopping lists.
+        If the user is not authenticated, they cannot see any shopping lists.
+        Otherwise, they can only see their own shopping lists.
+        Returns:
+            QuerySet[ShoppingList]: The queryset of shopping lists the user is allowed to see.
+        """
+        # Skips any permission checks and returns the base queryset of shopping lists.
         queryset = super().get_queryset()
         if is_admin_user(self.request.user):
             return queryset

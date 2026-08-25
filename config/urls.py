@@ -11,8 +11,8 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    # Dev-only media serving. This has to live in the project URLconf: mounted
-    # inside core.urls it lands behind the api/ prefix and MEDIA_URL paths 404.
+    # Dev-only media serving.
+    # This has to live in the project URLconf: mounted at /media/ and served from MEDIA_ROOT.
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch-all LAST: any non-API path is handed to the React router.

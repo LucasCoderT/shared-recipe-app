@@ -64,17 +64,6 @@ class RecipeGridCardSerializer(serializers.ModelSerializer):
         fields = ("id", "image", "name", "rating", "tags")
 
     def get_image(self, obj: Recipe) -> str | None:
-        """Return the first photo's URL, relative to the current origin.
-
-        build_absolute_uri() would use the Host header, and the dev server
-        proxies with changeOrigin, so under Docker that produced
-        http://backend:8000/media/... -- a hostname that only resolves inside
-        the compose network, leaving every grid image broken in the browser.
-
-        The SPA is served from the same origin as the API, so a root-relative
-        path is both correct and immune to whatever Host the request arrived
-        with. An API served cross-origin would need the absolute form back.
-        """
         photo = next(iter(getattr(obj, "ordered_photos", [])), None)
         if photo is None:
             return None
@@ -102,12 +91,6 @@ class RecipeGridQuerySerializer(serializers.Serializer):
 
 
 class ReorderSerializer(serializers.Serializer):
-    """The complete set of child ids, in their new order.
-
-    Must be complete rather than partial: Django's set_RELATED_order assigns
-    positions 0..n-1 to exactly the ids it is given and leaves everything else
-    untouched, so a partial list would collide with the rows it skipped.
-    """
 
     order = serializers.ListField(child=serializers.IntegerField(), allow_empty=False)
 

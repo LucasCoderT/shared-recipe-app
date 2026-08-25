@@ -3,7 +3,6 @@ from django.test import Client
 
 from core.models import User
 
-# ATOMIC_REQUESTS wraps every request in a transaction, so any view test hits the db.
 pytestmark = pytest.mark.django_db
 
 

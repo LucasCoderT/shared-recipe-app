@@ -11,8 +11,6 @@ def _normalize(email: str) -> str:
 
 
 def _password_field() -> serializers.CharField:
-    # trim_whitespace=False because leading and trailing spaces are legitimate
-    # password characters and DRF strips them by default.
     return serializers.CharField(
         write_only=True,
         trim_whitespace=False,
@@ -31,9 +29,6 @@ class RegisterSerializer(serializers.Serializer):
         return email
 
     def validate(self, attrs):
-        # Runs the AUTH_PASSWORD_VALIDATORS from settings. The unsaved user is
-        # passed so UserAttributeSimilarityValidator can reject a password that
-        # is just the email address back again.
         try:
             validate_password(attrs["password"], User(email=attrs["email"]))
         except DjangoValidationError as exc:
@@ -49,17 +44,12 @@ class LoginSerializer(serializers.Serializer):
         return _normalize(value)
 
     def validate(self, attrs):
-        # authenticate() runs the configured backends, checks the password hash,
-        # rejects inactive accounts, and records which backend approved the
-        # login so login() does not need to be told.
         user = authenticate(
             self.context.get("request"),
             username=attrs["email"],
             password=attrs["password"],
         )
         if user is None:
-            # Deliberately does not say which half was wrong: separate messages
-            # would let someone probe which addresses have accounts.
             raise serializers.ValidationError({"email": "Incorrect email address or password."})
         attrs["user"] = user
         return attrs

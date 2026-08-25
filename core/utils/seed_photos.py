@@ -1,13 +1,3 @@
-"""Placeholder photo assets used by the seed command.
-
-Seeded photo rows are inserted with bulk_create, which never routes through
-ImageField.save(), so those rows only carry a file name. The matching files have
-to be copied into MEDIA_ROOT separately or every photo URL 404s.
-
-A handful of placeholders are reused across every recipe. Nothing enforces
-uniqueness on RecipePhoto.image, so pointing hundreds of rows at four files
-keeps the repository small.
-"""
 
 from __future__ import annotations
 
@@ -29,14 +19,15 @@ PLACEHOLDER_PHOTOS = (
 
 
 def placeholder_photo(index: int) -> str:
-    """Return a placeholder path, cycling through the available files."""
     return PLACEHOLDER_PHOTOS[index % len(PLACEHOLDER_PHOTOS)]
 
 
 def copy_placeholder_photos() -> int:
-    """Copy the placeholder files into MEDIA_ROOT, returning how many were written.
-
-    Files that are already present are left alone, so re-seeding is idempotent.
+    """
+    Copies placeholder photos from the seed_assets
+    directory to the MEDIA_ROOT/recipe_photos directory.
+    Returns:
+        int: The number of photos copied.
     """
     destination = Path(settings.MEDIA_ROOT) / PHOTO_UPLOAD_DIR
     destination.mkdir(parents=True, exist_ok=True)

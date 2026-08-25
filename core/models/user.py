@@ -6,7 +6,6 @@ from core.models import base
 
 
 class UserManager(BaseUserManager):
-    """Creates users keyed on email instead of username."""
 
     use_in_migrations = True
 
@@ -14,16 +13,12 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("An email address is required.")
 
-        # normalize_email only lowercases the domain; addresses are matched
-        # case-insensitively throughout, so the whole thing is folded here.
         email = self.normalize_email(email).strip().lower()
         user = self.model(email=email, **extra_fields)
 
         if password:
             user.set_password(password)
         else:
-            # Registration is passwordless, so the account gets a password that
-            # can never match rather than an empty one that might.
             user.set_unusable_password()
 
         user.save(using=self._db)
@@ -47,6 +42,15 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin, base.TimestampedModel):
+    """
+    Custom user model that uses email as the unique identifier instead of username.
+
+    Implemented Because AUTH_USER_MODEL is harder to change once data exists,
+    and this is a new project, we can implement this now.
+
+    This is implemented to allow for a more flexible authentication system
+    where users can log in using their email address.
+    """
     email = models.EmailField(unique=True)
     display_name = models.CharField(
         max_length=150,

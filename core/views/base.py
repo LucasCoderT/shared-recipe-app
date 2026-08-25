@@ -17,15 +17,6 @@ from core.serializers import ReorderSerializer
 
 
 def _parse_client_ts(value: object) -> datetime | None:
-    """Parse the updated_at token from request data.
-
-    Returns None only when the field is absent (None / not provided), which
-    disables the stale-write check for that request.
-
-    Raises ValidationError (400) for any provided-but-unusable value so a
-    client that tried to send a token but got the format wrong gets an explicit
-    error rather than silently losing optimistic-lock protection.
-    """
     if value is None:
         return None
     if not isinstance(value, str):
@@ -39,12 +30,18 @@ def _parse_client_ts(value: object) -> datetime | None:
 
 
 def _truncate_to_ms(ts: datetime) -> datetime:
-    """Truncate microseconds to millisecond precision.
+    """
+    Truncates a datetime object to millisecond precision.
+    This is needed because JavaScript's Date object only supports milliseconds,
+    while Python's datetime supports microseconds.
+    This function ensures that when comparing timestamps between the client and server,
+    we are only considering milliseconds.
+    Args:
+        ts: The datetime object to be truncated.
 
-    JavaScript Date only carries milliseconds, so a timestamp echoed through a
-    JS client loses the sub-millisecond digits. Truncating both sides to ms
-    makes the comparison safe without requiring the frontend to treat the token
-    as an opaque string.
+    Returns:
+        A new datetime object truncated to millisecond precision.
+
     """
     return ts.replace(microsecond=(ts.microsecond // 1000) * 1000)
 
@@ -69,19 +66,26 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
     permission_classes = [HasGroupPermissionAndOwnershipOrReadOnly]
 
     def _check_stale_write(self, instance):
-        """Validate the updated_at token and return a row-locked instance.
+        """
+        Validates that the resource has not been modified since it was loaded by the client.
+        Scenarios:
+            - Token absent → returns the original instance (check skipped).
+            - Token present and matches → returns the select_for_update locked instance.
+            - Token present but mismatches → raises StaleWrite (409).
+            - Token present but malformed/naive → raises ValidationError (400).
+        Args:
+            instance: The object being modified.
+            This is the object that was retrieved from the database and is being updated or deleted.
 
-        - Token absent → returns the original instance (check skipped).
-        - Token present and matches → returns the select_for_update locked instance.
-        - Token present but mismatches → raises StaleWrite (409).
-        - Token present but malformed/naive → raises ValidationError (400).
-
-        of=("self",) locks only the primary table row; without it, PostgreSQL
-        rejects the lock because select_related adds nullable outer joins.
+        Returns:
+            The locked instance if the timestamps match, otherwise raises an exception.
         """
         client_ts = _parse_client_ts(self.request.data.get("updated_at"))
         if client_ts is None:
             return instance
+        # Locks the specific row in the database for update
+        # The of=("self",) argument ensures that only the row corresponding (Required by postgres)
+        # to the instance is locked.
         locked = self.get_queryset().select_for_update(of=("self",)).get(pk=instance.pk)
         if _truncate_to_ms(locked.updated_at) != _truncate_to_ms(client_ts):
             raise StaleWrite()
@@ -107,16 +111,11 @@ class OwnedResourceViewSet(viewsets.ModelViewSet):
 
 
 class OrderableNestedMixin:
-    """Adds a reorder action to a nested collection using order_with_respect_to.
-
-    Django generates set_<model>_order() on the parent for every child declaring
-    order_with_respect_to, so the reordering itself is a one-liner. What this
-    adds is the endpoint, the ownership check, and validation that the submitted
-    list is a complete permutation of the children that exist.
-
-    The DEFERRED unique constraint on (recipe, _order) is what lets this work:
-    the bulk update passes through states where two rows briefly share a
-    position, which an immediately-checked constraint would reject.
+    """
+    Mixin for nested viewsets that support reordering of items within a parent resource.
+    Requires the viewset to define an `order_setter_name` attribute, which should be
+    the name of a method on the parent resource that accepts a
+    list of item IDs in the desired order.
     """
 
     order_setter_name: str = ""
@@ -167,12 +166,6 @@ class ShoppingListNestedViewSet(OwnedResourceViewSet):
         )
 
     def get_queryset(self):
-        """Items are only visible to the owner of the list holding them.
-
-        Filtering by shopping_list_id alone would let anyone read another
-        user's items by guessing a list id, because safe methods bypass the
-        ownership check in the permission class.
-        """
         queryset = (
             super().get_queryset().filter(shopping_list_id=self.kwargs.get("shopping_list_pk"))
         )

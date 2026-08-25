@@ -6,8 +6,6 @@ unit_registry = UnitRegistry()
 
 
 def normalize_unit(value: str) -> str:
-    # A blank unit is meaningful: countable ingredients ("3 eggs") have no unit
-    # to convert, so there is nothing for pint to resolve.
     if not value:
         return ""
     try:

@@ -4,7 +4,6 @@ from core.auth_groups import ADMIN_GROUP
 
 
 def is_admin_user(user) -> bool:
-    """True for superusers, staff, and members of the Admin group."""
     if not user or not getattr(user, "is_authenticated", False):
         return False
     if user.is_superuser or user.is_staff:

@@ -27,8 +27,6 @@ RECIPE_INTERACTORS_GROUP = "Recipe Interactors"
 SHOPPING_LIST_EDITORS_GROUP = "Shopping List Editors"
 
 DEFAULT_GROUP_MODELS = {
-    # Recipe Editors: create and manage recipe content (structure, media, metadata).
-    # Users who should only review/comment need Recipe Interactors but not this.
     RECIPE_EDITORS_GROUP: (
         Recipe,
         RecipeIngredient,
@@ -37,14 +35,10 @@ DEFAULT_GROUP_MODELS = {
         RecipeStepIngredient,
         RecipeTag,
     ),
-    # Recipe Interactors: social layer — reviews and comments only.
-    # A read-only viewer needs neither this nor Recipe Editors.
     RECIPE_INTERACTORS_GROUP: (
         RecipeComment,
         RecipeReview,
     ),
-    # Shopping List Editors: personal shopping list management.
-    # Intentionally separate so a recipe-only role doesn't touch shopping data.
     SHOPPING_LIST_EDITORS_GROUP: (
         ShoppingList,
         ShoppingListItem,
@@ -77,9 +71,6 @@ def permissions_for_models(models: Iterable[type[Model]]) -> list[Permission]:
 
 
 def ensure_default_groups() -> None:
-    # Admin carries all model permissions so the group is self-documenting in the DB.
-    # is_admin_user() still bypasses object-level ownership checks, which Django's
-    # permission system cannot express — that bypass is independent of these permissions.
     all_models = [m for models in DEFAULT_GROUP_MODELS.values() for m in models]
     admin_group, _ = Group.objects.get_or_create(name=ADMIN_GROUP)
     admin_group.permissions.set(permissions_for_models(all_models))

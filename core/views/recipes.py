@@ -51,8 +51,6 @@ class RecipeViewSet(OwnedResourceViewSet):
     }
 
     def perform_create(self, serializer) -> None:
-        # author is read-only on the serializer, so the owner can only come from
-        # the session. Without this the insert fails on a not-null author_id.
         serializer.save(author=self.request.user)
 
     def get_recipe_grid_queryset(self) -> QuerySet[Recipe]:
@@ -126,6 +124,8 @@ class RecipeViewSet(OwnedResourceViewSet):
     )
     @action(detail=True, methods=["post"], url_path="clone")
     def clone(self, request, pk) -> Response:
+        # Skips the permission check for the original recipe,
+        # allowing any authenticated user to clone it.
         recipe = get_object_or_404(self.queryset, pk=pk)
         new_recipe = recipe.clone(request.user)
         return Response(RecipeSerializer(new_recipe, context=self.get_serializer_context()).data)

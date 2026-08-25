@@ -68,12 +68,6 @@ class ShoppingListItemAdmin(admin.ModelAdmin):
 
 
 class UserCreationForm(AdminUserCreationForm):
-    """Admin add-form for the email-first user.
-
-    Django's stock form is bound to the username field, so the model and fields
-    are repointed at email here. The parent still supplies the optional
-    unusable-password path, which matches how registration creates accounts.
-    """
 
     class Meta(AdminUserCreationForm.Meta):
         model = User
@@ -92,8 +86,6 @@ class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     model = User
 
-    # BaseUserAdmin's defaults all reference username, so every attribute that
-    # names a field has to be restated.
     ordering = ("email",)
     list_display = ("email", "display_name", "is_staff", "is_active", "created_at")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")

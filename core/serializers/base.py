@@ -4,16 +4,15 @@ from rest_framework import serializers
 
 
 class RelativeImageField(serializers.ImageField):
-    """Serialise an image as a root-relative URL.
+    """Serializes the image as a root-relative URL.
 
-    DRF's ImageField builds an absolute URL from the Host header. The dev
-    server proxies with changeOrigin, so under Docker that yields
-    http://backend:8000/media/... -- a hostname that only resolves inside the
-    compose network, which the browser renders as a broken image.
+    DRF's ImageField creates an absolute URL based on the Host header. But the
+    development server proxies with changeOrigin; hence, in Docker, it gives
+    us http://backend:8000/media/..., which only resolves within the compose
+    network and appears as a broken image in the browser.
 
-    The SPA is served from the same origin as the API, so a relative path is
-    correct and immune to whatever Host the request arrived with. Uploads are
-    unaffected: only the output representation changes.
+    Since the SPA is served from the same origin as the API, using a relative
+    URL makes sense and won't be affected by the Host used in the request.
     """
 
     def to_representation(self, value):

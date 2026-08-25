@@ -24,5 +24,16 @@ def assign_groups_to_new_user(sender, instance, created: bool, **kwargs) -> None
 
 @receiver(pre_save, sender=RecipeTag)
 def ensure_tag_limit(sender, instance: RecipeTag, **kwargs) -> None:
+    """
+    Pre save signal to ensure that a recipe does not have more than 5 tags.
+    Args:
+        sender: The model class.
+        instance: The instance being saved.
+        **kwargs: Additional keyword arguments.
+
+    Raises:
+        TooManyRecipeTags: If the recipe has more than 5 tags.
+
+    """
     if instance.recipe.tags.count() >= 5 and not instance.pk:
         raise TooManyRecipeTags("A recipe can have a maximum of 5 tags.")

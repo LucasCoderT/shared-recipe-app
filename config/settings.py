@@ -1,5 +1,3 @@
-"""Django settings for the Shared Recipe Application."""
-
 from pathlib import Path
 
 import environ
@@ -15,8 +13,6 @@ if (dot_env := BASE_DIR / ".env").exists():
 
 DEBUG = env.bool("DJANGO_DEBUG", default=True)
 
-# With DEBUG off there is no fallback: env.str raises ImproperlyConfigured
-# if DJANGO_SECRET_KEY is missing.
 if DEBUG:
     SECRET_KEY = env.str("DJANGO_SECRET_KEY", default="insecure-development-key")
 else:
@@ -24,16 +20,15 @@ else:
     if not SECRET_KEY:
         raise ImproperlyConfigured("DJANGO_SECRET_KEY must not be empty when DEBUG is false.")
 
-# Email-first user model. Set before the first migration because Django cannot
-# repoint the auth foreign keys afterwards without rebuilding every table.
 AUTH_USER_MODEL = "core.User"
 
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
-# The Vite dev server proxies /api to Django with changeOrigin, so Django sees its
-# own host paired with the dev server's Origin header. Without these entries every
-# authenticated write from the SPA fails Django's CSRF origin check. Anonymous
-# requests are unaffected, which is why login and register worked without it.
+# The Vite dev server reverse-proxies /api to Django with changeOrigin, meaning Django
+# gets its own domain name along with the Origin header that the dev server sets.
+# Otherwise, every authenticated write request coming from the SPA will fail Django’s
+# CSRF origin verification test. Anonymous requests are not impacted, hence the reason
+# why login and registration were working fine without it.
 CSRF_TRUSTED_ORIGINS = env.list(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
     default=["http://localhost:5173", "http://127.0.0.1:5173"],

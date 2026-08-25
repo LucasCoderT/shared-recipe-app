@@ -3,9 +3,8 @@ from rest_framework.exceptions import APIException
 
 
 class StaleWrite(APIException):
-    """The client's updated_at token doesn't match the current DB value.
-
-    Returned as HTTP 409 so the client knows to re-fetch before retrying.
+    """
+    Exception raised when a resource is modified after it was loaded, indicating a stale write.
     """
 
     status_code = status.HTTP_409_CONFLICT
@@ -14,6 +13,10 @@ class StaleWrite(APIException):
 
 
 class TooManyRecipeTags(APIException):
+    """
+    Exception raised when a recipe has more than 5 tags.
+    """
+
     status_code = status.HTTP_400_BAD_REQUEST
     default_detail = "A recipe can have a maximum of 5 tags."
     default_code = "too_many_tags"
