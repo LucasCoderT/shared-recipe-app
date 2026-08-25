@@ -1,7 +1,9 @@
 # Shared Recipe Application
 
-A recipe site. Users write their own recipes, browse and copy other people's,
-and build a shopping list from the ingredients.
+A recipe site. Users write their own recipes, browse and copy other people's, and build a shopping list from the
+ingredients.
+
+The reasoning behind the bigger choices is in [DECISIONS.md](DECISIONS.md).
 
 ## Stack
 
@@ -33,53 +35,89 @@ pyproject.toml
 
 ## Running it
 
+You need Docker with Compose v2, so that `docker compose` works.
+
 ```bash
 cp .env.example .env
 docker compose up --build
 ```
 
-Three containers. Postgres starts first, the backend waits for it, migrates,
-then runs Django. Vite runs on its own.
+Three containers. Postgres starts first, the backend waits for it, migrates, then runs Django. Vite runs on its own.
 
-| | |
-| --- | --- |
-| App | http://localhost:5173 |
-| API | http://localhost:8000/api/health/ |
-| API docs | http://localhost:8000/api/docs/ |
-| Admin | http://localhost:8000/admin/ |
+`up` stays attached to the logs. The seed and admin commands below go through
+`docker compose exec`, so run them from a second terminal, or start with
+`docker compose up --build -d` instead.
 
-Use 5173. Vite proxies `/api`, `/admin` and `/media` through to Django. Both
-source trees are mounted into the containers, so edits reload.
+|          |                                   |
+|----------|-----------------------------------|
+| App      | http://localhost:5173             |
+| API      | http://localhost:8000/api/health/ |
+| API docs | http://localhost:8000/api/docs/   |
+| Admin    | http://localhost:8000/admin/      |
 
-```bash
-docker compose exec backend python manage.py createsuperuser
-```
+Use 5173 for the app. Vite proxies `/api` and `/media` through to Django. It does not proxy `/static`, so open the
+Django admin on 8000 or it loads without its stylesheets. Both source trees are mounted into the containers, so edits
+reload.
 
-Seed sample data:
+## Seeding data
 
 ```bash
 docker compose exec backend python manage.py seed_data
 ```
 
-By default this seeds the 5 curated demo recipes plus synthetic load data for query testing.
-Use `--recipes 0` when you only want the curated demo dataset.
+This takes a few seconds. It creates 3 demo users, 300 synthetic users, the 6 curated recipes and about 500 synthetic
+ones, each with tags, photos, reviews and comments, plus shopping lists. One curated recipe is a copy of another, so the
+"copied from" banner has an example. `--recipes 0` keeps just the curated set. `--recipes 100000 --authors 500` is the
+load test; it runs as one transaction and takes a lot longer.
+
+Running the seed again deletes the seed users and everything they own, then recreates them. Accounts you registered
+yourself, and anything they made, are left alone. To wipe the database entirely:
+
+```bash
+docker compose down -v
+```
 
 ### Seeded credentials
 
 Every seeded account shares one password, set by `--password`:
 
-| | |
-| --- | --- |
+|            |                                                            |
+|------------|------------------------------------------------------------|
 | Demo users | `ava@example.com`, `marco@example.com`, `nina@example.com` |
-| Load users | `cook_00001@example.local` up to the `--authors` count |
-| Password | `Password@1` |
+| Admin      | `admin@example.com`                                        |
+| Load users | `cook_00001@example.local` up to the `--authors` count     |
+| Password   | `Password@1`                                               |
 
-The seed writes password hashes directly, so `--password` never runs through
-`AUTH_PASSWORD_VALIDATORS`. The default satisfies them anyway, so it works as a
-registration password too.
+## Admin access
 
-Email is the login field, so `createsuperuser` prompts for an email address
-rather than a username.
+The seed creates `admin@example.com` as a superuser, with the seed password (`Password@1` unless you passed
+`--password`). It signs in to the Django admin and to the app. In the app, superusers, staff users and members of the
+`Admin`
+group see Edit and Delete on every recipe, and their writes skip the ownership check. Re-seeding keeps this account and
+whatever it made.
+
+To add another admin:
+
+```bash
+docker compose exec backend python manage.py createsuperuser
+```
+
+Email is the login field, so it asks for an email address rather than a username.
+
+## Trying it out
+
+Sign in as `nina@example.com` and open Classic Spaghetti Bolognese, which is Ava's. Change the rating, leave a comment,
+then use
+"Copy to my recipes". The copy opens in the editor with the same tags, ingredients, steps and photos, and its page says
+where it came from.
+
+In the editor, add tags until you reach five and the field disables. Units come from a fixed list; type to filter it.
+
+For the concurrency check, open the same recipe's edit page in two tabs. Save in one, then save in the other. The second
+save gets a 409 and a Reload button instead of overwriting the first.
+
+Create a list on the Shopping lists page, then use "Add to shopping list" on any recipe. Items can also be added by hand
+on the list itself.
 
 ## Authorization
 
@@ -88,16 +126,27 @@ Default Django auth groups are provisioned after migrate:
 - `Recipe Editors`
 - `Recipe Interactors`
 - `Shopping List Editors`
+- `Admin`
 
-API writes require both the relevant Django model permission from one of those groups
-and object ownership. Anonymous reads remain public where the app is public, and
-superusers bypass group and ownership checks.
+New accounts join the first three. API writes require both the relevant Django model permission from one of those groups
+and object ownership. Anonymous reads remain public where the app is public, and admins bypass group and ownership
+checks.
+
+## Tests and linting
+
+```bash
+uv run pytest
+uv run ruff check .
+cd frontend && npm run typecheck && npm run lint && npm run format:check
+```
+
+Under Docker the Python ones become `docker compose exec backend pytest` and
+`docker compose exec backend ruff check .`. The frontend ones run on the host after `npm install`.
 
 ## Regenerating the API schema
 
-`schema.yaml` and `frontend/src/schema.ts` are both generated. Change a
-serializer, viewset or route and both need regenerating, or the frontend types
-drift from what the API actually returns.
+`schema.yaml` and `frontend/src/schema.ts` are both generated. Change a serializer, viewset or route and both need
+regenerating, or the frontend types drift from what the API actually returns.
 
 ```bash
 uv run python manage.py spectacular --file schema.yaml
@@ -115,7 +164,7 @@ The second step stays on the host. The frontend container only mounts
 
 ## Running it without Docker
 
-Postgres stays in a container, everything else runs locally.
+You need Python 3.12, uv and Node 22. Postgres stays in a container, everything else runs locally.
 
 ```bash
 cp .env.example .env
@@ -123,10 +172,13 @@ docker compose up -d db
 
 uv sync
 uv run python manage.py migrate
-uv run python manage.py createsuperuser
 
 cd frontend && npm install
 ```
+
+npm 11 blocks postinstall scripts, so a fresh `npm install` needs
+`npm approve-scripts esbuild` and `npm approve-scripts fsevents`, or Vite will not start. The Docker image uses npm 10
+and is not affected.
 
 Then two terminals:
 
@@ -140,14 +192,3 @@ To seed the same data without Docker:
 ```bash
 uv run python manage.py seed_data
 ```
-
-Examples:
-
-```bash
-uv run python manage.py seed_data --recipes 0
-uv run python manage.py seed_data --recipes 100000 --authors 500
-```
-
-npm 11 blocks postinstall scripts, so a fresh `npm install` needs
-`npm approve-scripts esbuild` and `npm approve-scripts fsevents`, or Vite will
-not start.
